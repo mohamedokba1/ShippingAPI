@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33712.159
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.API", "Shipping.API\Shipping.API.csproj", "{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.Entities", "Entities\Shipping.Entities.csproj", "{ED7BF31D-D53A-4348-B23F-2BA00208CD11}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BCA0D920-6E9F-4271-B335-C8A9ACA9F086}
+	EndGlobalSection
+EndGlobal
