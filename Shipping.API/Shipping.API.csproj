@@ -15,8 +15,4 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Entities\Shipping.Entities.csproj" />
-  </ItemGroup>
-
 </Project>

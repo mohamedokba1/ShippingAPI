@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33712.159
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.API", "Shipping.API\Shipping.API.csproj", "{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shipping.API", "Shipping.API\Shipping.API.csproj", "{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.Entities", "Entities\Shipping.Entities.csproj", "{ED7BF31D-D53A-4348-B23F-2BA00208CD11}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shipping.Entities", "Shipping.Entities\Shipping.Entities.csproj", "{C6F28B8A-A49F-473E-82D2-FBFBD46D2732}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D4845B0E-1E0D-4169-AD05-4E2BFF0098D3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED7BF31D-D53A-4348-B23F-2BA00208CD11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C6F28B8A-A49F-473E-82D2-FBFBD46D2732}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C6F28B8A-A49F-473E-82D2-FBFBD46D2732}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C6F28B8A-A49F-473E-82D2-FBFBD46D2732}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C6F28B8A-A49F-473E-82D2-FBFBD46D2732}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
