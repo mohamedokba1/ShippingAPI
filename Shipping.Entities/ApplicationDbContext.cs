@@ -1,12 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.EntityFrameworkCore;
+using Shipping.Entities.Models;
 
-namespace Shipping.Entities
+namespace Shipping.Entities;
+public class ApplicationDbContext : DbContext
 {
-    internal class ApplicationDbContext
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
     {
+        
+    }
+    public ApplicationDbContext() { }
+    public DbSet<Trader> Traders { get; set; }
+    public DbSet<Employee> Employees { get; set; }
+    public DbSet<Customer> Customers { get; set; }
+    public DbSet<SalesRepresentative> SalesRepresentatives { get; set; }
+    public DbSet<Order> Orders { get; set; }
+    public DbSet<City> Cities { get; set; }
+    public DbSet<Goverment> Goverments { get; set; }
+    public DbSet<Product> Products { get; set; }
+    public DbSet<Privellge> Privellges { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
     }
 }
