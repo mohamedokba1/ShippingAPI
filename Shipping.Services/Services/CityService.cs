@@ -1,12 +1,9 @@
 ﻿using Shipping.Entities.Models;
+using Shipping.Services.IServices;
+using Shipping.Services.Validations;
 using Shipping.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-
+namespace Shipping.Services.Services;
 public class CityService:ICityService
 {
     private readonly ICityRepository _cityRepository;

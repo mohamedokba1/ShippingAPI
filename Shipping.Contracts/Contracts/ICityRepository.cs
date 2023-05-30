@@ -1,5 +1,4 @@
-﻿using System.Net.Sockets;
-using Shipping.Entities.Models;
+﻿using Shipping.Entities.Models;
 
 namespace Shipping.Repositories;
 

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Net.NetworkInformation;
-using System.Text;
-using System.Threading.Tasks;
+
+namespace Shipping.Services.Validations;
 
 public static class ValidateModel
 {
@@ -16,7 +14,7 @@ public static class ValidateModel
         bool isValid = Validator.TryValidateObject(obj, validationContext, validationResults, true);
         if (!isValid)
         {
-            throw new Exception();
+            throw new ArgumentException(validationResults.FirstOrDefault()?.ErrorMessage);
         }
     }
 }
