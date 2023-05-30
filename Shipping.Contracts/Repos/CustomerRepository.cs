@@ -1,11 +1,6 @@
 ﻿using Shipping.Entities.Models;
 using Shipping.Entities;
 using Shipping.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Repositories;
 
@@ -43,5 +38,10 @@ public class CustomerRepository : ICustomerRepository
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+    public Task<Customer>? GetByIdAsync(int id)
+    {
+        throw new NotImplementedException();
     }
 }

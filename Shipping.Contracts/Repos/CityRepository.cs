@@ -2,12 +2,7 @@
 using Shipping.Entities;
 using Shipping.Entities.Models;
 using Shipping.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
+
 
 public class CityRepository : ICityRepository
 {
@@ -47,5 +42,10 @@ public class CityRepository : ICityRepository
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+    public IEnumerable<City> GetAll()
+    {
+        throw new NotImplementedException();
     }
 }
