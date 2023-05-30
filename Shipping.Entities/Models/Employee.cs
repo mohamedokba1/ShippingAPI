@@ -16,6 +16,6 @@ public class Employee
     public string Password { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 
-    public virtual ICollection<Privellge> Privillages { get; set; } = new List<Privellge>();
+    public virtual ICollection<PrivellgeDto> Privillages { get; set; } = new List<PrivellgeDto>();
 
 }

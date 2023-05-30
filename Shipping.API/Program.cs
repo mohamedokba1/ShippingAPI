@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
+using Shipping.Repositories.Contracts;
+using Shipping.Repositories.Repos;
 
 namespace Shipping.API
 {
@@ -13,6 +15,11 @@ namespace Shipping.API
             builder.Services.AddSwaggerGen();
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
+
+            #region register repositories
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
+            #endregion 
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())

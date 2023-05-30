@@ -37,5 +37,5 @@ namespace Shipping.Services.Dtos.SalesDtos
 
        
         }
-    }
+
 }
