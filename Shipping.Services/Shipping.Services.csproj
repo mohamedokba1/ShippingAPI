@@ -8,8 +8,11 @@
 
   <ItemGroup>
     <Folder Include="IServices\" />
-    <Folder Include="Dtos\" />
-    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Shipping.Contracts\Shipping.Repositories.csproj" />
+    <ProjectReference Include="..\Shipping.Entities\Shipping.Entities.csproj" />
   </ItemGroup>
 
 </Project>
