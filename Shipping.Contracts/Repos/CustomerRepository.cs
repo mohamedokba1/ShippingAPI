@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Shipping.Repositories.Repos
 {
-    public class CustomerRepository:ICustomerRepository
+    public class CustomerRepository: ICustomerRepository
     {
         private readonly ApplicationDbContext _context;
         public CustomerRepository(ApplicationDbContext context)
@@ -37,11 +37,7 @@ namespace Shipping.Repositories.Repos
         }
         public async Task DeleteAsync(Customer entity)
         {
-            var city = await _cityRepository.GetByIdAsync(id);
-        if (city != null)
-        {
-            await _cityRepository.DeleteAsync(city);
-        }
+            
         }
 
         public async Task SaveChangesAsync()
