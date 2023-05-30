@@ -3,7 +3,7 @@
 namespace Shipping.Entities.Models;
 public enum OrderState
 {
-    New, Waiting, Delayed, Rejected, Delivered
+    New
 }
 public enum ShippingType
 {
