@@ -1,6 +1,5 @@
 ﻿using Shipping.Entities.Models;
 using Shipping.Repositories;
-using Shipping.Services.IServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,39 +15,46 @@ public class CityService:ICityService
     {
         _cityRepository = cityRepository;
     }
-
     public Task<IEnumerable<City>> GetAllAsync()
     {
         return _cityRepository.GetAllAsync();
     }
-
     public Task<City> GetByIdAsync(int id)
     {
         return _cityRepository.GetByIdAsync(id);
     }
-
-    public Task AddAsync(City city)
+    public async Task AddAsync(City city)
     {
-        return _cityRepository.AddAsync(city);
+        if(city != null)
+        {
+            ValidateModel.ModelValidation(city);
+            await _cityRepository.AddAsync(city);
+            await _cityRepository.SaveChangesAsync();
+        }
     }
 
-    public Task UpdateAsync(City city, int id)
+    public async Task UpdateAsync(City city, int id)
     {
-        return _cityRepository.UpdateAsync(city);
+        if (city != null)
+        {
+            ValidateModel.ModelValidation(city);
+            await _cityRepository.UpdateAsync(city);
+            await _cityRepository.SaveChangesAsync();
+        }
     }
-
     public async Task DeleteAsync(int id)
     {
         var city = await _cityRepository.GetByIdAsync(id);
         if (city != null)
         {
+            ValidateModel.ModelValidation(city);
             await _cityRepository.DeleteAsync(city);
+            await _cityRepository.SaveChangesAsync();
         }
     }
-
-    public Task SaveChangesAsync()
+    public async Task SaveChangesAsync()
     {
-        return _cityRepository.SaveChangesAsync();
+        await _cityRepository.SaveChangesAsync();
     }
 }
 
