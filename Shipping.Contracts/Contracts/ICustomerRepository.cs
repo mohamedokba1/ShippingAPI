@@ -1,12 +1,14 @@
 ﻿using Shipping.Entities.Models;
+using System.Net.Sockets;
 
 namespace Shipping.Repositories.Contracts;
 
 public interface ICustomerRepository
 {
-    IEnumerable<Customer> GetAll();
-    Customer? GetById(int id);
-    void Add(Customer entity);
-    void Update(Customer entity);
-    void Delete(Customer entity);
+    Task<IEnumerable<Customer>> GetAllAsync();
+    Task<Customer>? GetByIdAsync(int id);
+    Task AddAsync(Customer entity);
+    Task UpdateAsync(Customer entity);
+    Task DeleteAsync(Customer entity);
+    Task SaveChangesAsync();
 }

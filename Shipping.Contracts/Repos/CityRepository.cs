@@ -1,4 +1,5 @@
-﻿using Shipping.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using Shipping.Entities;
 using Shipping.Entities.Models;
 using System;
 using System.Collections.Generic;
@@ -16,26 +17,37 @@ namespace Shipping.Repositories.Repos
         {
             _context = context;
         }
-        public IEnumerable<City> GetAll()
+
+        public async Task<IEnumerable<City>> GetAllAsync()
         {
-            return _context.Set<City>().ToList();
+            return await _context.Set<City>().ToListAsync();
         }
 
-        public City? GetById(int id)
+        public async Task<City> GetByIdAsync(int id)
         {
-            return _context.Set<City>().Find(id);
+            return await _context.Set<City>().FindAsync(id);
         }
-        public void Add(City entity)
+
+        public async Task AddAsync(City entity)
         {
-            _context.Add(entity);
+            await _context.Set<City>().AddAsync(entity);
         }
-        public void Update(City entity)
+
+        public async Task UpdateAsync(City entity)
         {
-            _context.Update(entity);
+            _context.Set<City>().Update(entity);
+            await Task.CompletedTask;
         }
-        public void Delete(City entity)
+
+        public async Task DeleteAsync(City entity)
         {
-            _context.Remove(entity);
+            _context.Set<City>().Remove(entity);
+            await Task.CompletedTask;
+        }
+
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
         }
     }
 }
