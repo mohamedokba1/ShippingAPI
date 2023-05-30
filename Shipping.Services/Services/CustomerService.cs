@@ -17,38 +17,51 @@ public class CustomerService: ICustomerService
         _customerRepository = customerRepository;
     }
 
-    public Task<IEnumerable<Customer>> GetAllAsync()
+    public async Task<IEnumerable<Customer>> GetAllAsync()
     {
-        return _customerRepository.GetAllAsync();
+        return await _customerRepository.GetAllAsync();
     }
 
-    public Task<Customer> GetByIdAsync(int id)
+    public async Task<Customer>? GetByIdAsync(Guid id)
     {
-        return _customerRepository.GetByIdAsync(id);
+        return await _customerRepository.GetByIdAsync(id);
     }
 
-    public Task AddAsync(Customer customer)
+    public async Task AddAsync(Customer customer)
     {
-        return _customerRepository.AddAsync(customer);
+        if (customer != null)
+        {
+            ValidateModel.ModelValidation(customer);
+            await _customerRepository.AddAsync(customer); ;
+            await _customerRepository.SaveChangesAsync();
+        }
     }
 
-    public Task UpdateAsync(Customer customer, int id)
+    public async Task UpdateAsync(Customer customer, Guid id)
     {
-        return _customerRepository.UpdateAsync(customer);
+        if (customer != null)
+        {
+            ValidateModel.ModelValidation(customer);
+            await _customerRepository.UpdateAsync(customer);
+            await _customerRepository.SaveChangesAsync();
+        }
     }
 
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(Guid id)
     {
         var customer = await _customerRepository.GetByIdAsync(id);
         if (customer != null)
         {
+            ValidateModel.ModelValidation(customer);
             await _customerRepository.DeleteAsync(customer);
+            await _customerRepository.SaveChangesAsync();
         }
     }
 
-    public Task SaveChangesAsync()
+    public async Task SaveChangesAsync()
     {
-        return _customerRepository.SaveChangesAsync();
+        await _customerRepository.SaveChangesAsync();
     }
+
 }
 
