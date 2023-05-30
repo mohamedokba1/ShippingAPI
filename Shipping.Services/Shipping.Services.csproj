@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Dtos\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Shipping.Contracts\Shipping.Repositories.csproj" />
     <ProjectReference Include="..\Shipping.Entities\Shipping.Entities.csproj" />
   </ItemGroup>

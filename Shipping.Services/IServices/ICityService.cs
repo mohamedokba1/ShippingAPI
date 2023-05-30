@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 public interface ICityService
 {
-    public Task<IEnumerable<City>> GetAllAsync();
-    public Task<City>? GetByIdAsync(int id);
-    public Task AddAsync(City city);
-    public Task UpdateAsync(City city, int id);
-    public Task DeleteAsync(int id);
+    public Task<IEnumerable<CityReadDto>> GetAllAsync();
+    public Task<CityReadDto>? GetByIdAsync(int id);
+    public Task AddAsync(CityAddDto cityAddDto);
+    public Task UpdateAsync(CityUpdateDto cityUpdateDto, int id);
+    public Task DeleteAsync(CityDeleteDto cityDeleteDto);
     public Task SaveChangesAsync();
 }

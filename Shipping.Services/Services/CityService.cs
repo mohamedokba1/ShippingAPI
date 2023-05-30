@@ -15,41 +15,75 @@ public class CityService:ICityService
     {
         _cityRepository = cityRepository;
     }
-    public Task<IEnumerable<City>> GetAllAsync()
+    public async Task<IEnumerable<CityReadDto>> GetAllAsync()
     {
-        return _cityRepository.GetAllAsync();
-    }
-    public Task<City> GetByIdAsync(int id)
-    {
-        return _cityRepository.GetByIdAsync(id);
-    }
-    public async Task AddAsync(City city)
-    {
-        if(city != null)
+        var cities = await _cityRepository.GetAllAsync();
+        return cities.Select(city => new CityReadDto
         {
+            CityId = city.City_Id,
+            CityName = city.CityName,
+            NormalShippingCost = city.NormalShippingCost
+        });
+    }
+    public async Task<CityReadDto> GetByIdAsync(int id)
+    {
+        var city = await _cityRepository.GetByIdAsync(id);
+        if (city != null)
+        {
+            return new CityReadDto
+            {
+                CityId = city.City_Id,
+                CityName = city.CityName,
+                NormalShippingCost = city.NormalShippingCost
+            };
+        }
+        return null;
+    }
+    public async Task AddAsync(CityAddDto cityAddDto)
+    {
+        if (cityAddDto != null)
+        {
+            var city = new City
+            {
+                CityName = cityAddDto.CityName,
+                NormalShippingCost = cityAddDto.NormalShippingCost
+            };
             ValidateModel.ModelValidation(city);
+
             await _cityRepository.AddAsync(city);
             await _cityRepository.SaveChangesAsync();
         }
     }
 
-    public async Task UpdateAsync(City city, int id)
+    public async Task UpdateAsync(CityUpdateDto cityUpdateDto, int id)
     {
-        if (city != null)
+
+        if (cityUpdateDto != null)
         {
-            ValidateModel.ModelValidation(city);
-            await _cityRepository.UpdateAsync(city);
-            await _cityRepository.SaveChangesAsync();
+            var city = await _cityRepository.GetByIdAsync(id);
+            if (city != null)
+            {
+                city.CityName = cityUpdateDto.CityName;
+                city.NormalShippingCost = cityUpdateDto.NormalShippingCost;
+                ValidateModel.ModelValidation(city);
+
+                await _cityRepository.UpdateAsync(city);
+                await _cityRepository.SaveChangesAsync();
+            }
         }
     }
-    public async Task DeleteAsync(int id)
+    public async Task DeleteAsync(CityDeleteDto cityDeleteDto)
     {
-        var city = await _cityRepository.GetByIdAsync(id);
-        if (city != null)
+        if (cityDeleteDto != null)
         {
-            ValidateModel.ModelValidation(city);
-            await _cityRepository.DeleteAsync(city);
-            await _cityRepository.SaveChangesAsync();
+            var city = await _cityRepository.GetByIdAsync(cityDeleteDto.CityId);
+            if (city != null)
+            {
+                ValidateModel.ModelValidation(city);
+
+                await _cityRepository.DeleteAsync(city);
+                await _cityRepository.SaveChangesAsync();
+            }
         }
     }
     public async Task SaveChangesAsync()

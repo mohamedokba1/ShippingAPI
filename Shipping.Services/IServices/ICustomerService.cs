@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 public interface ICustomerService
 {
-    public Task<IEnumerable<Customer>> GetAllAsync();
-    public Task<Customer>? GetByIdAsync(Guid id);
-    public Task AddAsync(Customer customer);
-    public Task UpdateAsync(Customer customer, Guid id);
-    public Task DeleteAsync(Guid id);
+    public Task<IEnumerable<CustomerReadDto>> GetAllAsync();
+    public Task<CustomerReadDto>? GetByIdAsync(Guid id);
+    public Task AddAsync(CustomerAddDto customerAddDto);
+    public Task UpdateAsync(CustomerUpdateDto customerUpdateDto, Guid id);
+    public Task DeleteAsync(CustomerDeleteDto customerDeleteDto);
     public Task SaveChangesAsync();
 }
 
