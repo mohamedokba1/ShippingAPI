@@ -21,6 +21,7 @@ namespace Shipping.API
             builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
             #endregion 
 
+            builder.Services.AddAutoMapper(typeof(Program));
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

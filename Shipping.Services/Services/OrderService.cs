@@ -1,15 +1,8 @@
 ﻿using Shipping.Entities.Models;
 using Shipping.Repositories.Contracts;
-using Shipping.Repositories.Repos;
-using Shipping.Services.Dtos.OrderDtos;
 using Shipping.Services.IServices;
 using Shipping.Services.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.WebSockets;
-using System.Text;
-using System.Threading.Tasks;
+using Shipping.Services.Dtos;
 
 namespace Shipping.Services.Services;
 
@@ -23,7 +16,7 @@ public class OrderService : IOrderService
     }
 
 
-    public async Task AddAsync(OrderDto orderDto)
+    public async Task AddAsync(OrderAddDto orderDto)
     {
         if(orderDto != null)
         {
@@ -98,7 +91,7 @@ public class OrderService : IOrderService
     }
 
 
-    public async Task UpdateAsync(OrderDto orderDto, Guid id)
+    public async Task UpdateAsync(OrderAddDto orderDto, Guid id)
     {
         if (orderDto != null)
         {
@@ -121,6 +114,4 @@ public class OrderService : IOrderService
             await orderRepository.SaveChangesAsync();
         }
     }
-
-
 }

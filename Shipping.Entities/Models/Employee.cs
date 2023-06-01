@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
 namespace Shipping.Entities.Models;
 
 public class Employee
@@ -16,6 +15,6 @@ public class Employee
     public string Password { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 
-    public virtual ICollection<PrivellgeDto> Privillages { get; set; } = new List<PrivellgeDto>();
+    public virtual ICollection<Privellge> Privillages { get; set; } = new List<Privellge>();
 
 }

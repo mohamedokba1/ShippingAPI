@@ -1,11 +1,12 @@
-﻿using Shipping.Entities.Models;
+﻿using Shipping.Services.Dtos;
+
 namespace Shipping.Services.IServices;
 
 public interface ITraderService
 {
-    IEnumerable<Trader> GetAllTraders();
-    Trader GetTraderById(Guid id);
-    void AddTrader(Trader trader);
-    void UpdateTrader(Guid trader_id, Trader trader);
-    void DeleteTrader(Guid trader_id);
+    Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync();
+    Task<TraderResponseDto> GetTraderByIdAsync(Guid id);
+    Task AddTraderAsync(TraderAddDto trader);
+    Task UpdateTraderAsync(Guid trader_id, TraderUpdateDto trader);
+    Task DeleteTraderAsync(Guid trader_id);
 }

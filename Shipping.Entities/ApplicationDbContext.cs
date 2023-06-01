@@ -17,7 +17,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<City> Cities { get; set; }
     public DbSet<Goverment> Goverments { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<PrivellgeDto> Privellges { get; set; }
+    public DbSet<Privellge> Privellges { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

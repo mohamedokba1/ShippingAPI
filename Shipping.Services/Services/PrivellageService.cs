@@ -1,15 +1,8 @@
 ﻿using Shipping.Entities.Models;
-using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
-using Shipping.Repositories.Repos;
-using Shipping.Services.Dtos.PrivellageDtos;
 using Shipping.Services.IServices;
 using Shipping.Services.Validations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Shipping.Services.Dtos;
 
 namespace Shipping.Services.Services;
 

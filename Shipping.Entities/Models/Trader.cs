@@ -26,5 +26,5 @@ public class Trader
     public string ContactNumber { get; set; } = string.Empty;
 
     public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
-    public virtual ICollection<PrivellgeDto> Privellges { get; set; } = new HashSet<PrivellgeDto>();
+    public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
 }

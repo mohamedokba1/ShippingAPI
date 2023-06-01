@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
+namespace Shipping.Services.Dtos;
 public class CityAddDto
 {
     [Required(ErrorMessage = "City name is required")]

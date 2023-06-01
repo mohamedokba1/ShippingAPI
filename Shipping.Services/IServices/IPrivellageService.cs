@@ -1,19 +1,12 @@
-﻿using Shipping.Entities.Models;
-using Shipping.Services.Dtos.PrivellageDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shipping.Services.Dtos;
 
-namespace Shipping.Services.IServices
+namespace Shipping.Services.IServices;
+
+public interface IPrivellageService
 {
-    public interface IPrivellageService
-    {
-        Task<IEnumerable<PrivellageDto>> GetAllAsync();
-        Task<PrivellageDto> GetByIdAsync(Guid id);
-        Task AddAsync(PrivellageDto privellgeDto);
-        Task UpdateAsync(PrivellageDto privellgeDto, Guid id);
-        Task DeleteAsync(Guid id);
-    }
+    Task<IEnumerable<PrivellageDto>> GetAllAsync();
+    Task<PrivellageDto> GetByIdAsync(Guid id);
+    Task AddAsync(PrivellageDto privellgeDto);
+    Task UpdateAsync(PrivellageDto privellgeDto, Guid id);
+    Task DeleteAsync(Guid id);
 }

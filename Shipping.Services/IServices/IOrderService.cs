@@ -1,10 +1,4 @@
-﻿using Shipping.Entities.Models;
-using Shipping.Services.Dtos.OrderDtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shipping.Services.Dtos;
 
 namespace Shipping.Services.IServices
 {
@@ -12,8 +6,8 @@ namespace Shipping.Services.IServices
     {
         Task<IEnumerable<OrderReadDto>> GetAllAsync();
         Task<OrderReadDto> GetByIdAsync(Guid id);
-        Task AddAsync(OrderDto orderDto);
-        Task UpdateAsync(OrderDto orderDto, Guid id);
+        Task AddAsync(OrderAddDto orderDto);
+        Task UpdateAsync(OrderAddDto orderDto, Guid id);
         Task DeleteAsync(Guid id);
     }
 }

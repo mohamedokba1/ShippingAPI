@@ -1,11 +1,6 @@
 ﻿using Shipping.Entities.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shipping.Services.Services
 {
@@ -37,10 +32,8 @@ namespace Shipping.Services.Services
 
         public  Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return  _productRepository.GetAllAsync();  
+            return  _productRepository.GetAllAsync();
         }
-
-        
 
         public  Task UpdateAsync(Product product)
         {

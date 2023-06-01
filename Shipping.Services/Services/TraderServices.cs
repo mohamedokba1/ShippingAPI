@@ -1,7 +1,6 @@
-﻿using Shipping.Entities.Models;
-using Shipping.Repositories.Contracts;
+﻿using Shipping.Repositories.Contracts;
+using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
-using Shipping.Services.Validations;
 
 namespace Shipping.Services.Services;
 
@@ -12,27 +11,28 @@ public class TraderServices : ITraderService
     {
         _traderRepository = traderRepository;
     }
-    public void AddTrader(Trader trader)
-    {
 
-    }
-
-    public void DeleteTrader(Guid trader_id)
+    public Task AddTraderAsync(TraderAddDto trader)
     {
         throw new NotImplementedException();
     }
 
-    public IEnumerable<Trader> GetAllTraders()
+    public Task DeleteTraderAsync(Guid trader_id)
     {
         throw new NotImplementedException();
     }
 
-    public Trader GetTraderById(Guid id)
+    public Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync()
     {
         throw new NotImplementedException();
     }
 
-    public void UpdateTrader(Guid trader_id, Trader trader)
+    public Task<TraderResponseDto> GetTraderByIdAsync(Guid id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task UpdateTraderAsync(Guid trader_id, TraderUpdateDto trader)
     {
         throw new NotImplementedException();
     }

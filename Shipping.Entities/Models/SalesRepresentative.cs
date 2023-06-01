@@ -26,5 +26,5 @@ public class SalesRepresentative
     public string Email { get; set; } = string.Empty;
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-    public virtual ICollection<PrivellgeDto> Privellges { get; set; } = new List<PrivellgeDto>();
+    public virtual ICollection<Privellge> Privellges { get; set; } = new List<Privellge>();
 }

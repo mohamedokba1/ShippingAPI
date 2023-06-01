@@ -3,21 +3,22 @@ using Shipping.Entities.Models;
 
 namespace Shipping.Services.Dtos;
 
-public class AddTraderDto
+public class TraderAddDto
 {
     public Guid Trader_Id { get; set; }
     [Required]
     [StringLength(50)]
     public string TraderName { get; set; } = string.Empty;
-    [DataType(DataType.EmailAddress)]
+    [Required(ErrorMessage = "Email can not be blank")]
+    [EmailAddress(ErrorMessage = "The Entered email is not valid")]
     [StringLength(30)]
     public string? Email { get; set; }
-    [Required]
+    [Required(ErrorMessage= "Address can not be blank")]
     public string Address { get; set; } = string.Empty;
     [Required]
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
-    [Required]
+    [Required(ErrorMessage = "Cost per refused order can not be blank")]
     public double CostPerRefusedOrder { get; set; }
     public string? CompanyBranch { get; set; }
     [DataType(DataType.PhoneNumber)]
@@ -25,19 +26,6 @@ public class AddTraderDto
     [StringLength(11)]
     public string ContactNumber { get; set; } = string.Empty;
     public ICollection<OrderResponseDto> Orders { get; set; }
-    public ICollection<PrivellgeResponseDto> Privellges { get; set; }
+    public ICollection<Privellge> Privellges { get; set; }
 
-    public Trader ToTrader()
-    {
-        return new Trader
-        {
-            TraderName = TraderName,
-            Address = Address,
-            Email = Email,
-            Password = Password,
-            CompanyBranch = CompanyBranch,
-            ContactNumber = ContactNumber,
-            CostPerRefusedOrder = CostPerRefusedOrder,
-        };
-    }
 }

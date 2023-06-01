@@ -12,31 +12,35 @@ public class TraderRepository : ITraderRepository
     {
         _context = context;
     }
-    public async Task AddTrader(Trader trader)
+    public async Task AddTraderAsync(Trader trader)
     {
         _context.Traders.Add(trader);
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteTrader(Trader trader)
+    public async Task DeleteTraderAsync(Trader trader)
     {
         _context.Traders.Remove(trader);
         await _context.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Trader>> GetAllTtraders()
+    public async Task<IEnumerable<Trader>> GetAllTradersAsync()
     {
         return await _context.Traders.ToListAsync();
     }
-
-    public async Task<Trader?> GetTraderById(Guid trader_id)
+    public async Task<Trader?> GetTraderByIdAsync(Guid trader_id)
     {
         return await _context.Traders.FirstOrDefaultAsync(temp => temp.Trader_Id == trader_id);
     }
 
-    public async Task UpdateTrader(Trader trader)
+    public async Task UpdateTraderASync(Trader trader)
     {
         _context.Traders.Update(trader);
         await _context.SaveChangesAsync();
+    }
+
+    public Task UpdateTraderASync(Guid trderId, Trader trader)
+    {
+        throw new NotImplementedException();
     }
 }
