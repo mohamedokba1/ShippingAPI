@@ -1,9 +1,9 @@
 ﻿using Shipping.Entities.Models;
 using Shipping.Services.Validations;
 using Shipping.Repositories.Contracts;
+using Shipping.Services.Dtos;
 
-
-
+namespace Shipping.Services.Services;
 public class CustomerService: ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;

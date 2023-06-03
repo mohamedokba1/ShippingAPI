@@ -1,6 +1,5 @@
 ﻿namespace Shipping.Services.Dtos;
 
-public class PrivellgeResponseDto
+public class TraderUpdateDto
 {
-
 }

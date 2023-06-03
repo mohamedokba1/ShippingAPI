@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
+using Shipping.Repositories.Contracts;
+using Shipping.Repositories.Repos;
 
 namespace Shipping.API
 {
@@ -18,6 +20,12 @@ namespace Shipping.API
             
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            #region register repositories
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
+            #endregion 
+
+            builder.Services.AddAutoMapper(typeof(Program));
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

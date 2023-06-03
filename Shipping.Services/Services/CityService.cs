@@ -1,10 +1,10 @@
 ﻿using Shipping.Entities.Models;
-using Shipping.Services.IServices;
+using Shipping.Services.Dtos;
 using Shipping.Services.Validations;
 using Shipping.Repositories;
 
 namespace Shipping.Services.Services;
-public class CityService:ICityService
+public class CityService: ICityService
 {
     private readonly ICityRepository _cityRepository;
 
