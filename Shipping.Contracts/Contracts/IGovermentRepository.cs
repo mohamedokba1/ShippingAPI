@@ -1,6 +1,14 @@
-﻿namespace Shipping.Repositories.Contracts;
+﻿using Shipping.Entities.Models;
+
+namespace Shipping.Repositories.Contracts;
 
 public interface IGovermentRepository
 {
+    Task<IEnumerable<Goverment>> Getall();
+    Task<Goverment> GetByid(int id);
+    Task Add(Goverment goverment);
+    Task Update(int id, Goverment goverment);
+    Task Delete(int id);
 
+    Task Savechanges();
 }

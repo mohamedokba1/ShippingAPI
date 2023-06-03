@@ -6,6 +6,7 @@ public class Employee
 {
     [Key]
     public Guid Employee_Id { get; set; }
+
     [Required]
     [StringLength(70)]
     public string Name { get; set; } = string.Empty;
