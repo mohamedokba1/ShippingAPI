@@ -20,5 +20,15 @@ public class MappingProfile : Profile
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
         CreateMap<GovermentUpdateDto, Goverment>().ReverseMap();
 
+        CreateMap<CityReadDto, City>().ReverseMap();
+        CreateMap<CityAddDto, City>().ReverseMap();
+        CreateMap<CityUpdateDto, City>().ReverseMap();
+        CreateMap<CityDeleteDto, City>().ReverseMap();
+
+        CreateMap<CustomerReadDto, Customer>().ReverseMap();
+        CreateMap<CustomerAddDto, Customer>().ReverseMap();
+        CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
+        CreateMap<CustomerDeleteDto, Customer>().ReverseMap();
+
     }
 }
