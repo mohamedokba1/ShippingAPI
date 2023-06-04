@@ -23,6 +23,9 @@ namespace Shipping.API
             #region register repositories
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
+
+            builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            builder.Services.AddScoped<IGovermentRepository,GovernmentRepository>();
             #endregion 
 
             builder.Services.AddAutoMapper(typeof(Program));
