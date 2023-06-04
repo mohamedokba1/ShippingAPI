@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Models;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shipping.Repositories.Repos
 {
-  
+
     public class SalesRepository : ISalesRepresentativeRepository
     {
         private readonly ApplicationDbContext context;

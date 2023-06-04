@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Shipping.Entities.Models;
+using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 
 namespace Shipping.Services.Mapping;
@@ -19,6 +19,5 @@ public class MappingProfile : Profile
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
         CreateMap<GovermentUpdateDto, Goverment>().ReverseMap();
-
     }
 }

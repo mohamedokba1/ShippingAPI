@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230604152243_AddIdentity")]
+    partial class AddIdentity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -538,37 +541,6 @@ namespace Shipping.Entities.Migrations
                     b.ToTable("SalesRepresentatives");
                 });
 
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.SpecialPackage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("City_Id")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Goverment_Id")
-                        .HasColumnType("int");
-
-                    b.Property<double>("ShippingCost")
-                        .HasColumnType("float");
-
-                    b.Property<Guid>("Trader_Id")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("City_Id");
-
-                    b.HasIndex("Goverment_Id");
-
-                    b.HasIndex("Trader_Id");
-
-                    b.ToTable("SpecialPackages");
-                });
-
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Trader", b =>
                 {
                     b.Property<Guid>("Trader_Id")
@@ -762,33 +734,6 @@ namespace Shipping.Entities.Migrations
                     b.Navigation("salesRepresentativeId");
 
                     b.Navigation("traderId");
-                });
-
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.SpecialPackage", b =>
-                {
-                    b.HasOne("Shipping.Entities.Domain.Models.City", "city")
-                        .WithMany()
-                        .HasForeignKey("City_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shipping.Entities.Domain.Models.Goverment", "goverment")
-                        .WithMany()
-                        .HasForeignKey("Goverment_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shipping.Entities.Domain.Models.Trader", "trader")
-                        .WithMany()
-                        .HasForeignKey("Trader_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("city");
-
-                    b.Navigation("goverment");
-
-                    b.Navigation("trader");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Goverment", b =>

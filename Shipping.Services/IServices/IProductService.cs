@@ -1,4 +1,4 @@
-﻿using Shipping.Entities.Models;
+﻿using Shipping.Entities.Domain.Models;
 
 namespace Shipping.Services.IServices;
 

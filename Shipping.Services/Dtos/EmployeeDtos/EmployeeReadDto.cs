@@ -1,16 +1,9 @@
-﻿using Shipping.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos
 {
-    public record EmployeeReadDto 
+    public record EmployeeReadDto
     {
-        
         public Guid Employee_Id { get; init; }
 
         [Required]

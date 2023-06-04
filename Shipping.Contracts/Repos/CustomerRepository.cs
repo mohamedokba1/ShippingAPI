@@ -1,8 +1,8 @@
-﻿using Shipping.Entities.Models;
-using Shipping.Entities;
+﻿using Shipping.Entities;
 using Shipping.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Repositories;
+using Shipping.Entities.Domain.Models;
 
 public class CustomerRepository : ICustomerRepository
 {
