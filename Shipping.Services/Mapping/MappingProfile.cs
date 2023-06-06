@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
+using Shipping.Services.Dtos.ProductDtos;
+using Shipping.Services.Dtos.SalesDtos;
 
 namespace Shipping.Services.Mapping;
 
@@ -29,6 +31,17 @@ public class MappingProfile : Profile
         CreateMap<CustomerAddDto, Customer>().ReverseMap();
         CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
         CreateMap<CustomerDeleteDto, Customer>().ReverseMap();
+
+        CreateMap<ProductReadDtos, Product>().ReverseMap();
+        CreateMap<ProductUpdateDtos, Product>().ReverseMap();
+        CreateMap<AddProductDto,Product>().ReverseMap();
+        CreateMap<ProductDeletDtos,Product>().ReverseMap();
+
+        CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
+        CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
+        CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
+        CreateMap<SalesUpdateDtos, SalesRepresentative>().ReverseMap();
+
 
     }
 }
