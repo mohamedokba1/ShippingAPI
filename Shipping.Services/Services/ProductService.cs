@@ -22,10 +22,7 @@ namespace Shipping.Services.Services
             return _productRepository.AddAsync(ProductToAdd);
         }
 
-        public Task AddAsync(Product product)
-        {
-            throw new NotImplementedException();
-        }
+       
 
         public async Task DeleteAsync(Guid id)
         {

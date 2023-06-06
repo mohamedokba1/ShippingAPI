@@ -12,18 +12,24 @@ namespace Shipping.API.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _productService;
-        private readonly IMapper _mapper;
-        public ProductController(IProductService productService,IMapper mapper)
+        
+        public ProductController(IProductService productService)
         {
             _productService = productService;
-            _mapper = mapper;
+            
         }
-        [HttpGet]
-        public ActionResult<IEnumerable<ProductReadDtos>> GetAllProduct()
-        {
-            var result = _mapper.Map<IEnumerable<ProductReadDtos>>(Product);
-            return _productService.GetProductsAsync();
+        //[HttpGet]
+        //public ActionResult<IEnumerable<ProductReadDtos>> GetAllProduct()
+        //{
 
-        }
+        //    return _productService.GetProductsAsync();
+
+        //}
+        //[HttpGet]
+        //[Route("{id}")]
+        //public ActionResult<ProductReadDtos> GetProduct(Guid id)
+        //{
+        //    return _productService.GetProductByIdAsync(id);
+        //}
     }
 }
