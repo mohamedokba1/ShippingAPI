@@ -92,11 +92,9 @@ public class CustomerService: ICustomerService
         }
     }
 
-    public async Task DeleteAsync(CustomerDeleteDto customerDeleteDto)
+    public async Task DeleteAsync(Guid id)
     {
-        if (customerDeleteDto != null)
-        {
-            var customer = await _customerRepository.GetByIdAsync(customerDeleteDto.CustomerId);
+            var customer = await _customerRepository.GetByIdAsync(id);
             if (customer != null)
             {
                 ValidateModel.ModelValidation(customer);
@@ -104,7 +102,6 @@ public class CustomerService: ICustomerService
                 await _customerRepository.DeleteAsync(customer);
                 await _customerRepository.SaveChangesAsync();
             }
-        }
     }
 
     public async Task SaveChangesAsync()

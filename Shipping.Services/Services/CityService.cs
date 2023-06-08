@@ -74,11 +74,9 @@ public class CityService: ICityService
             }
         }
     }
-    public async Task DeleteAsync(CityDeleteDto cityDeleteDto)
+    public async Task DeleteAsync(int id)
     {
-        if (cityDeleteDto != null)
-        {
-            var city = await _cityRepository.GetByIdAsync(cityDeleteDto.CityId);
+            var city = await _cityRepository.GetByIdAsync(id);
             if (city != null)
             {
                 ValidateModel.ModelValidation(city);
@@ -86,7 +84,6 @@ public class CityService: ICityService
                 await _cityRepository.DeleteAsync(city);
                 await _cityRepository.SaveChangesAsync();
             }
-        }
     }
     public async Task SaveChangesAsync()
     {
