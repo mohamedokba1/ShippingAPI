@@ -3,8 +3,10 @@ using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Entities.Domain;
 using Shipping.Entities.Domain.Identity;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
+using Shipping.Services.Services;
 using System.Text;
 
 namespace Shipping.API
@@ -59,6 +61,17 @@ namespace Shipping.API
             #region Auto Mapper
 
             builder.Services.AddAutoMapper(typeof(Program));
+
+            #endregion
+
+            #region Repos
+            builder.Services.AddScoped<ICityRepository, CityRepository>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            #endregion
+            #region Services
+            builder.Services.AddScoped<ICityService, CityService>();
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
 
             #endregion
 
