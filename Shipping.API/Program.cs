@@ -56,6 +56,9 @@ namespace Shipping.API
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IGovermentRepository,GovernmentRepository>();
+
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ISalesRepresentativeRepository,SalesRepository>();
             #endregion
 
             #region Auto Mapper

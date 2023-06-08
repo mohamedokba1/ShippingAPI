@@ -6,10 +6,10 @@ namespace Shipping.Services.Dtos;
 
 public class AddProductDto
 {
+    //[Required]
+    //public Guid Product_Id { get; set; }
     [Required]
-    public Guid Product_Id { get; set; }
-    [Required]
-    [StringLength(50)]
+    [StringLength(50,ErrorMessage ="Product Name is not valid ")]
     public string ProductName { get; set; } = string.Empty;
     [Required]
 
