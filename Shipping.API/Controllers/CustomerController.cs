@@ -70,18 +70,14 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteCustomer(Guid id, CustomerDeleteDto customer)
+        public async Task<ActionResult> DeleteCustomer(Guid id)
         {
-            if (id != customer.CustomerId)
-            {
-                return BadRequest("Customer is Null.");
-            }
             var ExistingCustomer = await _customerService.GetByIdAsync(id);
             if (ExistingCustomer == null)
             {
                 return NotFound();
             }
-            await _customerService.DeleteAsync(customer);
+            await _customerService.DeleteAsync(id);
             return NoContent();
         }
     }

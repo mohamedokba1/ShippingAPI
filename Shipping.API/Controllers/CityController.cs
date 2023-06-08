@@ -71,18 +71,14 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteCity(int id, CityDeleteDto city)
+        public async Task<ActionResult> DeleteCity(int id)
         {
-            if (id != city.CityId)
-            {
-                return BadRequest("City is Null.");
-            }
             var ExistingCity = await _cityService.GetByIdAsync(id);
             if (ExistingCity == null)
             {
                 return NotFound();
             }
-            await _cityService.DeleteAsync(city);
+            await _cityService.DeleteAsync(id);
             return NoContent();
         }
     }
