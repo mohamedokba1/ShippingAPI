@@ -12,7 +12,7 @@ public class MappingProfile : Profile
         CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
 
-        CreateMap<EmployeeReadDto, Employee>().ReverseMap();
+        CreateMap<GovermentReadDto, Employee>().ReverseMap();
         CreateMap<EmployeeAddDto, Employee>().ReverseMap();
         CreateMap<EmployeeupdateDto, Employee>().ReverseMap();
 

@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
+using Shipping.Services.IServices;
+using Shipping.Services.Services;
 
 namespace Shipping.API
 {
@@ -26,6 +28,9 @@ namespace Shipping.API
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IGovermentRepository,GovernmentRepository>();
+
+            builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+            builder.Services.AddScoped<IGovernmentService, GovernmentService>();
             #endregion 
 
             builder.Services.AddAutoMapper(typeof(Program));

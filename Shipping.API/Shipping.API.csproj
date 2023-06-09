@@ -20,10 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Shipping.Contracts\Shipping.Repositories.csproj" />
     <ProjectReference Include="..\Shipping.Entities\Shipping.Entities.csproj" />
     <ProjectReference Include="..\Shipping.Services\Shipping.Services.csproj" />
