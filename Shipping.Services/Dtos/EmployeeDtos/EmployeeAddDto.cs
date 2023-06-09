@@ -1,10 +1,4 @@
-﻿using Shipping.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos
 {
@@ -22,7 +16,7 @@ namespace Shipping.Services.Dtos
         public string Password { get; set; } = string.Empty;
         public bool IsActive { get; set; }
 
-         public virtual ICollection<PrivellageDto> Privillages { get; set; } = new List<PrivellageDto>();
+        public virtual ICollection<PrivellageDto> Privillages { get; set; } = new List<PrivellageDto>();
 
     }
 }

@@ -1,10 +1,4 @@
-﻿using Shipping.Entities.Models;
-using Shipping.Services.Dtos;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Shipping.Services.Dtos;
 
 namespace Shipping.Services.IServices
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shipping.Entities.Models;
+namespace Shipping.Entities.Domain.Models;
 
 public class Trader
 {

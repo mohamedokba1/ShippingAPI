@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Models;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Shipping.Repositories.Repos
 {
-    
+
 
     public class ProductRepository : IProductRepository
     {
@@ -51,18 +51,18 @@ namespace Shipping.Repositories.Repos
 
         
 
-        public async Task<Product>? GetByIdAsync(int id)
+        public async Task<Product>? GetByIdAsync(Guid id)
         {
             return await context.Set<Product>().FindAsync(id);
         }
 
        
 
-        public async Task UpdateAsync(Product product)
+        public async Task UpdateAsync(Guid id, Product? product)
         {
-            context.Set<Product>().Update(product);
+            //context.Set<Product>().Update(product);
 
-            await Task.CompletedTask;
+            //await Task.CompletedTask;
         }
     }
 }

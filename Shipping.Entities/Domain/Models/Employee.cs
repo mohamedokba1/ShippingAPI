@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
-namespace Shipping.Entities.Models;
+
+namespace Shipping.Entities.Domain.Models;
 
 public class Employee
 {
@@ -17,5 +18,5 @@ public class Employee
     public bool IsActive { get; set; }
 
     public virtual ICollection<Privellge> Privillages { get; set; } = new List<Privellge>();
-
+    public virtual Branch branch { get; set; }
 }

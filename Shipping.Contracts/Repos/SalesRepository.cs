@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Models;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Shipping.Repositories.Repos
 {
-  
+
     public class SalesRepository : ISalesRepresentativeRepository
     {
         private readonly ApplicationDbContext context;
@@ -47,17 +47,17 @@ namespace Shipping.Repositories.Repos
 
 
 
-        public async Task<SalesRepresentative>? GetByIdAsync(int id)
+        public async Task<SalesRepresentative>? GetByIdAsync(Guid id)
         {
             return await  context.Set<SalesRepresentative>().FindAsync(id);
         }
 
 
 
-        public async Task UpdateAsync(SalesRepresentative sale)
+        public async Task UpdateAsync(Guid id ,SalesRepresentative? sale)
         {
-            context.Update(sale);
-            await Task.CompletedTask;
+            //context.Update(sale);
+            //await Task.CompletedTask;
         }
 
         

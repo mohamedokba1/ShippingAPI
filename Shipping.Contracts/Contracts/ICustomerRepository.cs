@@ -1,4 +1,4 @@
-﻿using Shipping.Entities.Models;
+﻿using Shipping.Entities.Domain.Models;
 using System.Net.Sockets;
 
 namespace Shipping.Repositories.Contracts;

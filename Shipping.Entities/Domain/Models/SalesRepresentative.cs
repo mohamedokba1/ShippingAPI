@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Shipping.Entities.Models;
+namespace Shipping.Entities.Domain.Models;
 
 public class SalesRepresentative
 {
@@ -20,11 +20,11 @@ public class SalesRepresentative
     public double CompanyPercentage { get; set; }
     public string Address { get; set; } = string.Empty;
     [Required]
-    public string Goverment { get; set; } = string.Empty;
-    [Required]
-    [DataType(DataType.EmailAddress)]
+    [EmailAddress(ErrorMessage = "Entered Email is invalid")]
     public string Email { get; set; } = string.Empty;
 
-    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-    public virtual ICollection<Privellge> Privellges { get; set; } = new List<Privellge>();
+    public virtual ICollection<Goverment> Goverments { get; set; } = new HashSet<Goverment>();
+    public virtual ICollection<Branch> Branchs { get; set; } = new HashSet<Branch>();
+    public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+    public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
 }
