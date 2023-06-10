@@ -18,18 +18,19 @@ namespace Shipping.API.Controllers
             _productService = productService;
             
         }
-        //[HttpGet]
-        //public ActionResult<IEnumerable<ProductReadDtos>> GetAllProduct()
-        //{
+        [HttpGet]
+        public ActionResult<IEnumerable<ProductReadDtos>> GetAllProduct()
+        {
+            var result = _productService.GetProductsAsync();
 
-        //    return _productService.GetProductsAsync();
+            return result;
 
-        //}
-        //[HttpGet]
-        //[Route("{id}")]
-        //public ActionResult<ProductReadDtos> GetProduct(Guid id)
-        //{
-        //    return _productService.GetProductByIdAsync(id);
-        //}
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<ProductReadDtos> GetProduct(Guid id)
+        {
+            return _productService.GetProductByIdAsync(id);
+        }
     }
 }

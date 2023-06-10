@@ -5,6 +5,8 @@ using Shipping.Entities.Domain;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
+using Shipping.Services.IServices;
+using Shipping.Services.Services;
 using System.Text;
 
 namespace Shipping.API
@@ -57,6 +59,10 @@ namespace Shipping.API
 
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ISalesRepresentativeRepository,SalesRepository>();
+            #endregion
+
+            #region register services
+            builder.Services.AddScoped<IProductService, ProductService>();
             #endregion
 
             #region Auto Mapper
