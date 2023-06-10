@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Validations;
 
 public static class ValidateModel
 {
-    internal static void ModelValidation(object obj)
+    public static List<ValidationResult>? ModelValidation(object obj)
     {
         ValidationContext validationContext = new ValidationContext(obj);
         List<ValidationResult> validationResults = new List<ValidationResult>();
@@ -14,7 +12,9 @@ public static class ValidateModel
         bool isValid = Validator.TryValidateObject(obj, validationContext, validationResults, true);
         if (!isValid)
         {
-            throw new ArgumentException(validationResults.FirstOrDefault()?.ErrorMessage);
+            return validationResults;
         }
+        else
+            return null;
     }
 }

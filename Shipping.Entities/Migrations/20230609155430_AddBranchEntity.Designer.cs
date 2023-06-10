@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230609155430_AddBranchEntity")]
+    partial class AddBranchEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -350,7 +353,7 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("GovermentId")
+                    b.Property<int>("Goverment_Id")
                         .HasColumnType("int");
 
                     b.Property<double>("NormalShippingCost")
@@ -358,7 +361,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasKey("City_Id");
 
-                    b.HasIndex("GovermentId");
+                    b.HasIndex("Goverment_Id");
 
                     b.ToTable("Cities");
                 });
@@ -808,7 +811,7 @@ namespace Shipping.Entities.Migrations
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.Goverment", "goverment")
                         .WithMany("Cities")
-                        .HasForeignKey("GovermentId")
+                        .HasForeignKey("Goverment_Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -6,7 +6,8 @@ public interface ITraderRepository
 {
     Task<IEnumerable<Trader>> GetAllTradersAsync();
     Task<Trader?> GetTraderByIdAsync(Guid trader_id);
-    Task UpdateTraderASync(Guid trderId, Trader trader);
     Task DeleteTraderAsync(Trader trader);
-    Task AddTraderAsync(Trader trader);
+    Task<Trader?> AddTraderAsync(Trader trader);
+    Task UpdateAsync(Trader trader);
+    Task SaveChangesAsync();
 }

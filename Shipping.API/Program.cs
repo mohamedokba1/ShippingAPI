@@ -72,17 +72,6 @@ namespace Shipping.API
 
             #endregion
 
-            #region Repos
-            builder.Services.AddScoped<ICityRepository, CityRepository>();
-            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-
-            #endregion
-            #region Services
-            builder.Services.AddScoped<ICityService, CityService>();
-            builder.Services.AddScoped<ICustomerService, CustomerService>();
-
-            #endregion
-
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
