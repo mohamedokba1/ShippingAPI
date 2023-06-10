@@ -1,7 +1,11 @@
-﻿using Shipping.Entities.Domain.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Services.Dtos;
 using Shipping.Services.Validations;
-using Shipping.Repositories;
+
 
 namespace Shipping.Services.Services;
 public class CityService: ICityService
@@ -34,7 +38,7 @@ public class CityService: ICityService
                 NormalShippingCost = city.NormalShippingCost
             };
         }
-        return null;
+        return null!;
     }
     public async Task AddAsync(CityAddDto cityAddDto)
     {
@@ -43,7 +47,8 @@ public class CityService: ICityService
             var city = new City
             {
                 CityName = cityAddDto.CityName,
-                NormalShippingCost = cityAddDto.NormalShippingCost
+                NormalShippingCost = cityAddDto.NormalShippingCost,
+                GovermentId = cityAddDto.GovernmentId
             };
             ValidateModel.ModelValidation(city);
 
@@ -69,11 +74,9 @@ public class CityService: ICityService
             }
         }
     }
-    public async Task DeleteAsync(CityDeleteDto cityDeleteDto)
+    public async Task DeleteAsync(int id)
     {
-        if (cityDeleteDto != null)
-        {
-            var city = await _cityRepository.GetByIdAsync(cityDeleteDto.CityId);
+            var city = await _cityRepository.GetByIdAsync(id);
             if (city != null)
             {
                 ValidateModel.ModelValidation(city);
@@ -81,7 +84,6 @@ public class CityService: ICityService
                 await _cityRepository.DeleteAsync(city);
                 await _cityRepository.SaveChangesAsync();
             }
-        }
     }
     public async Task SaveChangesAsync()
     {

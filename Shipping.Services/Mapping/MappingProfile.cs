@@ -14,7 +14,7 @@ public class MappingProfile : Profile
         CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
 
-        CreateMap<EmployeeReadDto, Employee>().ReverseMap();
+        CreateMap<GovermentReadDto, Employee>().ReverseMap();
         CreateMap<EmployeeAddDto, Employee>().ReverseMap();
         CreateMap<EmployeeupdateDto, Employee>().ReverseMap();
 
@@ -25,12 +25,10 @@ public class MappingProfile : Profile
         CreateMap<CityReadDto, City>().ReverseMap();
         CreateMap<CityAddDto, City>().ReverseMap();
         CreateMap<CityUpdateDto, City>().ReverseMap();
-        CreateMap<CityDeleteDto, City>().ReverseMap();
 
         CreateMap<CustomerReadDto, Customer>().ReverseMap();
         CreateMap<CustomerAddDto, Customer>().ReverseMap();
         CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
-        CreateMap<CustomerDeleteDto, Customer>().ReverseMap();
 
         CreateMap<ProductReadDtos, Product>().ReverseMap();
         CreateMap<ProductUpdateDtos, Product>().ReverseMap();

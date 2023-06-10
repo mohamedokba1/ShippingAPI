@@ -10,6 +10,6 @@ public class City
     public string CityName { get; set; } = string.Empty;
     [Required]
     public double NormalShippingCost { get; set; }
-
-    public virtual Goverment goverment { get; set; }
+    public int GovermentId { get; set; }
+    public virtual Goverment? goverment { get; set; }
 }
