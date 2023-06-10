@@ -49,20 +49,25 @@ namespace Shipping.Repositories.Repos
             return await context.Set<Product>().ToListAsync();
         }
 
-        
+
 
         public async Task<Product>? GetByIdAsync(Guid id)
         {
             return await context.Set<Product>().FindAsync(id);
         }
 
-       
+        public async Task saveChanges()
+        {
+            context.SaveChanges();
+            
+        }
 
         public async Task UpdateAsync(Guid id, Product? product)
         {
             //context.Set<Product>().Update(product);
 
             //await Task.CompletedTask;
+            context.SaveChanges();
         }
     }
 }

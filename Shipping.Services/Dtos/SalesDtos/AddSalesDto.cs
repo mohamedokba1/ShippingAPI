@@ -23,8 +23,8 @@ public class AddSalesDto
     [EmailAddress(ErrorMessage = "Entered Email is invalid")]
     public string Email { get; set; } = string.Empty;
 
-    public virtual ICollection<Goverment> Goverments { get; set; } = new HashSet<Goverment>();
-    public virtual ICollection<Branch> Branchs { get; set; } = new HashSet<Branch>();
-    public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
-    public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
+    //public virtual ICollection<Goverment> Goverments { get; set; } = new HashSet<Goverment>();
+    //public virtual ICollection<Branch> Branchs { get; set; } = new HashSet<Branch>();
+    //public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
+    //public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
 }
