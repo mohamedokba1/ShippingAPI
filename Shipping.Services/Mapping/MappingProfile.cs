@@ -31,14 +31,14 @@ public class MappingProfile : Profile
         CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
 
         CreateMap<ProductReadDtos, Product>().ReverseMap();
-        CreateMap<ProductUpdateDtos, Product>().ReverseMap();
+        CreateMap<ProductUpdateDtos, Product>().ForMember(dest=>dest.Product_Id,src=>src.MapFrom(src=>src.Product_Id)).ReverseMap();
         CreateMap<AddProductDto,Product>().ReverseMap();
         CreateMap<ProductDeletDtos,Product>().ReverseMap();
 
         CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
         CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
-        CreateMap<SalesUpdateDtos, SalesRepresentative>().ReverseMap();
+        CreateMap<SalesUpdateDtos, SalesRepresentative>().ForMember(dest => dest.SalesRepresentative_Id, src => src.MapFrom(src => src.SalesRepresentative_Id)).ReverseMap();
 
 
     }

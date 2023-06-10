@@ -22,17 +22,19 @@ namespace Shipping.Repositories.Repos
         public async Task AddAsync(SalesRepresentative sale)
         {
            await context.AddAsync(sale);
+            context.SaveChanges();
             
         }
 
         
 
-        public async Task DeleteAsync(SalesRepresentative sale)
+        public async Task DeleteAsync(Guid id)
         {
-            var salee = await context.Set<SalesRepresentative>().FindAsync(sale);
+            var salee = await context.Set<SalesRepresentative>().FindAsync(id);
             if (salee != null)
             {
                context.Remove(salee);
+                context.SaveChanges();
             }
             await Task.CompletedTask;
 
@@ -47,12 +49,15 @@ namespace Shipping.Repositories.Repos
 
 
 
-        public async Task<SalesRepresentative>? GetByIdAsync(Guid id)
+        public async Task<SalesRepresentative?> GetByIdAsync(Guid id)
         {
             return await  context.Set<SalesRepresentative>().FindAsync(id);
         }
 
-
+        public async Task saveChanges()
+        {
+            await context.SaveChangesAsync();
+        }
 
         public async Task UpdateAsync(Guid id ,SalesRepresentative? sale)
         {

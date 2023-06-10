@@ -19,7 +19,9 @@ public class SalesService : ISalesService
     public Task AddAsync(AddSalesDto sale)
     {
         var AddedSale=_mapper.Map<SalesRepresentative>(sale);
-       return _salesRepository.AddAsync(AddedSale);
+       _salesRepository.AddAsync(AddedSale);
+        _salesRepository.saveChanges();
+        return Task.CompletedTask;
     }
 
     public async Task DeleteAsync(Guid id)
@@ -29,7 +31,8 @@ public class SalesService : ISalesService
         if (sale != null)
         {
             
-            await _salesRepository.DeleteAsync(sale);
+            await _salesRepository.DeleteAsync(sale.SalesRepresentative_Id);
+            _salesRepository.saveChanges();
         }
        
     }
@@ -60,8 +63,26 @@ public class SalesService : ISalesService
         var salToUpdate=await _salesRepository.GetByIdAsync(id);
         if(salToUpdate != null)
         {
-            salToUpdate = _mapper.Map<SalesRepresentative>(salToUpdate);
-             await _salesRepository.UpdateAsync(id,salToUpdate);
+            //salToUpdate = _mapper.Map<SalesRepresentative>(salToUpdate);
+            //salToUpdate = new SalesRepresentative()
+            //{
+            //    SalesRepresentative_Id = salToUpdate.SalesRepresentative_Id,
+            //    Address = salToUpdate.Address,
+            //    Name = salToUpdate.Name,
+            //    PhoneNumber = salToUpdate.PhoneNumber,
+            //    Password = salToUpdate.Password,
+            //    CompanyPercentage = salToUpdate.CompanyPercentage,
+            //    Email = salToUpdate.Email
+            //};
+             
+            salToUpdate.PhoneNumber = sale.PhoneNumber;
+            salToUpdate.Address = sale.Address;
+            salToUpdate.Email=sale.Email;
+            salToUpdate.Name = sale.Name;
+            salToUpdate.Password = sale.Password;
+            salToUpdate.CompanyPercentage = sale.CompanyPercentage;
+            salToUpdate.UserName = sale.UserName;
+            await _salesRepository.saveChanges();
         }
         
     }

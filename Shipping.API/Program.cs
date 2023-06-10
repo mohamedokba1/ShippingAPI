@@ -63,6 +63,10 @@ namespace Shipping.API
             builder.Services.AddScoped<ITraderService, TraderServices>();
             #endregion 
 
+            #region register services
+            builder.Services.AddScoped<IProductService, ProductService>();
+            #endregion
+
             #region Auto Mapper
 
             builder.Services.AddAutoMapper(typeof(Program));

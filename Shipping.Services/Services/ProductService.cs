@@ -18,25 +18,29 @@ namespace Shipping.Services.Services
         }
         public Task AddAsync(AddProductDto product)
         {
-            Product ProductToAdd=_mapper.Map<Product>(product);
-            return _productRepository.AddAsync(ProductToAdd);
+              Product ProductToAdd=_mapper.Map<Product>(product);
+            
+              _productRepository.AddAsync(ProductToAdd);
+            
+              return Task.CompletedTask;
         }
 
        
 
         public async Task DeleteAsync(Guid id)
         {
-            var pro = await _productRepository.GetByIdAsync( id);
-            if (pro != null)
+            var productToDelete = await _productRepository.GetByIdAsync( id);
+            if (productToDelete != null)
             {
-                await _productRepository.DeleteAsync(pro);
+                await _productRepository.DeleteAsync(productToDelete);
+                
             }
         }
 
-        public  async Task<ProductReadDtos> GetProductByIdAsync(Guid id)
+        public  async Task<ProductReadDtos>? GetProductByIdAsync(Guid id)
         {
             
-            Product productFromDB=await  _productRepository.GetByIdAsync(id);
+            var productFromDB=await _productRepository.GetByIdAsync(id);
             if(productFromDB != null)
             {
                 return _mapper.Map<ProductReadDtos>(productFromDB);
@@ -58,8 +62,13 @@ namespace Shipping.Services.Services
             Product productToUpdate =await  _productRepository.GetByIdAsync(id);
             if (productToUpdate != null)
             {
-               productToUpdate= _mapper.Map<Product>(productToUpdate);
-                await  _productRepository.UpdateAsync(id, productToUpdate);
+                
+
+                productToUpdate.ProductName = product.ProductName;
+                productToUpdate.Price = product.Price;
+                productToUpdate.Weight = product.Weight;
+               
+                
             }
 
             
