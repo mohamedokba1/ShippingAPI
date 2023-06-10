@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
+using Shipping.Services.Dtos.ProductDtos;
+using Shipping.Services.Dtos.SalesDtos;
 
 namespace Shipping.Services.Mapping;
 
@@ -12,7 +14,7 @@ public class MappingProfile : Profile
         CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
 
-        CreateMap<EmployeeReadDto, Employee>().ReverseMap();
+        CreateMap<GovermentReadDto, Employee>().ReverseMap();
         CreateMap<EmployeeAddDto, Employee>().ReverseMap();
         CreateMap<EmployeeupdateDto, Employee>().ReverseMap();
 
@@ -23,12 +25,21 @@ public class MappingProfile : Profile
         CreateMap<CityReadDto, City>().ReverseMap();
         CreateMap<CityAddDto, City>().ReverseMap();
         CreateMap<CityUpdateDto, City>().ReverseMap();
-        CreateMap<CityDeleteDto, City>().ReverseMap();
 
         CreateMap<CustomerReadDto, Customer>().ReverseMap();
         CreateMap<CustomerAddDto, Customer>().ReverseMap();
         CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
-        CreateMap<CustomerDeleteDto, Customer>().ReverseMap();
+
+        CreateMap<ProductReadDtos, Product>().ReverseMap();
+        CreateMap<ProductUpdateDtos, Product>().ReverseMap();
+        CreateMap<AddProductDto,Product>().ReverseMap();
+        CreateMap<ProductDeletDtos,Product>().ReverseMap();
+
+        CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
+        CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
+        CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
+        CreateMap<SalesUpdateDtos, SalesRepresentative>().ReverseMap();
+
 
     }
 }

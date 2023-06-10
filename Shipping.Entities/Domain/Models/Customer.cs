@@ -16,7 +16,6 @@ public class Customer
     public string? Village { get; set; }
     [Required]
     [StringLength(11)]
-    [RegularExpression("")]
     public string Phone1 { get; set; } = string.Empty;
     [StringLength(11)]
     public string Phone2 { get; set; } = string.Empty;

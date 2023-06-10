@@ -47,17 +47,17 @@ namespace Shipping.Repositories.Repos
 
 
 
-        public async Task<SalesRepresentative>? GetByIdAsync(int id)
+        public async Task<SalesRepresentative>? GetByIdAsync(Guid id)
         {
             return await  context.Set<SalesRepresentative>().FindAsync(id);
         }
 
 
 
-        public async Task UpdateAsync(SalesRepresentative sale)
+        public async Task UpdateAsync(Guid id ,SalesRepresentative? sale)
         {
-            context.Update(sale);
-            await Task.CompletedTask;
+            //context.Update(sale);
+            //await Task.CompletedTask;
         }
 
         
