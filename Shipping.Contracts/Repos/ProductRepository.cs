@@ -25,20 +25,16 @@ namespace Shipping.Repositories.Repos
 
         public async Task AddAsync(Product product)
         {
-            await context.Set<Product>().AddAsync(product);   
+            await context.Set<Product>().AddAsync(product);
+            await saveChanges();
              
         }
 
         public async Task DeleteAsync(Product product)
         {
-            //var pro =await context.Set<Product>().FindAsync(product);
-            //if (pro != null)
-            //{
-            //   context.Remove(pro);
-            //}
-            //await Task.CompletedTask;
+          
             context.Set<Product>().Remove(product);
-            await Task.CompletedTask;
+            await saveChanges();
         }
 
        
@@ -64,10 +60,8 @@ namespace Shipping.Repositories.Repos
 
         public async Task UpdateAsync(Guid id, Product? product)
         {
-            //context.Set<Product>().Update(product);
 
-            //await Task.CompletedTask;
-            context.SaveChanges();
+            await saveChanges();
         }
     }
 }
