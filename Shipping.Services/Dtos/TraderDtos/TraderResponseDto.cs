@@ -1,5 +1,4 @@
 ﻿using Shipping.Entities.Domain.Models;
-using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos;
 

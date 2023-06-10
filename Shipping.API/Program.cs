@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Domain;
 using Shipping.Entities.Domain.Identity;
-using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
 using Shipping.Services.IServices;
@@ -51,7 +49,7 @@ namespace Shipping.API
             });
             #endregion
 
-            #region register repositories
+            #region Register repositories and services
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
 
@@ -60,6 +58,9 @@ namespace Shipping.API
 
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IGovernmentService, GovernmentService>();
+
+            builder.Services.AddScoped<ITraderRepository, TraderRepository>();
+            builder.Services.AddScoped<ITraderService, TraderServices>();
             #endregion 
 
             #region Auto Mapper
