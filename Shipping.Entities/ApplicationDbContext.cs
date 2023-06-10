@@ -8,9 +8,7 @@ namespace Shipping.Entities;
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, string>
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
-    {
-        
-    }
+    {}
 
     public DbSet<Trader> Traders { get; set; }
     public DbSet<Employee> Employees { get; set; }
@@ -22,7 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Product> Products { get; set; }
     public DbSet<Privellge> Privellges { get; set; }
     public DbSet<SpecialPackage> SpecialPackages { get; set; }
-
+    public DbSet<Branch> Branches { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

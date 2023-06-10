@@ -5,6 +5,8 @@ using Shipping.Entities.Domain;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
+using Shipping.Services.IServices;
+using Shipping.Services.Services;
 using System.Text;
 
 namespace Shipping.API
@@ -62,6 +64,8 @@ namespace Shipping.API
 
             #endregion
 
+            builder.Services.AddScoped<ITraderService, TraderServices>();
+            builder.Services.AddScoped<ITraderRepository, TraderRepository>();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

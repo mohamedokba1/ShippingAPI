@@ -1,39 +1,77 @@
-﻿using Shipping.Repositories.Contracts;
+﻿using AutoMapper;
+using Shipping.Entities.Domain.Models;
+using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
+using Shipping.Services.Validations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Services;
 
 public class TraderServices : ITraderService
 {
     private readonly ITraderRepository _traderRepository;
-    public TraderServices(ITraderRepository traderRepository)
+    private readonly IMapper _mapper;
+    public TraderServices(ITraderRepository traderRepository, IMapper mapper)
     {
         _traderRepository = traderRepository;
+        _mapper = mapper;
     }
 
-    public Task AddTraderAsync(TraderAddDto trader)
+    public async Task<TraderResponseDto?> AddTraderAsync(TraderAddDto traderAddDto)
     {
-        throw new NotImplementedException();
+        List<ValidationResult>? validationResult = ValidateModel.ModelValidation(traderAddDto);
+        Trader newtrader = _mapper.Map<Trader>(traderAddDto);
+        Trader? addedTrader =  await _traderRepository.AddTraderAsync(newtrader);
+        if (addedTrader != null)
+        {
+            TraderResponseDto addedTraderResponse = _mapper.Map<TraderResponseDto>(addedTrader);
+            return addedTraderResponse;
+        }
+        else
+            return null;
     }
 
-    public Task DeleteTraderAsync(Guid trader_id)
+    public async Task<bool> DeleteTraderAsync(Guid trader_id)
     {
-        throw new NotImplementedException();
+        Trader? trader = await _traderRepository.GetTraderByIdAsync(trader_id);
+        if (trader != null)
+        {
+            await _traderRepository.DeleteTraderAsync(trader);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-    public Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync()
+    public async Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync()
     {
-        throw new NotImplementedException();
+        IEnumerable<Trader>? traders = await _traderRepository.GetAllTradersAsync();
+        List<TraderResponseDto> trdaersResponse = new List<TraderResponseDto>();
+        foreach (Trader trader in traders)
+        {
+            trdaersResponse.Add(_mapper.Map<TraderResponseDto>(trader));
+        }
+        return trdaersResponse;
     }
 
-    public Task<TraderResponseDto> GetTraderByIdAsync(Guid id)
+    public async Task<TraderResponseDto> GetTraderByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        Trader? trader = await _traderRepository.GetTraderByIdAsync(id);
+        return _mapper.Map<TraderResponseDto>(trader);
     }
 
-    public Task UpdateTraderAsync(Guid trader_id, TraderUpdateDto trader)
+    public async Task<bool> UpdateTraderAsync(Guid traderId, TraderUpdateDto traderUpdateDto)
     {
-        throw new NotImplementedException();
+        Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
+        if (trader != null)
+        {
+            _mapper.Map(traderUpdateDto, trader);
+            await _traderRepository.SaveChangesAsync();
+            return true;
+        }
+        else { return false; }
     }
 }

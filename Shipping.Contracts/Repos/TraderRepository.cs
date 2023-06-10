@@ -12,35 +12,38 @@ public class TraderRepository : ITraderRepository
     {
         _context = context;
     }
-    public async Task AddTraderAsync(Trader trader)
+    public async Task<Trader?> AddTraderAsync(Trader trader)
     {
-        _context.Traders.Add(trader);
-        await _context.SaveChangesAsync();
+        _context.Set<Trader>().Add(trader);
+        int result = await _context.SaveChangesAsync();
+        if(result == 1)
+            return trader;
+        return null;
     }
 
     public async Task DeleteTraderAsync(Trader trader)
     {
-        _context.Traders.Remove(trader);
-        await _context.SaveChangesAsync();
+        _context.Set<Trader>().RemoveRange(trader);
+        await SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Trader>> GetAllTradersAsync()
     {
-        return await _context.Traders.ToListAsync();
+        return await _context.Set<Trader>().ToListAsync();
     }
     public async Task<Trader?> GetTraderByIdAsync(Guid trader_id)
     {
-        return await _context.Traders.FirstOrDefaultAsync(temp => temp.Trader_Id == trader_id);
+        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.Trader_Id == trader_id);
     }
 
-    public async Task UpdateTraderASync(Trader trader)
+    public async Task SaveChangesAsync()
     {
-        _context.Traders.Update(trader);
         await _context.SaveChangesAsync();
     }
 
-    public Task UpdateTraderASync(Guid trderId, Trader trader)
+    public async Task UpdateAsync(Trader trader)
     {
-        throw new NotImplementedException();
+        _context.Set<Trader>().Update(trader);
+        await Task.CompletedTask;
     }
 }

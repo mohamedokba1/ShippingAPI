@@ -5,7 +5,6 @@ namespace Shipping.Services.Dtos;
 
 public class TraderAddDto
 {
-    public Guid Trader_Id { get; set; }
     [Required]
     [StringLength(50)]
     public string TraderName { get; set; } = string.Empty;
@@ -25,7 +24,4 @@ public class TraderAddDto
     [Required]
     [StringLength(11)]
     public string ContactNumber { get; set; } = string.Empty;
-    public ICollection<OrderResponseDto> Orders { get; set; }
-    public ICollection<Privellge> Privellges { get; set; }
-
 }
