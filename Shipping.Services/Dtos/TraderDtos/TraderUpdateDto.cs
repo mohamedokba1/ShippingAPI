@@ -24,4 +24,5 @@ public class TraderUpdateDto
     [Required]
     [StringLength(11)]
     public string ContactNumber { get; set; } = string.Empty;
+    public bool IsDeleted { get; set; }
 }

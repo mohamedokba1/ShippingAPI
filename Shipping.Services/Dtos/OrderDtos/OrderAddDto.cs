@@ -5,7 +5,6 @@ namespace Shipping.Services.Dtos;
 
 public class OrderAddDto
 {
-
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
     public DateTime OrderDate { get; set; }

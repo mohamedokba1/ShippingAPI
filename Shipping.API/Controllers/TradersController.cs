@@ -36,7 +36,8 @@ namespace Shipping.API.Controllers
             TraderResponseDto? response = await _traderService.AddTraderAsync(traderAddDto);
             var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port ?? -1, "/api/traders/" + response?.Trader_Id.ToString());
             string createdUri = uriBuilder.ToString();
-            if(response == null) return Problem("Failed to add trader");
+            if(response == null)
+                return Problem();
             return Created(createdUri, response);
         }
 

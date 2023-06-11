@@ -2,53 +2,51 @@
 using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shipping.Repositories.Repos
 {
     public class OrderRepository : IOrderRepository
     {
-        public ApplicationDbContext context { get; }
+        private readonly ApplicationDbContext _context;
 
-        public OrderRepository(ApplicationDbContext _context)
+        public OrderRepository(ApplicationDbContext context)
         {
-            context = _context;
+            _context = context;
         }
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await context.Set<Order>().ToListAsync();
+            return await _context.Set<Order>().ToListAsync();
         }
 
-        public async Task<Order> GetByIdAsync(Guid id)
+        public async Task<Order?> GetByIdAsync(Guid id)
         {
-            return await context.Set<Order>().FindAsync(id);
+            return await _context.Set<Order>().FirstOrDefaultAsync(order => order.Order_Id == id);
         }
 
         public async Task AddAsync(Order order)
         {
-            await context.Set<Order>().AddAsync(order);
+            await _context.Set<Order>().AddAsync(order);
         }
 
         public async Task UpdateAsync(Order order)
         {
-            context.Set<Order>().Update(order);
+            _context.Set<Order>().Update(order);
             await Task.CompletedTask;
 
         }
 
         public async Task DeleteAsync(Order order)
         {
-            context.Set<Order>().Remove(order);
-            await Task.CompletedTask;
+            Order? result = await GetByIdAsync(order.Order_Id);
+            if (result is not null)
+            {
+                result.IsDeleted = true;
+            }
         }
 
         public async Task SaveChangesAsync()
         {
-            await context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
     }
 }

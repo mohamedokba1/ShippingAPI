@@ -479,6 +479,9 @@ namespace Shipping.Entities.Migrations
                     b.Property<double>("ExtraWeightCost")
                         .HasColumnType("float");
 
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 

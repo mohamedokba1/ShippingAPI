@@ -26,6 +26,7 @@ public class Order
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
+    public bool IsDeleted { get; set; }
 
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();

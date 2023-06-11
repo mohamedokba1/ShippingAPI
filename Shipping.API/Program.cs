@@ -59,6 +59,9 @@ namespace Shipping.API
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IGovernmentService, GovernmentService>();
 
+            builder.Services.AddScoped<IProductService, ProductService>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+
             builder.Services.AddScoped<ITraderRepository, TraderRepository>();
             builder.Services.AddScoped<ITraderService, TraderServices>();
             #endregion 

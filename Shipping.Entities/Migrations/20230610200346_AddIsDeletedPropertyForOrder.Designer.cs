@@ -12,8 +12,8 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230610025600_build")]
-    partial class build
+    [Migration("20230610200346_AddIsDeletedPropertyForOrder")]
+    partial class AddIsDeletedPropertyForOrder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -338,7 +338,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasIndex("salesPersonSalesRepresentative_Id");
 
-                    b.ToTable("Branch");
+                    b.ToTable("Branches");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.City", b =>
@@ -481,6 +481,9 @@ namespace Shipping.Entities.Migrations
 
                     b.Property<double>("ExtraWeightCost")
                         .HasColumnType("float");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");

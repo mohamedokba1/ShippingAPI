@@ -7,7 +7,7 @@ namespace Shipping.Services.IServices
         Task<IEnumerable<OrderReadDto>> GetAllAsync();
         Task<OrderReadDto> GetByIdAsync(Guid id);
         Task AddAsync(OrderAddDto orderDto);
-        Task UpdateAsync(OrderAddDto orderDto, Guid id);
+        Task UpdateAsync(OrderUpdateDto orderUpdateDto, Guid id);
         Task DeleteAsync(Guid id);
     }
 }
