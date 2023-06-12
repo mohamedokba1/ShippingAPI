@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
 using Shipping.Services.IServices;
@@ -56,7 +57,16 @@ namespace Shipping.API
             #endregion
 
             #region Register repositories and services
+            builder.Services.AddScoped<ICityService, CityService>();
+            builder.Services.AddScoped<ICityRepository, CityRepository>();
+
+            builder.Services.AddScoped<ICustomerService, CustomerService>();
+            builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+
+            builder.Services.AddScoped<IOrderService,OrderService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+            builder.Services.AddScoped<IPrivellageService,PrivellageService>();
             builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
