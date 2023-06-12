@@ -20,6 +20,12 @@ namespace Shipping.API
             builder.Services.AddEndpointsApiExplorer();
 
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("Shippping", p => p.AllowAnyHeader().AllowAnyOrigin().WithOrigins("http://localhost:4200"));
+            });
+
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
             
@@ -82,6 +88,7 @@ namespace Shipping.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseCors("Shippping");
 
             app.UseHttpsRedirection();
             app.UseAuthentication();

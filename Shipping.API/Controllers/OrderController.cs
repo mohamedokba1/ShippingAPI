@@ -46,7 +46,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(Guid id, OrderAddDto order)
+        public async Task<ActionResult> Update(Guid id, OrderUpdateDto order)
         {
             if (id != order.Id)
                 return BadRequest("Order is Null.");
