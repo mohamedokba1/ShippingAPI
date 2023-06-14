@@ -15,7 +15,7 @@ namespace Shipping.Repositories.Repos
         }
         public async Task<IEnumerable<Order>> GetAllAsync()
         {
-            return await _context.Set<Order>().ToListAsync();
+            return await _context.Set<Order>().Include(c=>c.Customers).ToListAsync();
         }
 
         public async Task<Order?> GetByIdAsync(long id)

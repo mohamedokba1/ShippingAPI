@@ -25,7 +25,8 @@ public class CustomerService: ICustomerService
             City = customer.City,
             Village = customer.Village,
             Phone1 = customer.Phone1,
-            Phone2 = customer.Phone2
+            Phone2 = customer.Phone2,
+            //OrderId=customer.Order_Id
         });
     }
 

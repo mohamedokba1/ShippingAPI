@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230613170327_AddIDSToOrderModel")]
+    partial class AddIDSToOrderModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,11 +27,11 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("CustomerOrder", b =>
                 {
-                    b.Property<long>("CustomersCustomer_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("CustomersCustomer_Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("OrdersOrder_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("OrdersOrder_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("CustomersCustomer_Id", "OrdersOrder_Id");
 
@@ -39,11 +42,11 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("EmployeePrivellge", b =>
                 {
-                    b.Property<long>("EmployeesEmployee_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("EmployeesEmployee_Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("PrivillagesPrivellge_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PrivillagesPrivellge_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("EmployeesEmployee_Id", "PrivillagesPrivellge_Id");
 
@@ -57,8 +60,8 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("GovermentsGoverment_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesRepresentativesSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SalesRepresentativesSalesRepresentative_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("GovermentsGoverment_Id", "SalesRepresentativesSalesRepresentative_Id");
 
@@ -175,11 +178,11 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("OrderProduct", b =>
                 {
-                    b.Property<long>("OrdersOrder_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("OrdersOrder_Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("ProductsProduct_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("ProductsProduct_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("OrdersOrder_Id", "ProductsProduct_Id");
 
@@ -190,11 +193,11 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("PrivellgeSalesRepresentative", b =>
                 {
-                    b.Property<int>("PrivellgesPrivellge_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PrivellgesPrivellge_Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("SalesRepresentativesSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("SalesRepresentativesSalesRepresentative_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PrivellgesPrivellge_Id", "SalesRepresentativesSalesRepresentative_Id");
 
@@ -205,11 +208,11 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("PrivellgeTrader", b =>
                 {
-                    b.Property<int>("PrivellgesPrivellge_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("PrivellgesPrivellge_Id")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("TradersTrader_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("TradersTrader_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PrivellgesPrivellge_Id", "TradersTrader_Id");
 
@@ -328,8 +331,8 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("salesPersonSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<Guid>("salesPersonSalesRepresentative_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -365,11 +368,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Customer", b =>
                 {
-                    b.Property<long>("Customer_Id")
+                    b.Property<Guid>("Customer_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Customer_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("City")
                         .IsRequired()
@@ -407,11 +408,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
                 {
-                    b.Property<long>("Employee_Id")
+                    b.Property<Guid>("Employee_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Employee_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -465,11 +464,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
                 {
-                    b.Property<long>("Order_Id")
+                    b.Property<Guid>("Order_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Order_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CompanyBranch")
                         .IsRequired()
@@ -503,23 +500,12 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
                     b.Property<Guid>("TraderId")
                         .HasColumnType("uniqueidentifier");
-=======
-                    b.Property<int>("salesRepresentativeIdSalesRepresentative_Id")
-                        .HasColumnType("int");
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
 
                     b.Property<int>("shipping_type")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-=======
-                    b.Property<long>("traderIdTrader_Id")
-                        .HasColumnType("bigint");
-
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
                     b.HasKey("Order_Id");
 
                     b.HasIndex("SalesRepresentativeId");
@@ -531,11 +517,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Privellge", b =>
                 {
-                    b.Property<int>("Privellge_Id")
+                    b.Property<Guid>("Privellge_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Privellge_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PrivellgeName")
                         .IsRequired()
@@ -548,11 +532,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Product", b =>
                 {
-                    b.Property<long>("Product_Id")
+                    b.Property<Guid>("Product_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Product_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -571,11 +553,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
                 {
-                    b.Property<int>("SalesRepresentative_Id")
+                    b.Property<Guid>("SalesRepresentative_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesRepresentative_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -628,8 +608,8 @@ namespace Shipping.Entities.Migrations
                     b.Property<double>("ShippingCost")
                         .HasColumnType("float");
 
-                    b.Property<long>("Trader_Id")
-                        .HasColumnType("bigint");
+                    b.Property<Guid>("Trader_Id")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -644,11 +624,9 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Trader", b =>
                 {
-                    b.Property<long>("Trader_Id")
+                    b.Property<Guid>("Trader_Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Trader_Id"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -859,21 +837,21 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
                 {
-                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "SalesRepresentative")
+                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "salesRepresentativeId")
                         .WithMany("Orders")
                         .HasForeignKey("SalesRepresentativeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Shipping.Entities.Domain.Models.Trader", "Trader")
+                    b.HasOne("Shipping.Entities.Domain.Models.Trader", "traderId")
                         .WithMany("Orders")
                         .HasForeignKey("TraderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("SalesRepresentative");
+                    b.Navigation("salesRepresentativeId");
 
-                    b.Navigation("Trader");
+                    b.Navigation("traderId");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SpecialPackage", b =>

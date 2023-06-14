@@ -11,4 +11,5 @@ public interface ICustomerRepository
     Task UpdateAsync(Customer entity);
     Task DeleteAsync(Customer entity);
     Task SaveChangesAsync();
+    Task<List<Customer>> GetCustomersByIds(List<Guid> customerIds);
 }

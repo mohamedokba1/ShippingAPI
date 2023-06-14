@@ -46,11 +46,13 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
+<<<<<<< HEAD
+        [Route("{id}")]
+        public async Task<ActionResult> Update(Guid id, [FromBody] OrderUpdateDto order)
+=======
         public async Task<ActionResult> Update(long id, OrderUpdateDto order)
+>>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
         {
-            if (id != order.Id)
-                return BadRequest("Order is Null.");
- 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -64,7 +66,12 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
+<<<<<<< HEAD
+        [Route("{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+=======
         public async Task<ActionResult> Delete(long id)
+>>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
         {
             var order = await orderService.GetByIdAsync(id);
             if (order == null)

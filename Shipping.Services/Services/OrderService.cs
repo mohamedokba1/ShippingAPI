@@ -9,10 +9,13 @@ namespace Shipping.Services.Services;
 public class OrderService : IOrderService
 {
     public IOrderRepository orderRepository { get; }
+    public ICustomerRepository _customerRepository { get; }
 
-    public OrderService(IOrderRepository _orderRepository)
+
+    public OrderService(IOrderRepository _orderRepository, ICustomerRepository customerRepository)
     {
         orderRepository = _orderRepository;
+        _customerRepository = customerRepository;
     }
 
     public async Task AddAsync(OrderAddDto orderDto)
@@ -27,10 +30,7 @@ public class OrderService : IOrderService
                 DefaultCost = orderDto.DefaultCost,
                 ExtraWeightCost = orderDto.ExtraWeightCost,
                 OrderDate = orderDto.OrderDate,
-                salesRepresentativeId = orderDto.salesRepresentativeId,
-                Products = orderDto.Products,
                 shipping_type = orderDto.shipping_type,
-                traderId = orderDto.traderId
             };
             ValidateModel.ModelValidation(order);
             await orderRepository.AddAsync(order);
@@ -50,26 +50,40 @@ public class OrderService : IOrderService
     {
         var orders = await orderRepository.GetAllAsync();
 
-        return orders.Select(o => new OrderReadDto
+        var orderDtos = orders.Select(o => new OrderReadDto
         {
+            OrderId = o.Order_Id,
             State = o.State,
             CompanyBranch = o.CompanyBranch,
-            CustomerName = o.CustomerName,
             PaymentMethod = o.PaymentMethod,
             DefaultCost = o.DefaultCost,
             ExtraWeightCost = o.ExtraWeightCost,
             OrderDate = o.OrderDate,
             ShippingType = o.shipping_type,
-        }
-        );
+            TraderId = o.TraderId,
+            SalesRepresentativeId = o.SalesRepresentativeId,
+            CustomerId = o.Customers.FirstOrDefault().Customer_Id,
+            CustomerName = o.Customers.FirstOrDefault().Name,
+            Government=o.Customers.FirstOrDefault().Goverment,
+            City=o.Customers.FirstOrDefault().City,
+        }).ToList();
+
+
+        return orderDtos;
     }
+<<<<<<< HEAD
+
+    public async Task<OrderResponseDto> GetByIdAsync(Guid id)
+=======
     public async Task<OrderReadDto> GetByIdAsync(long id)
+>>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
     {
         var order = await orderRepository.GetByIdAsync(id);
         if (order != null)
         {
-            return new OrderReadDto
+            return new OrderResponseDto
             {
+                Id=order.Order_Id,
                 State = order.State,
                 CompanyBranch = order.CompanyBranch,
                 CustomerName = order.CustomerName,
@@ -77,7 +91,7 @@ public class OrderService : IOrderService
                 DefaultCost = order.DefaultCost,
                 ExtraWeightCost = order.ExtraWeightCost,
                 OrderDate = order.OrderDate,
-                ShippingType = order.shipping_type,
+                shipping_type = order.shipping_type,
 
             };
         }
@@ -87,24 +101,23 @@ public class OrderService : IOrderService
     {
         if (OrderUpdateDto != null)
         {
-            var order = new Order
-            {
-                Order_Id = id,
-                CompanyBranch = OrderUpdateDto.CompanyBranch,
-                CustomerName = OrderUpdateDto.CustomerName,
-                PaymentMethod = OrderUpdateDto.PaymentMethod,
-                DefaultCost = OrderUpdateDto.DefaultCost,
-                ExtraWeightCost = OrderUpdateDto.ExtraWeightCost,
-                OrderDate = OrderUpdateDto.OrderDate,
-                salesRepresentativeId = OrderUpdateDto.salesRepresentativeId,
-                Products = OrderUpdateDto.Products,
-                shipping_type = OrderUpdateDto.shipping_type,
-                traderId = OrderUpdateDto.traderId,
-                //IsDeleted = OrderUpdateDto.IsDeleted
-            };
-            ValidateModel.ModelValidation(order);
-            await orderRepository.UpdateAsync(order);
+            var existingOrder = await orderRepository.GetByIdAsync(id);
+
+            existingOrder.State= OrderUpdateDto.State ;
+            existingOrder.CompanyBranch= OrderUpdateDto.CompanyBranch ;
+            existingOrder.CustomerName = OrderUpdateDto.CustomerName;
+            existingOrder.PaymentMethod = OrderUpdateDto.PaymentMethod;
+            existingOrder.DefaultCost = OrderUpdateDto.DefaultCost;
+            existingOrder.ExtraWeightCost = OrderUpdateDto.ExtraWeightCost;
+            existingOrder.OrderDate = OrderUpdateDto.OrderDate;
+            existingOrder.shipping_type = OrderUpdateDto.shipping_type;
+
+
+            ValidateModel.ModelValidation(existingOrder);
+            await orderRepository.UpdateAsync(existingOrder);
             await orderRepository.SaveChangesAsync();
         }
     }
+
+
 }

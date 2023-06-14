@@ -14,9 +14,4 @@ public class OrderAddDto
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
-
-
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-    public virtual Trader traderId { get; set; }
-    public virtual SalesRepresentative salesRepresentativeId { get; set; }
 }

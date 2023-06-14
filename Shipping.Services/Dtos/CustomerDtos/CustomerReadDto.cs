@@ -17,6 +17,8 @@ public class CustomerReadDto
 
 public class OrderReadDto
 {
+    
+    public Guid OrderId { get; set; }
     public OrderState State { get; set; }
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
@@ -24,9 +26,13 @@ public class OrderReadDto
     public double ExtraWeightCost { get; set; }
     public string CompanyBranch { get; set; }=string.Empty;
     public double DefaultCost { get; set; }
+    public Guid CustomerId { get; set; }
+    public string City { get; set; } = string.Empty;
+    public string Government { get; set; } = string.Empty;
     public string CustomerName { get; set; } = string.Empty;
-    public ICollection<CustomerReadDto>? Customers { get; set; }
     public ShippingType ShippingType { get; set; }
     public Guid TraderId { get; set; }
     public Guid SalesRepresentativeId { get; set; }
+    public ICollection<CustomerReadDto>? Customers { get; set; }
+
 }

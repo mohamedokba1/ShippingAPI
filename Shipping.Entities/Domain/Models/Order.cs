@@ -28,11 +28,22 @@ public class Order
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
+<<<<<<< HEAD
+
+    //public bool IsDeleted { get; set; }
+=======
     public bool IsDeleted { get; set; }
+>>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
 
-
+    public Guid ProductId { get; set; }
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
+    public Guid CustomerId { get; set; }
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
-    public virtual Trader traderId { get; set; }
-    public virtual SalesRepresentative salesRepresentativeId { get; set; }
+
+    public Guid TraderId { get; set; }
+    public virtual Trader? Trader { get; set; }
+
+    public Guid SalesRepresentativeId { get; set; }
+    public virtual SalesRepresentative? SalesRepresentative { get; set; }
 }

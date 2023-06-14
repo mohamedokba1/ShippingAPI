@@ -13,7 +13,7 @@ public class CustomerRepository : ICustomerRepository
     }
     public async Task<IEnumerable<Customer>> GetAllAsync()
     {
-        return await _context.Set<Customer>().ToListAsync();
+        return await _context.Set<Customer>().Include(o=>o.Orders).ToListAsync();
     }
 
     public async Task<Customer>? GetByIdAsync(Guid id)
@@ -40,8 +40,11 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync();
     }
 
-    public Task<Customer>? GetByIdAsync(int id)
+    public async Task<List<Customer>> GetCustomersByIds(List<Guid> customerIds)
     {
-        throw new NotImplementedException();
+        return await _context.Customers
+            .Where(c => customerIds.Contains(c.Customer_Id))
+            .ToListAsync();
     }
+
 }

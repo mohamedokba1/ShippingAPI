@@ -62,7 +62,11 @@ public class SalesService : ISalesService
     {
         var salToUpdate=await _salesRepository.GetByIdAsync(id);
         if(salToUpdate != null)
+<<<<<<< HEAD
+        {    
+=======
         {
+>>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
             salToUpdate.PhoneNumber = sale.PhoneNumber;
             salToUpdate.Address = sale.Address;
             salToUpdate.Email=sale.Email;
