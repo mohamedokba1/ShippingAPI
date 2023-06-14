@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
 public class SalesRepresentative
 {
     [Key]
-    public Guid SalesRepresentative_Id { get; set; }
+    [Column(TypeName = "int")]
+    public int SalesRepresentative_Id { get; set; }
     [Required]
     [StringLength(70)]
     public string Name { get; set; } = string.Empty;

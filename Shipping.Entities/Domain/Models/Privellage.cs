@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
 public class Privellge
 {
     [Key]
-    public Guid Privellge_Id { get; set; }
+    [Column(TypeName = "int")]
+    public int Privellge_Id { get; set; }
     [Required]
     public string PrivellgeName { get; set; } = string.Empty;
 

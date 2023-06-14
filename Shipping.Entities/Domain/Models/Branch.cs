@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
 public class Branch
 {
     [Key]
+    [Column(TypeName = "int")]
     public int Id { get; set; }
     public string branchName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }

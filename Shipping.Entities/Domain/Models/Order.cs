@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 public enum OrderState
@@ -16,7 +17,8 @@ public enum PaymentType
 public class Order
 {
     [Key]
-    public Guid Order_Id { get; set; }
+    [Column(TypeName = "bigint")]
+    public long Order_Id { get; set; }
     public OrderState State { get; set; } = OrderState.New;
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]

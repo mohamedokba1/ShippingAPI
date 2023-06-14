@@ -1,10 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
 public class City
 {
     [Key]
+    [Column(TypeName = "int")]
     public int City_Id { get; set; }
     [Required]
     public string CityName { get; set; } = string.Empty;

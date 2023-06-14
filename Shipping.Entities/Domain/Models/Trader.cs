@@ -1,11 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
 public class Trader
 {
     [Key]
-    public Guid Trader_Id { get; set; }
+    [Column(TypeName="bigint")]
+    public long Trader_Id { get; set; }
     [Required]
     [StringLength(50)]
     public string TraderName { get; set; } = string.Empty;
