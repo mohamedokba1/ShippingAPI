@@ -12,7 +12,7 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230614195916_InitialCreate")]
+    [Migration("20230614204840_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -42,13 +42,13 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("EmployeePrivellge", b =>
                 {
-                    b.Property<long>("EmployeesEmployee_Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("EmployeesId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("PrivillagesPrivellge_Id")
                         .HasColumnType("int");
 
-                    b.HasKey("EmployeesEmployee_Id", "PrivillagesPrivellge_Id");
+                    b.HasKey("EmployeesId", "PrivillagesPrivellge_Id");
 
                     b.HasIndex("PrivillagesPrivellge_Id");
 
@@ -60,12 +60,12 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("GovermentsGoverment_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesRepresentativesSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("SalesRepresentativesId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("GovermentsGoverment_Id", "SalesRepresentativesSalesRepresentative_Id");
+                    b.HasKey("GovermentsGoverment_Id", "SalesRepresentativesId");
 
-                    b.HasIndex("SalesRepresentativesSalesRepresentative_Id");
+                    b.HasIndex("SalesRepresentativesId");
 
                     b.ToTable("GovermentSalesRepresentative");
                 });
@@ -196,12 +196,12 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("PrivellgesPrivellge_Id")
                         .HasColumnType("int");
 
-                    b.Property<int>("SalesRepresentativesSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("SalesRepresentativesId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PrivellgesPrivellge_Id", "SalesRepresentativesSalesRepresentative_Id");
+                    b.HasKey("PrivellgesPrivellge_Id", "SalesRepresentativesId");
 
-                    b.HasIndex("SalesRepresentativesSalesRepresentative_Id");
+                    b.HasIndex("SalesRepresentativesId");
 
                     b.ToTable("PrivellgeSalesRepresentative");
                 });
@@ -211,12 +211,12 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("PrivellgesPrivellge_Id")
                         .HasColumnType("int");
 
-                    b.Property<long>("TradersTrader_Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("TradersId")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PrivellgesPrivellge_Id", "TradersTrader_Id");
+                    b.HasKey("PrivellgesPrivellge_Id", "TradersId");
 
-                    b.HasIndex("TradersTrader_Id");
+                    b.HasIndex("TradersId");
 
                     b.ToTable("PrivellgeTrader");
                 });
@@ -233,12 +233,19 @@ namespace Shipping.Entities.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<long>("EmployeeId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -263,8 +270,14 @@ namespace Shipping.Entities.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<long>("SalesRepresentativeId")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TraderId")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("TwoFactorEnabled")
                         .HasColumnType("bit");
@@ -284,6 +297,10 @@ namespace Shipping.Entities.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("ApplicationUser");
+
+                    b.UseTphMappingStrategy();
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Identity.ApplicationUserRole", b =>
@@ -331,12 +348,12 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("salesPersonSalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("salesPersonId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("salesPersonSalesRepresentative_Id");
+                    b.HasIndex("salesPersonId");
 
                     b.ToTable("Branches");
                 });
@@ -408,44 +425,6 @@ namespace Shipping.Entities.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
-                {
-                    b.Property<long>("Employee_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Employee_Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("branchId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Employee_Id");
-
-                    b.HasIndex("branchId");
-
-                    b.ToTable("Employees");
-                });
-
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Goverment", b =>
                 {
                     b.Property<int>("Goverment_Id")
@@ -506,8 +485,8 @@ namespace Shipping.Entities.Migrations
                     b.Property<long>("SalesRepresentativeId")
                         .HasColumnType("bigint");
 
-                    b.Property<int?>("SalesRepresentative_Id")
-                        .HasColumnType("int");
+                    b.Property<string>("SalesRepresentativeId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
@@ -515,14 +494,17 @@ namespace Shipping.Entities.Migrations
                     b.Property<long>("TraderId")
                         .HasColumnType("bigint");
 
+                    b.Property<string>("TraderId1")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<int>("shipping_type")
                         .HasColumnType("int");
 
                     b.HasKey("Order_Id");
 
-                    b.HasIndex("SalesRepresentative_Id");
+                    b.HasIndex("SalesRepresentativeId1");
 
-                    b.HasIndex("TraderId");
+                    b.HasIndex("TraderId1");
 
                     b.ToTable("Orders");
                 });
@@ -567,48 +549,6 @@ namespace Shipping.Entities.Migrations
                     b.ToTable("Products");
                 });
 
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
-                {
-                    b.Property<int>("SalesRepresentative_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SalesRepresentative_Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("CompanyPercentage")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(70)
-                        .HasColumnType("nvarchar(70)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .IsRequired()
-                        .HasMaxLength(11)
-                        .HasColumnType("nvarchar(11)");
-
-                    b.Property<string>("UserName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("SalesRepresentative_Id");
-
-                    b.ToTable("SalesRepresentatives");
-                });
-
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SpecialPackage", b =>
                 {
                     b.Property<int>("Id")
@@ -626,8 +566,8 @@ namespace Shipping.Entities.Migrations
                     b.Property<double>("ShippingCost")
                         .HasColumnType("float");
 
-                    b.Property<long?>("Trader_Id")
-                        .HasColumnType("bigint");
+                    b.Property<string>("traderId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -635,18 +575,70 @@ namespace Shipping.Entities.Migrations
 
                     b.HasIndex("Goverment_Id");
 
-                    b.HasIndex("Trader_Id");
+                    b.HasIndex("traderId");
 
                     b.ToTable("SpecialPackages");
                 });
 
+            modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
+                {
+                    b.HasBaseType("Shipping.Entities.Domain.Identity.ApplicationUser");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("branchId")
+                        .HasColumnType("int");
+
+                    b.HasIndex("branchId");
+
+                    b.HasDiscriminator().HasValue("Employee");
+                });
+
+            modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
+                {
+                    b.HasBaseType("Shipping.Entities.Domain.Identity.ApplicationUser");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("CompanyPercentage")
+                        .HasColumnType("float");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(70)
+                        .HasColumnType("nvarchar(70)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("Name")
+                                .HasColumnName("SalesRepresentative_Name");
+
+                            t.Property("Password")
+                                .HasColumnName("SalesRepresentative_Password");
+                        });
+
+                    b.HasDiscriminator().HasValue("SalesRepresentative");
+                });
+
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Trader", b =>
                 {
-                    b.Property<long>("Trader_Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Trader_Id"));
+                    b.HasBaseType("Shipping.Entities.Domain.Identity.ApplicationUser");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -663,10 +655,6 @@ namespace Shipping.Entities.Migrations
                     b.Property<double>("CostPerRefusedOrder")
                         .HasColumnType("float");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
-
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -676,9 +664,16 @@ namespace Shipping.Entities.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.HasKey("Trader_Id");
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("Address")
+                                .HasColumnName("Trader_Address");
 
-                    b.ToTable("Traders");
+                            t.Property("Password")
+                                .HasColumnName("Trader_Password");
+                        });
+
+                    b.HasDiscriminator().HasValue("Trader");
                 });
 
             modelBuilder.Entity("CustomerOrder", b =>
@@ -700,7 +695,7 @@ namespace Shipping.Entities.Migrations
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.Employee", null)
                         .WithMany()
-                        .HasForeignKey("EmployeesEmployee_Id")
+                        .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -721,7 +716,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
                         .WithMany()
-                        .HasForeignKey("SalesRepresentativesSalesRepresentative_Id")
+                        .HasForeignKey("SalesRepresentativesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -802,7 +797,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
                         .WithMany()
-                        .HasForeignKey("SalesRepresentativesSalesRepresentative_Id")
+                        .HasForeignKey("SalesRepresentativesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -817,7 +812,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasOne("Shipping.Entities.Domain.Models.Trader", null)
                         .WithMany()
-                        .HasForeignKey("TradersTrader_Id")
+                        .HasForeignKey("TradersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -826,9 +821,7 @@ namespace Shipping.Entities.Migrations
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "salesPerson")
                         .WithMany("Branchs")
-                        .HasForeignKey("salesPersonSalesRepresentative_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("salesPersonId");
 
                     b.Navigation("salesPerson");
                 });
@@ -844,28 +837,15 @@ namespace Shipping.Entities.Migrations
                     b.Navigation("goverment");
                 });
 
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
-                {
-                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "branch")
-                        .WithMany("Employees")
-                        .HasForeignKey("branchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("branch");
-                });
-
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "SalesRepresentative")
                         .WithMany("Orders")
-                        .HasForeignKey("SalesRepresentative_Id");
+                        .HasForeignKey("SalesRepresentativeId1");
 
                     b.HasOne("Shipping.Entities.Domain.Models.Trader", "Trader")
                         .WithMany("Orders")
-                        .HasForeignKey("TraderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("TraderId1");
 
                     b.Navigation("SalesRepresentative");
 
@@ -884,13 +864,22 @@ namespace Shipping.Entities.Migrations
 
                     b.HasOne("Shipping.Entities.Domain.Models.Trader", "trader")
                         .WithMany()
-                        .HasForeignKey("Trader_Id");
+                        .HasForeignKey("traderId");
 
                     b.Navigation("city");
 
                     b.Navigation("goverment");
 
                     b.Navigation("trader");
+                });
+
+            modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
+                {
+                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "branch")
+                        .WithMany("Employees")
+                        .HasForeignKey("branchId");
+
+                    b.Navigation("branch");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Branch", b =>

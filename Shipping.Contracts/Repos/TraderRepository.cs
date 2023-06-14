@@ -33,7 +33,7 @@ public class TraderRepository : ITraderRepository
     }
     public async Task<Trader?> GetTraderByIdAsync(long trader_id)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.Trader_Id == trader_id);
+        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.TraderId == trader_id);
     }
 
     public async Task SaveChangesAsync()

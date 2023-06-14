@@ -31,7 +31,7 @@ public class SalesService : ISalesService
         if (sale != null)
         {
             
-            await _salesRepository.DeleteAsync(sale.SalesRepresentative_Id);
+            await _salesRepository.DeleteAsync(sale.SalesRepresentativeId);
             _salesRepository.saveChanges();
         }
        

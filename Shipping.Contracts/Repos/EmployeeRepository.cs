@@ -38,7 +38,7 @@ namespace Shipping.Repositories.Repos
 
         public async Task<Employee?> GetByid(long id)
         {
-            return await context.Employees.FirstOrDefaultAsync(e => e.Employee_Id == id);
+            return await context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
         public async Task Savechanges()

@@ -11,5 +11,5 @@ public class Branch
     public DateTime CreatedAt { get; set; }
     public bool State { get; set; }
     public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
-    public virtual SalesRepresentative salesPerson { get; set; }
+    public virtual SalesRepresentative? salesPerson { get; set; }
 }

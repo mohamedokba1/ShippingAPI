@@ -5,6 +5,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using Shipping.Services.Dtos;
+using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -16,25 +18,60 @@ namespace Shipping.API.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<ApplicationUser> _salesManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ISalesService _salesService;
 
-        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> salesManager)
+        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager,ISalesService salesService)
         {
             _configuration = configuration;
-            _salesManager = salesManager;
+            _userManager = userManager;
+            _salesService = salesService;
         }
+        [HttpPost]
+        [Route("registerSales")]
+        public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
+        {
+            var salesRep= new SalesRepresentative
+            {
+                UserName = salesRepresentative.UserName,
+                Email = salesRepresentative.Email,
+                Address = salesRepresentative.Address,
+                Name = salesRepresentative.Name,
+                PhoneNumber = salesRepresentative.PhoneNumber,
+                CompanyPercentage = salesRepresentative.CompanyPercentage
+            };
 
+            var result = await _userManager.CreateAsync(salesRep, salesRepresentative.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
+            new Claim(ClaimTypes.Name, salesRep.UserName),
+            new Claim(ClaimTypes.Role, "SalesRepresentative"),
+        };
+            var data = await _userManager.AddClaimsAsync(salesRep, claims);
+            if (!data.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
+
+            return Ok("Admin Registered Successfully");
+        }
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
         {
-            var user = await _salesManager.FindByNameAsync(credentials.Email);
+            var user = await _userManager.FindByNameAsync(credentials.Email);
             if (user == null)
             {
                 return Unauthorized();
             }
 
-            var isAuthenticated = await _salesManager.CheckPasswordAsync(user, credentials.Password);
+            var isAuthenticated = await _userManager.CheckPasswordAsync(user, credentials.Password);
             if (!isAuthenticated)
             {
                 return Unauthorized();
@@ -46,8 +83,8 @@ namespace Shipping.API.Controllers
                 new Claim(ClaimTypes.Name, user?.Email)
             };
 
-            var userRoles = await _salesManager.GetRolesAsync(user);
-            if (userRoles.Contains("trader") || userRoles.Contains("salesrepresentative") || userRoles.Contains("employee"))
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (userRoles.Contains("Trader") || userRoles.Contains("SalesRepresentative") || userRoles.Contains("Employee"))
             {
                 claimsList.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
             }
