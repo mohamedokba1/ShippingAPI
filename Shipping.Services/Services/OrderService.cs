@@ -100,7 +100,7 @@ public class OrderService : IOrderService
                 Products = OrderUpdateDto.Products,
                 shipping_type = OrderUpdateDto.shipping_type,
                 traderId = OrderUpdateDto.traderId,
-                IsDeleted = OrderUpdateDto.IsDeleted
+                //IsDeleted = OrderUpdateDto.IsDeleted
             };
             ValidateModel.ModelValidation(order);
             await orderRepository.UpdateAsync(order);

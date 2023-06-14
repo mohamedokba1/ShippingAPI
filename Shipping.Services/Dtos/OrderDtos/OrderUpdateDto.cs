@@ -5,6 +5,7 @@ namespace Shipping.Services.Dtos;
 
 public class OrderUpdateDto
 {
+    public Guid Id { get; set; }
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
     public DateTime OrderDate { get; set; }

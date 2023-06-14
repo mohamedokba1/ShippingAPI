@@ -40,7 +40,7 @@ namespace Shipping.Repositories.Repos
             Order? result = await GetByIdAsync(order.Order_Id);
             if (result is not null)
             {
-                result.IsDeleted = true;
+                //result.IsDeleted = true;
             }
         }
 
