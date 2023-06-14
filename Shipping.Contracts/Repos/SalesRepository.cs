@@ -26,9 +26,7 @@ namespace Shipping.Repositories.Repos
             
         }
 
-        
-
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(long id)
         {
             var salee = await context.Set<SalesRepresentative>().FindAsync(id);
             if (salee != null)
@@ -40,16 +38,12 @@ namespace Shipping.Repositories.Repos
 
         }
 
-
-
         public async Task<IEnumerable<SalesRepresentative>> GetAllAsync()
         {
             return await context.Set<SalesRepresentative>().ToListAsync();
         }
 
-
-
-        public async Task<SalesRepresentative?> GetByIdAsync(Guid id)
+        public async Task<SalesRepresentative?> GetByIdAsync(long id)
         {
             return await  context.Set<SalesRepresentative>().FindAsync(id);
         }
@@ -59,7 +53,7 @@ namespace Shipping.Repositories.Repos
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(Guid id ,SalesRepresentative? sale)
+        public async Task UpdateAsync(long id ,SalesRepresentative? sale)
         {
             //context.Update(sale);
             //await Task.CompletedTask;

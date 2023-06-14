@@ -24,7 +24,7 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetById(Guid id)
+        public async Task<ActionResult<OrderReadDto>> GetById(long id)
         {
             var privellage = await privellageService.GetByIdAsync(id);
             if (privellage == null)
@@ -46,7 +46,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(Guid id, PrivellageDto privellage)
+        public async Task<ActionResult> Update(long id, PrivellageDto privellage)
         {
             if (id != privellage.Id)
                 return BadRequest("Privellage is Null.");
@@ -64,7 +64,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult> Delete(long id)
         {
             var privellage = await privellageService.GetByIdAsync(id);
             if (privellage == null)

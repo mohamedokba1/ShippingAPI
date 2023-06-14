@@ -5,10 +5,10 @@ namespace Shipping.Repositories.Contracts;
 public interface ISalesRepresentativeRepository
 {
     Task AddAsync(SalesRepresentative sale);
-    Task UpdateAsync(Guid id,SalesRepresentative? sale);
-    Task DeleteAsync(Guid id);
+    Task UpdateAsync(long id,SalesRepresentative? sale);
+    Task DeleteAsync(long id);
     Task<IEnumerable<SalesRepresentative>> GetAllAsync();
-    Task<SalesRepresentative>? GetByIdAsync(Guid id);
+    Task<SalesRepresentative>? GetByIdAsync(long id);
     Task saveChanges();
 
 }

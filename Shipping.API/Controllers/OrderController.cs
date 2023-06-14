@@ -24,7 +24,7 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetById(Guid id)
+        public async Task<ActionResult<OrderReadDto>> GetById(long id)
         {
             var order = await orderService.GetByIdAsync(id);
             if (order == null)
@@ -42,11 +42,11 @@ namespace Shipping.API.Controllers
                 return BadRequest(ModelState);
             await orderService.AddAsync(order);
 
-            return CreatedAtAction(nameof(order), new { id = order.Id }, order);
+            return CreatedAtAction(nameof(order), new { id = order.Id}, order);
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(Guid id, OrderUpdateDto order)
+        public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
             if (id != order.Id)
                 return BadRequest("Order is Null.");
@@ -64,7 +64,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(Guid id)
+        public async Task<ActionResult> Delete(long id)
         {
             var order = await orderService.GetByIdAsync(id);
             if (order == null)

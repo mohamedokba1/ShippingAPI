@@ -29,7 +29,7 @@ namespace Shipping.Services.Services
 
         }
 
-        public async Task Delete(Guid id)
+        public async Task Delete(long id)
         {
              await employeeRepository.Delete(id);
         }
@@ -40,7 +40,7 @@ namespace Shipping.Services.Services
             return mapper.Map<IEnumerable<EmployeeReadDto>>(employeesfromDb);
         }
 
-        public async Task<EmployeeReadDto> GetByid(Guid id)
+        public async Task<EmployeeReadDto> GetByid(long id)
         {
             var employeefromDb = await employeeRepository.GetByid(id);
 
@@ -56,7 +56,7 @@ namespace Shipping.Services.Services
             await employeeRepository.Savechanges();
         }
 
-        public async Task Update(Guid id, EmployeeupdateDto employeeDto)
+        public async Task Update(long id, EmployeeupdateDto employeeDto)
         {
             Employee empfromDb =await employeeRepository.GetByid(id);
             if(empfromDb != null)

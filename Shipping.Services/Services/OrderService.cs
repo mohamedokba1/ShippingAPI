@@ -37,7 +37,7 @@ public class OrderService : IOrderService
             await orderRepository.SaveChangesAsync();
         }
     }
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var order = new Order
         {
@@ -63,7 +63,7 @@ public class OrderService : IOrderService
         }
         );
     }
-    public async Task<OrderReadDto> GetByIdAsync(Guid id)
+    public async Task<OrderReadDto> GetByIdAsync(long id)
     {
         var order = await orderRepository.GetByIdAsync(id);
         if (order != null)
@@ -83,7 +83,7 @@ public class OrderService : IOrderService
         }
         return null;
     }
-    public async Task UpdateAsync(OrderUpdateDto OrderUpdateDto, Guid id)
+    public async Task UpdateAsync(OrderUpdateDto OrderUpdateDto, long id)
     {
         if (OrderUpdateDto != null)
         {

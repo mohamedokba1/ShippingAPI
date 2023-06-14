@@ -25,7 +25,7 @@ namespace Shipping.Repositories.Repos
            await  context.Employees.AddAsync(employee);
         }         
 
-        public async Task Delete(Guid id)
+        public async Task Delete(long id)
         {
             var employee = GetByid(id);
              context.Remove(employee);
@@ -36,7 +36,7 @@ namespace Shipping.Repositories.Repos
             return await context.Employees.ToListAsync();
         }
 
-        public async Task<Employee?> GetByid(Guid id)
+        public async Task<Employee?> GetByid(long id)
         {
             return await context.Employees.FirstOrDefaultAsync(e => e.Employee_Id == id);
         }
@@ -46,7 +46,7 @@ namespace Shipping.Repositories.Repos
             await context.SaveChangesAsync();
         }
 
-        public async Task Update(Guid id, Employee? employee)
+        public async Task Update(long id, Employee? employee)
         {
 
         }

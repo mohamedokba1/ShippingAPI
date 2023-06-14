@@ -6,7 +6,6 @@ namespace Shipping.Entities.Domain.Models;
 public class Goverment
 {
     [Key]
-    [Column(TypeName = "int")]
     public int Goverment_Id { get; set; }
     [Required]
     public string GovermentName { get; set; } = string.Empty;

@@ -29,7 +29,7 @@ public class TraderServices : ITraderService
             return null;
     }
 
-    public async Task<bool> DeleteTraderAsync(Guid trader_id)
+    public async Task<bool> DeleteTraderAsync(long trader_id)
     {
         Trader? trader = await _traderRepository.GetTraderByIdAsync(trader_id);
         if (trader != null)
@@ -52,13 +52,13 @@ public class TraderServices : ITraderService
         return trdaersResponse;
     }
 
-    public async Task<TraderResponseDto> GetTraderByIdAsync(Guid id)
+    public async Task<TraderResponseDto> GetTraderByIdAsync(long id)
     {
         Trader? trader = await _traderRepository.GetTraderByIdAsync(id);
         return _mapper.Map<TraderResponseDto>(trader);
     }
 
-    public async Task<bool> UpdateTraderAsync(Guid traderId, TraderUpdateDto traderUpdateDto)
+    public async Task<bool> UpdateTraderAsync(long traderId, TraderUpdateDto traderUpdateDto)
     {
         Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
         if (trader != null)

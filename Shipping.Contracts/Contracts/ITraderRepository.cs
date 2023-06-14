@@ -5,7 +5,7 @@ namespace Shipping.Repositories.Contracts;
 public interface ITraderRepository
 {
     Task<IEnumerable<Trader>> GetAllTradersAsync();
-    Task<Trader?> GetTraderByIdAsync(Guid trader_id);
+    Task<Trader?> GetTraderByIdAsync(long trader_id);
     Task DeleteTraderAsync(Trader trader);
     Task<Trader?> AddTraderAsync(Trader trader);
     Task UpdateAsync(Trader trader);

@@ -18,7 +18,7 @@ namespace Shipping.Repositories.Repos
             return await _context.Set<Order>().ToListAsync();
         }
 
-        public async Task<Order?> GetByIdAsync(Guid id)
+        public async Task<Order?> GetByIdAsync(long id)
         {
             return await _context.Set<Order>().FirstOrDefaultAsync(order => order.Order_Id == id);
         }

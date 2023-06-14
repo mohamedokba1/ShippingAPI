@@ -5,9 +5,9 @@ namespace Shipping.Services.IServices
     public interface IOrderService
     {
         Task<IEnumerable<OrderReadDto>> GetAllAsync();
-        Task<OrderReadDto> GetByIdAsync(Guid id);
+        Task<OrderReadDto> GetByIdAsync(long id);
         Task AddAsync(OrderAddDto orderDto);
-        Task UpdateAsync(OrderUpdateDto orderUpdateDto, Guid id);
-        Task DeleteAsync(Guid id);
+        Task UpdateAsync(OrderUpdateDto orderUpdateDto, long id);
+        Task DeleteAsync(long id);
     }
 }

@@ -23,7 +23,7 @@ namespace Shipping.Repositories.Repos
             return await context.Set<Privellge>().ToListAsync();
         }
 
-        public async Task<Privellge> GetByIdAsync(Guid id)
+        public async Task<Privellge> GetByIdAsync(long id)
         {
             return await context.Set<Privellge>().FindAsync(id);
         }

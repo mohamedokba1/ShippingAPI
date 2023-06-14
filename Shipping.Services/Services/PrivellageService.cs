@@ -28,7 +28,7 @@ public class PrivellageService : IPrivellageService
         }
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
         var privellge = await privellageRepository.GetByIdAsync(id);
         if (privellge != null)
@@ -49,7 +49,7 @@ public class PrivellageService : IPrivellageService
         });
     }
 
-    public async Task<PrivellageDto> GetByIdAsync(Guid id)
+    public async Task<PrivellageDto> GetByIdAsync(long id)
     {
         var privellge = await privellageRepository.GetByIdAsync(id);
         if (privellge != null)
@@ -62,7 +62,7 @@ public class PrivellageService : IPrivellageService
         return null;
     }
 
-    public async Task UpdateAsync(PrivellageDto privellgeDto, Guid id)
+    public async Task UpdateAsync(PrivellageDto privellgeDto, long id)
     {
         if (privellgeDto != null)
         {

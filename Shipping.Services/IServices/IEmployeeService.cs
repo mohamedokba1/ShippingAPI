@@ -5,10 +5,10 @@ namespace Shipping.Services.IServices
     public interface IEmployeeService
     {
         Task<IEnumerable<EmployeeReadDto>> Getall();
-        Task<EmployeeReadDto> GetByid(Guid id);
+        Task<EmployeeReadDto> GetByid(long id);
         Task Add(EmployeeAddDto employee);
-        Task Update(Guid id, EmployeeupdateDto employee);
-        Task Delete(Guid id);
+        Task Update(long id, EmployeeupdateDto employee);
+        Task Delete(long id);
         Task Savechanges();
     }
 }
