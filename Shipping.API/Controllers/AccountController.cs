@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,9 +8,6 @@ using Shipping.Entities.Domain.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-=======
-﻿using Microsoft.AspNetCore.Mvc;
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
 
 namespace Shipping.API.Controllers
 {
@@ -29,11 +25,55 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        [Route("Login")]
+        [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
         {
-           
+            var user = await _salesManager.FindByNameAsync(credentials.Email);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+
+            var isAuthenticated = await _salesManager.CheckPasswordAsync(user, credentials.Password);
+            if (!isAuthenticated)
+            {
+                return Unauthorized();
+            }
+
+            var claimsList = new List<Claim> 
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user?.Email)
+            };
+
+            var userRoles = await _salesManager.GetRolesAsync(user);
+            if (userRoles.Contains("trader") || userRoles.Contains("salesrepresentative") || userRoles.Contains("employee"))
+            {
+                claimsList.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
+            }
+
+            var secretKeyString = _configuration.GetValue<string>("SecretKey");
+            var secretKeyBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
+            var secretKey = new SymmetricSecurityKey(secretKeyBytes);
+
+            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+
+            var expiryDate = DateTime.Now.AddDays(2);
+            var token = new JwtSecurityToken(
+                claims: claimsList,
+                expires: expiryDate,
+                signingCredentials: signingCredentials);
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenString = tokenHandler.WriteToken(token);
+
+            return new TokenDto
+            {
+                Token = tokenString,
+                ExpiryDate = expiryDate,
+            };
         }
+
     }
 
 }

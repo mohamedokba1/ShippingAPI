@@ -47,7 +47,7 @@ namespace Shipping.Repositories.Repos
 
 
 
-        public async Task<Product>? GetByIdAsync(Guid id)
+        public async Task<Product>? GetByIdAsync(long id)
         {
             return await context.Set<Product>().FindAsync(id);
         }
@@ -58,7 +58,7 @@ namespace Shipping.Repositories.Repos
             
         }
 
-        public async Task UpdateAsync(Guid id, Product? product)
+        public async Task UpdateAsync(long id, Product? product)
         {
 
             await saveChanges();

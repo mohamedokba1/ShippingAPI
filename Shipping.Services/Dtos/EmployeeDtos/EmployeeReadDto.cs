@@ -4,7 +4,7 @@ namespace Shipping.Services.Dtos
 {
     public record EmployeeReadDto
     {
-        public Guid Employee_Id { get; init; }
+        public long Employee_Id { get; init; }
 
         [Required]
         [StringLength(70)]

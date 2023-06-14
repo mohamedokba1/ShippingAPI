@@ -475,7 +475,7 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("CustomerId")
+                    b.Property<long>("CustomerId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CustomerName")
@@ -494,32 +494,27 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("PaymentMethod")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("ProductId")
+                    b.Property<long>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("SalesRepresentativeId")
+                    b.Property<long>("SalesRepresentativeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-                    b.Property<Guid>("TraderId")
+                    b.Property<long>("TraderId")
                         .HasColumnType("uniqueidentifier");
-=======
+
                     b.Property<int>("salesRepresentativeIdSalesRepresentative_Id")
                         .HasColumnType("int");
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
 
                     b.Property<int>("shipping_type")
                         .HasColumnType("int");
 
-<<<<<<< HEAD
-=======
                     b.Property<long>("traderIdTrader_Id")
                         .HasColumnType("bigint");
 
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
                     b.HasKey("Order_Id");
 
                     b.HasIndex("SalesRepresentativeId");

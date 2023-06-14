@@ -30,7 +30,7 @@ public class CustomerService: ICustomerService
         });
     }
 
-    public async Task<CustomerReadDto> GetByIdAsync(Guid id)
+    public async Task<CustomerReadDto> GetByIdAsync(long id)
     {
         var customer = await _customerRepository.GetByIdAsync(id);
         if (customer != null)
@@ -71,7 +71,7 @@ public class CustomerService: ICustomerService
         }
     }
 
-    public async Task UpdateAsync(CustomerUpdateDto customerUpdateDto, Guid id)
+    public async Task UpdateAsync(CustomerUpdateDto customerUpdateDto, long id)
     {
         if (customerUpdateDto != null)
         {
@@ -93,7 +93,7 @@ public class CustomerService: ICustomerService
         }
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(long id)
     {
             var customer = await _customerRepository.GetByIdAsync(id);
             if (customer != null)

@@ -361,21 +361,21 @@ namespace Shipping.Entities.Migrations
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     shipping_type = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    traderIdTrader_Id = table.Column<long>(type: "bigint", nullable: false),
-                    salesRepresentativeIdSalesRepresentative_Id = table.Column<int>(type: "int", nullable: false)
+                    Trader_Id = table.Column<long>(type: "bigint", nullable: false),
+                    SalesRepresentative_Id = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Order_Id);
                     table.ForeignKey(
                         name: "FK_Orders_SalesRepresentatives_salesRepresentativeIdSalesRepresentative_Id",
-                        column: x => x.salesRepresentativeIdSalesRepresentative_Id,
+                        column: x => x.SalesRepresentative_Id,
                         principalTable: "SalesRepresentatives",
                         principalColumn: "SalesRepresentative_Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Orders_Traders_traderIdTrader_Id",
-                        column: x => x.traderIdTrader_Id,
+                        column: x => x.Trader_Id,
                         principalTable: "Traders",
                         principalColumn: "Trader_Id",
                         onDelete: ReferentialAction.NoAction);

@@ -11,7 +11,7 @@ namespace Shipping.Services.Dtos.ProductDtos
     public class ProductUpdateDtos
     {
         [Required]
-        public Guid Product_Id { get; set; }
+        public long Product_Id { get; set; }
         [Required]
         [StringLength(50, ErrorMessage = "Product Name is not valid ")]
         public string ProductName { get; set; } = string.Empty;

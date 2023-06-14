@@ -5,10 +5,10 @@ namespace Shipping.Repositories.Contracts;
 public interface IProductRepository
 {
     Task AddAsync(Product product);
-    Task UpdateAsync(Guid id, Product? product);
+    Task UpdateAsync(long id, Product? product);
     Task DeleteAsync(Product product);
     Task <IEnumerable<Product>> GetAllAsync();
-    Task <Product>? GetByIdAsync(Guid id);
+    Task <Product>? GetByIdAsync(long id);
     Task saveChanges();
     
 }

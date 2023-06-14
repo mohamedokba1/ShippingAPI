@@ -71,12 +71,8 @@ public class OrderService : IOrderService
 
         return orderDtos;
     }
-<<<<<<< HEAD
 
-    public async Task<OrderResponseDto> GetByIdAsync(Guid id)
-=======
-    public async Task<OrderReadDto> GetByIdAsync(long id)
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
+    public async Task<OrderResponseDto> GetByIdAsync(long id)
     {
         var order = await orderRepository.GetByIdAsync(id);
         if (order != null)
@@ -118,6 +114,4 @@ public class OrderService : IOrderService
             await orderRepository.SaveChangesAsync();
         }
     }
-
-
 }

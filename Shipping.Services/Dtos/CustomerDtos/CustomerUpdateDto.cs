@@ -3,7 +3,7 @@
 namespace Shipping.Services.Dtos;
 public class CustomerUpdateDto
 {
-    public Guid CustomerId { get; set; }
+    public long CustomerId { get; set; }
 
     [Required]
     public string Name { get; set; }=string.Empty;

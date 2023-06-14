@@ -2,7 +2,7 @@
 namespace Shipping.Services.Dtos;
 public class CustomerAddDto
 {
-    public Guid CustomerId { get; set; }
+    public long CustomerId { get; set; }
 
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; }=string.Empty;

@@ -23,7 +23,7 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<CustomerReadDto>> GetCustomer(Guid id)
+        public async Task<ActionResult<CustomerReadDto>> GetCustomer(long id)
         {
             var customer = await _customerService.GetByIdAsync(id);
             if (customer == null)
@@ -50,7 +50,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateCustomer(Guid id, CustomerUpdateDto customer)
+        public async Task<ActionResult> UpdateCustomer(long id, CustomerUpdateDto customer)
         {
             if (id != customer.CustomerId)
             {
@@ -70,7 +70,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteCustomer(Guid id)
+        public async Task<ActionResult> DeleteCustomer(long id)
         {
             var ExistingCustomer = await _customerService.GetByIdAsync(id);
             if (ExistingCustomer == null)

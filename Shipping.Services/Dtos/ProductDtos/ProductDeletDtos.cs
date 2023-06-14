@@ -10,6 +10,6 @@ namespace Shipping.Services.Dtos.ProductDtos
     public class ProductDeletDtos
     {
         [Required]
-        public Guid Product_Id { get; set; }
+        public long Product_Id { get; set; }
     }
 }

@@ -16,7 +16,7 @@ public class CustomerRepository : ICustomerRepository
         return await _context.Set<Customer>().Include(o=>o.Orders).ToListAsync();
     }
 
-    public async Task<Customer>? GetByIdAsync(Guid id)
+    public async Task<Customer>? GetByIdAsync(long id)
     {
          return await _context.Set<Customer>().FindAsync(id);
     }
@@ -40,7 +40,7 @@ public class CustomerRepository : ICustomerRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task<List<Customer>> GetCustomersByIds(List<Guid> customerIds)
+    public async Task<List<Customer>> GetCustomersByIds(List<long> customerIds)
     {
         return await _context.Customers
             .Where(c => customerIds.Contains(c.Customer_Id))

@@ -5,11 +5,8 @@ namespace Shipping.Services.Dtos;
 
 public class OrderUpdateDto
 {
-<<<<<<< HEAD
     public OrderState State { get; set; } = OrderState.New;
-=======
     public long Id { get; set; }
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
     public DateTime OrderDate { get; set; }

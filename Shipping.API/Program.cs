@@ -22,42 +22,37 @@ namespace Shipping.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-<<<<<<< HEAD
-            //builder.Services.AddCors(options =>
-            //{
-            //    options.AddPolicy("Shipping", p => p.WithOrigins("http://localhost:4200")
-            //                                         .AllowAnyHeader()
-            //                                         .AllowAnyOrigin()
-            //                                         .AllowAnyMethod()
-            //                                         .WithMethods("GET", "POST", "PUT", "DELETE")
-            //                                         );
-            //});
+
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("Shipping", p => p.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin().WithOrigins("http://localhost:4200").WithMethods("PUT", "POST", "DELETE"));
-=======
+                options.AddPolicy("Shipping", p => p.AllowAnyHeader().
+                AllowAnyMethod().
+                AllowAnyOrigin().
+                WithOrigins("http://localhost:4200").
+                WithMethods("PUT", "POST", "DELETE"));
+            });
+
             #region CORS
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy(name: "AllowedOrigins",
                     builder => builder.WithOrigins("", "*"));
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
+
             });
             #endregion
 
             #region Context Configuration
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
-<<<<<<< HEAD
+
 
             
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-=======
             #endregion
 
             #region Identity
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
+
             builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {
                 options.Password.RequireUppercase = true;
@@ -70,18 +65,6 @@ namespace Shipping.API
             .AddDefaultTokenProviders();
             #endregion
 
-            //builder.Services
-            //    .AddIdentity<SalesRepresentative, IdentityRole>(options =>
-            //    {
-            //        options.Password.RequireUppercase = false;
-            //        options.Password.RequireLowercase = false;
-            //        options.Password.RequireNonAlphanumeric = false;
-            //        options.Password.RequireDigit = true;
-            //        options.Password.RequiredLength = 5;
-
-            //        options.User.RequireUniqueEmail = true;
-            //    })
-            //    .AddEntityFrameworkStores<ApplicationDbContext>();
 
             #region Authentication Scheme
 
@@ -127,11 +110,6 @@ namespace Shipping.API
             builder.Services.AddScoped<ITraderService, TraderServices>();
             #endregion 
 
-<<<<<<< HEAD
-           
-
-=======
->>>>>>> fd8e4736c771af946ab51aa18e7080e323d17591
             #region Auto Mapper
 
             builder.Services.AddAutoMapper(typeof(Program));

@@ -27,7 +27,7 @@ namespace Shipping.Services.Services
 
        
 
-        public async Task DeleteAsync(Guid id)
+        public async Task DeleteAsync(long id)
         {
             var productToDelete = await _productRepository.GetByIdAsync( id);
             if (productToDelete != null)
@@ -37,7 +37,7 @@ namespace Shipping.Services.Services
             }
         }
 
-        public  async Task<ProductReadDtos>? GetProductByIdAsync(Guid id)
+        public  async Task<ProductReadDtos>? GetProductByIdAsync(long id)
         {
             
             var productFromDB=await _productRepository.GetByIdAsync(id);
@@ -57,7 +57,7 @@ namespace Shipping.Services.Services
             return _mapper.Map<IEnumerable<ProductReadDtos>>(allProduct);
         }
 
-        public  async Task UpdateAsync(Guid id, ProductUpdateDtos product)
+        public  async Task UpdateAsync(long id, ProductUpdateDtos product)
         {
             Product productToUpdate =await  _productRepository.GetByIdAsync(id);
             if (productToUpdate != null)

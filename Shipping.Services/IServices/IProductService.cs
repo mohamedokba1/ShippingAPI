@@ -8,10 +8,10 @@ public interface IProductService
 {
     public Task<IEnumerable<ProductReadDtos>> GetProductsAsync();
     
-    public  Task<ProductReadDtos>? GetProductByIdAsync(Guid id);
+    public  Task<ProductReadDtos>? GetProductByIdAsync(long id);
     public Task AddAsync(AddProductDto product);
-    public Task UpdateAsync(Guid id,ProductUpdateDtos product);
-    public Task DeleteAsync(Guid id);
+    public Task UpdateAsync(long id,ProductUpdateDtos product);
+    public Task DeleteAsync(long id);
     
 
 }

@@ -4,7 +4,7 @@ namespace Shipping.Services.Dtos;
 
 public class TraderResponseDto
 {
-    public Guid Trader_Id { get; set; }
+    public long Trader_Id { get; set; }
     public string TraderName { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string Address { get; set; } = string.Empty;

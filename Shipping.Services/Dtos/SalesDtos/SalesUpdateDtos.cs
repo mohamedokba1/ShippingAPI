@@ -11,7 +11,7 @@ namespace Shipping.Services.Dtos.SalesDtos
     public class SalesUpdateDtos
     {
         [Key]
-        public Guid SalesRepresentative_Id { get; set; }
+        public long SalesRepresentative_Id { get; set; }
         [Required]
         [StringLength(70)]
         public string Name { get; set; } = string.Empty;

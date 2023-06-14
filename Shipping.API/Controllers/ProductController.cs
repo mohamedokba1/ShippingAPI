@@ -27,7 +27,7 @@ namespace Shipping.API.Controllers
         }
         [HttpGet]
         [Route("{id}")]
-        public async Task< ActionResult<ProductReadDtos>> GetProduct(Guid id)
+        public async Task< ActionResult<ProductReadDtos>> GetProduct(long id)
         {
             
             return Ok(await _productService.GetProductByIdAsync(id));
@@ -35,7 +35,7 @@ namespace Shipping.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> updateProduct(Guid id , ProductUpdateDtos product)
+        public async Task<ActionResult> updateProduct(long id , ProductUpdateDtos product)
         {
             
 
@@ -56,7 +56,7 @@ namespace Shipping.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult> DeleteProduct(Guid id)
+        public async Task<ActionResult> DeleteProduct(long id)
         {
         
             await _productService.DeleteAsync(id);

@@ -6,7 +6,7 @@ namespace Shipping.Services.Dtos;
 
 public class OrderResponseDto
 {
-    public Guid Id { get; set; }
+    public long Id { get; set; }
     public OrderState State { get; set; } = OrderState.New;
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]

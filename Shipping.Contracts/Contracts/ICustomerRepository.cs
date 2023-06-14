@@ -6,10 +6,10 @@ namespace Shipping.Repositories.Contracts;
 public interface ICustomerRepository
 {
     Task<IEnumerable<Customer>> GetAllAsync();
-    Task<Customer>? GetByIdAsync(Guid id);
+    Task<Customer>? GetByIdAsync(long id);
     Task AddAsync(Customer entity);
     Task UpdateAsync(Customer entity);
     Task DeleteAsync(Customer entity);
     Task SaveChangesAsync();
-    Task<List<Customer>> GetCustomersByIds(List<Guid> customerIds);
+    Task<List<Customer>> GetCustomersByIds(List<long> customerIds);
 }

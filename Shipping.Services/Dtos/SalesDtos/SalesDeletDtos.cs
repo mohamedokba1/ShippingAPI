@@ -11,7 +11,7 @@ namespace Shipping.Services.Dtos.SalesDtos
     public class SalesDeletDtos
     {
         [Key]
-        public Guid SalesRepresentative_Id { get; set; }
+        public long SalesRepresentative_Id { get; set; }
         
     }
 }
