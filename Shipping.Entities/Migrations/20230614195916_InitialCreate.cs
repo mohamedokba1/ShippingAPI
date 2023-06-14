@@ -167,7 +167,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -187,7 +187,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -205,13 +205,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -231,7 +231,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,7 +252,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -273,7 +273,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.GovermentId,
                         principalTable: "Goverments",
                         principalColumn: "Goverment_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -295,7 +295,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.salesPersonSalesRepresentative_Id,
                         principalTable: "SalesRepresentatives",
                         principalColumn: "SalesRepresentative_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -313,13 +313,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.GovermentsGoverment_Id,
                         principalTable: "Goverments",
                         principalColumn: "Goverment_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_GovermentSalesRepresentative_SalesRepresentatives_SalesRepresentativesSalesRepresentative_Id",
                         column: x => x.SalesRepresentativesSalesRepresentative_Id,
                         principalTable: "SalesRepresentatives",
                         principalColumn: "SalesRepresentative_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -337,13 +337,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.PrivellgesPrivellge_Id,
                         principalTable: "Privellges",
                         principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PrivellgeSalesRepresentative_SalesRepresentatives_SalesRepresentativesSalesRepresentative_Id",
                         column: x => x.SalesRepresentativesSalesRepresentative_Id,
                         principalTable: "SalesRepresentatives",
                         principalColumn: "SalesRepresentative_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -361,24 +361,26 @@ namespace Shipping.Entities.Migrations
                     CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     shipping_type = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    Trader_Id = table.Column<long>(type: "bigint", nullable: false),
-                    SalesRepresentative_Id = table.Column<int>(type: "int", nullable: false)
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
+                    TraderId = table.Column<long>(type: "bigint", nullable: false),
+                    SalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false),
+                    SalesRepresentative_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Order_Id);
                     table.ForeignKey(
-                        name: "FK_Orders_SalesRepresentatives_salesRepresentativeIdSalesRepresentative_Id",
+                        name: "FK_Orders_SalesRepresentatives_SalesRepresentative_Id",
                         column: x => x.SalesRepresentative_Id,
                         principalTable: "SalesRepresentatives",
-                        principalColumn: "SalesRepresentative_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "SalesRepresentative_Id");
                     table.ForeignKey(
-                        name: "FK_Orders_Traders_traderIdTrader_Id",
-                        column: x => x.Trader_Id,
+                        name: "FK_Orders_Traders_TraderId",
+                        column: x => x.TraderId,
                         principalTable: "Traders",
                         principalColumn: "Trader_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -396,13 +398,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.PrivellgesPrivellge_Id,
                         principalTable: "Privellges",
                         principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_PrivellgeTrader_Traders_TradersTrader_Id",
                         column: x => x.TradersTrader_Id,
                         principalTable: "Traders",
                         principalColumn: "Trader_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -412,9 +414,9 @@ namespace Shipping.Entities.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ShippingCost = table.Column<double>(type: "float", nullable: false),
-                    Goverment_Id = table.Column<int>(type: "int", nullable: false),
-                    City_Id = table.Column<int>(type: "int", nullable: false),
-                    Trader_Id = table.Column<long>(type: "bigint", nullable: false)
+                    Goverment_Id = table.Column<int>(type: "int", nullable: true),
+                    City_Id = table.Column<int>(type: "int", nullable: true),
+                    Trader_Id = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -423,20 +425,17 @@ namespace Shipping.Entities.Migrations
                         name: "FK_SpecialPackages_Cities_City_Id",
                         column: x => x.City_Id,
                         principalTable: "Cities",
-                        principalColumn: "City_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "City_Id");
                     table.ForeignKey(
                         name: "FK_SpecialPackages_Goverments_Goverment_Id",
                         column: x => x.Goverment_Id,
                         principalTable: "Goverments",
-                        principalColumn: "Goverment_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Goverment_Id");
                     table.ForeignKey(
                         name: "FK_SpecialPackages_Traders_Trader_Id",
                         column: x => x.Trader_Id,
                         principalTable: "Traders",
-                        principalColumn: "Trader_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        principalColumn: "Trader_Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -460,7 +459,7 @@ namespace Shipping.Entities.Migrations
                         column: x => x.branchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -478,13 +477,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.CustomersCustomer_Id,
                         principalTable: "Customers",
                         principalColumn: "Customer_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CustomerOrder_Orders_OrdersOrder_Id",
                         column: x => x.OrdersOrder_Id,
                         principalTable: "Orders",
                         principalColumn: "Order_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -502,13 +501,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.OrdersOrder_Id,
                         principalTable: "Orders",
                         principalColumn: "Order_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_OrderProduct_Products_ProductsProduct_Id",
                         column: x => x.ProductsProduct_Id,
                         principalTable: "Products",
                         principalColumn: "Product_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -526,13 +525,13 @@ namespace Shipping.Entities.Migrations
                         column: x => x.EmployeesEmployee_Id,
                         principalTable: "Employees",
                         principalColumn: "Employee_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_EmployeePrivellge_Privellges_PrivillagesPrivellge_Id",
                         column: x => x.PrivillagesPrivellge_Id,
                         principalTable: "Privellges",
                         principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -605,14 +604,14 @@ namespace Shipping.Entities.Migrations
                 column: "ProductsProduct_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_salesRepresentativeIdSalesRepresentative_Id",
+                name: "IX_Orders_SalesRepresentative_Id",
                 table: "Orders",
-                column: "salesRepresentativeIdSalesRepresentative_Id");
+                column: "SalesRepresentative_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_traderIdTrader_Id",
+                name: "IX_Orders_TraderId",
                 table: "Orders",
-                column: "traderIdTrader_Id");
+                column: "TraderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivellgeSalesRepresentative_SalesRepresentativesSalesRepresentative_Id",
