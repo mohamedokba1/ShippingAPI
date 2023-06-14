@@ -24,10 +24,7 @@ public class TraderServices : ITraderService
         Trader newtrader = _mapper.Map<Trader>(traderAddDto);
         Trader? addedTrader =  await _traderRepository.AddTraderAsync(newtrader);
         if (addedTrader != null)
-        {
-            TraderResponseDto addedTraderResponse = _mapper.Map<TraderResponseDto>(addedTrader);
-            return addedTraderResponse;
-        }
+            return _mapper.Map<TraderResponseDto>(addedTrader);
         else
             return null;
     }
@@ -41,9 +38,7 @@ public class TraderServices : ITraderService
             return true;
         }
         else
-        {
             return false;
-        }
     }
 
     public async Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync()

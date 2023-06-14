@@ -18,12 +18,22 @@ namespace Shipping.API
             builder.Services.AddControllers();
 
             builder.Services.AddEndpointsApiExplorer();
-
             builder.Services.AddSwaggerGen();
+
+            #region CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowedOrigins",
+                    builder => builder.WithOrigins("", "*"));
+            });
+            #endregion
+
+            #region Context Configuration
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
-            
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            #endregion
+
+            #region Identity
             builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {
                 options.Password.RequireUppercase = true;
@@ -34,6 +44,7 @@ namespace Shipping.API
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+            #endregion
 
             #region Authentication Scheme
 
@@ -66,10 +77,6 @@ namespace Shipping.API
             builder.Services.AddScoped<ITraderService, TraderServices>();
             #endregion 
 
-            #region register services
-            builder.Services.AddScoped<IProductService, ProductService>();
-            #endregion
-
             #region Auto Mapper
 
             builder.Services.AddAutoMapper(typeof(Program));
@@ -84,6 +91,7 @@ namespace Shipping.API
             }
 
             app.UseHttpsRedirection();
+            app.UseCors("AllowedOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
