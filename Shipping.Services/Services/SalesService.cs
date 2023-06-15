@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.SalesDtos;
 using Shipping.Services.IServices;
+using System.Security.Claims;
 
 namespace Shipping.Services.Services;
 
@@ -11,18 +14,41 @@ public class SalesService : ISalesService
 {
     private readonly ISalesRepresentativeRepository _salesRepository;
     private readonly IMapper _mapper;
-    public SalesService(ISalesRepresentativeRepository salesRepository,IMapper mapper)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public SalesService(ISalesRepresentativeRepository salesRepository,IMapper mapper, UserManager<ApplicationUser> userManager)
     {
         _salesRepository = salesRepository;
         _mapper = mapper;
+        _userManager = userManager;
     }
-    public Task AddAsync(AddSalesDto sale)
+    public async Task AddAsync(AddSalesDto sale)
     {
-        var AddedSale=_mapper.Map<SalesRepresentative>(sale);
-       _salesRepository.AddAsync(AddedSale);
-        _salesRepository.saveChanges();
-        return Task.CompletedTask;
+        var user = new ApplicationUser
+        {
+            UserName = sale.UserName,
+            Email = sale.Email,
+            PhoneNumber = sale.PhoneNumber
+        };
+
+        var salesRep = new SalesRepresentative
+        {
+            CompanyPercentage = sale.CompanyPercentage,
+            User = user
+        };
+        var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id),
+        new Claim(ClaimTypes.Name, user.UserName),
+        new Claim(ClaimTypes.Role, "SalesRepresentative")
+    };
+
+        var claimResult = await _userManager.AddClaimsAsync(user, claims);
+       
+        await _userManager.CreateAsync(user, sale.Password);
+        await _salesRepository.AddAsync(salesRep);
+        await _salesRepository.saveChanges();
     }
+
 
     public async Task DeleteAsync(string id)
     {

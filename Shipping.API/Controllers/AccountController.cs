@@ -27,42 +27,13 @@ namespace Shipping.API.Controllers
         }
         [HttpPost]
         [Route("registerSales")]
-        //public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
-        //{
-        //    var user = new ApplicationUser
-        //    {
-        //        UserName= salesRepresentative.UserName,
-        //        Email = salesRepresentative.Email,
-        //        PhoneNumber = salesRepresentative.PhoneNumber
-        //    };
-        //    var salesRep = new SalesRepresentative
-        //    {
-        //        CompanyPercentage = salesRepresentative.CompanyPercentage,
-        //        User = user
+        public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
+        {
+            await _salesService.AddAsync(salesRepresentative);
+            return Ok("SalesRepresentative Registered Successfully");
+        }
 
-        //    };
-        //    var result = await _userManager.CreateAsync(user , salesRepresentative.Password);
-        //    var SalesObj = _salesService.AddAsync(salesRepresentative);
 
-        //    if (!result.Succeeded)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
-
-        //    var claims = new List<Claim>
-        //{
-        //    new Claim(ClaimTypes.NameIdentifier, salesRep.User.Id),
-        //    new Claim(ClaimTypes.Name, salesRep.User.UserName),
-        //    new Claim(ClaimTypes.Role, "SalesRepresentative"),
-        //};
-        //    var data = await _userManager.AddClaimsAsync(SalesObj, claims);
-        //    if (!data.Succeeded)
-        //    {
-        //        return BadRequest(result.Errors);
-        //    }
-
-        //    return Ok("SalesRepresentative Registered Successfully");
-        //}
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
