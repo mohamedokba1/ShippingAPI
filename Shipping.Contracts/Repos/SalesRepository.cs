@@ -16,11 +16,9 @@ namespace Shipping.Repositories.Repos
     public class SalesRepository : ISalesRepresentativeRepository
     {
         private readonly ApplicationDbContext context;
-        private readonly UserManager<ApplicationUser> _userManager;
-        public SalesRepository(ApplicationDbContext _context, UserManager<ApplicationUser> userManager) 
+        public SalesRepository(ApplicationDbContext _context) 
         { 
             context = _context;
-            _userManager = userManager;
         }
 
         public async Task AddAsync(SalesRepresentative sale)
@@ -49,14 +47,12 @@ namespace Shipping.Repositories.Repos
 
         public async Task<SalesRepresentative?> GetByIdAsync(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            return user as SalesRepresentative;
+            return await context.Set<SalesRepresentative>().FirstOrDefaultAsync(temp => temp.User.Id == id);
         }
 
         public async Task<SalesRepresentative?> GetByEmailAsync(string email)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-            return user as SalesRepresentative;
+            return await context.Set<SalesRepresentative>().FirstOrDefaultAsync(temp => temp.User.Email == email);
         }
         public async Task saveChanges()
         {

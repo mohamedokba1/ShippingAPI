@@ -63,7 +63,8 @@ public class OrderService : IOrderService
             CustomerName = o.Customers.FirstOrDefault().Name,
             Government=o.Customers.FirstOrDefault().Name,
             City=o.Customers.FirstOrDefault().Name,
-            UserId = o.UserId,
+            SalesRepresentativeId = o.SalesRepresentative.User.Id,
+            TraderId=o.Trader.User.Id
 
         }).ToList();
 

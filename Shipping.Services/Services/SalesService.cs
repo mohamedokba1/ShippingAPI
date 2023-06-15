@@ -31,7 +31,7 @@ public class SalesService : ISalesService
         if (sale != null)
         {
             
-            await _salesRepository.DeleteAsync(sale.Id);
+            await _salesRepository.DeleteAsync(sale.User.Id);
             _salesRepository.saveChanges();
         }
        
@@ -77,13 +77,13 @@ public class SalesService : ISalesService
         var salToUpdate=await _salesRepository.GetByIdAsync(id);
         if(salToUpdate != null)
         {    
-            salToUpdate.PhoneNumber = sale.PhoneNumber;
+            salToUpdate.User.PhoneNumber = sale.PhoneNumber;
             salToUpdate.Address = sale.Address;
-            salToUpdate.Email=sale.Email;
-            salToUpdate.Name = sale.Name;
-            salToUpdate.Password = sale.Password;
+            salToUpdate.User.Email = sale.Email;
+            salToUpdate.User.UserName = sale.Name;
+            salToUpdate.User.PasswordHash = sale.Password;
             salToUpdate.CompanyPercentage = sale.CompanyPercentage;
-            salToUpdate.UserName = sale.UserName;
+            salToUpdate.User.UserName = sale.UserName;
             await _salesRepository.saveChanges();
         }
         

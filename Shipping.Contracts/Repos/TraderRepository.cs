@@ -10,11 +10,9 @@ namespace Shipping.Repositories.Repos;
 public class TraderRepository : ITraderRepository
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<ApplicationUser> _userManager;
     public TraderRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
-        _userManager = userManager;
     }
     public async Task<Trader?> AddTraderAsync(Trader trader)
     {
@@ -37,7 +35,7 @@ public class TraderRepository : ITraderRepository
     }
     public async Task<Trader?> GetTraderByIdAsync(string trader_id)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.TraderId == trader_id);
+        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.User.Id == trader_id);
     }
 
     public async Task SaveChangesAsync()
@@ -58,6 +56,6 @@ public class TraderRepository : ITraderRepository
 
     public async Task<IEnumerable<Trader>> GetFilteredTradersAsync(string searchSrting)
     {
-        return await _context.Set<Trader>().Where(trader => trader.TraderName.Contains(searchSrting)).ToListAsync();
+        return await _context.Set<Trader>().Where(trader => trader.User.UserName.Contains(searchSrting)).ToListAsync();
     }
 }

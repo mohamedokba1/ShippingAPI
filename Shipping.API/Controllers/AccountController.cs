@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
+using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
@@ -26,35 +27,35 @@ namespace Shipping.API.Controllers
         }
         [HttpPost]
         [Route("registerSales")]
-        public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
-        {
-            var salesRep = new SalesRepresentative
-            {
-                UserName = salesRepresentative.UserName,
-                Email = salesRepresentative.Email,
-                PhoneNumber = salesRepresentative.PhoneNumber
-            };
+        //public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
+        //{
+        //    var salesRep = new SalesRepresentative
+        //    {
+        //        UserName = salesRepresentative.UserName,
+        //        Email = salesRepresentative.Email,
+        //        PhoneNumber = salesRepresentative.PhoneNumber
+        //    };
 
-            var result = await _userManager.CreateAsync(salesRep, salesRepresentative.Password);
-            if (!result.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
+        //    var result = await _userManager.CreateAsync(salesRep, salesRepresentative.Password);
+        //    if (!result.Succeeded)
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
 
-            var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
-            new Claim(ClaimTypes.Name, salesRep.UserName),
-            new Claim(ClaimTypes.Role, "SalesRepresentative"),
-        };
-            var data = await _userManager.AddClaimsAsync(salesRep, claims);
-            if (!data.Succeeded)
-            {
-                return BadRequest(result.Errors);
-            }
+        //    var claims = new List<Claim>
+        //{
+        //    new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
+        //    new Claim(ClaimTypes.Name, salesRep.User.UserName),
+        //    new Claim(ClaimTypes.Role, "SalesRepresentative"),
+        //};
+        //    var data = await _userManager.AddClaimsAsync(salesRep, claims);
+        //    if (!data.Succeeded)
+        //    {
+        //        return BadRequest(result.Errors);
+        //    }
 
-            return Ok("SalesRepresentative Registered Successfully");
-        }
+        //    return Ok("SalesRepresentative Registered Successfully");
+        //}
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)

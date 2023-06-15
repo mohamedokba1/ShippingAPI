@@ -6,16 +6,11 @@ namespace Shipping.Entities.Domain.Models;
 
 public class Employee
 {
-    [Required]
-    [StringLength(70)]
-    public string Name { get; set; } = string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string UserName { get; set; } = string.Empty;
-    [Required]
-    [DataType(DataType.Password)]
-    public string Password { get; set; } = string.Empty;
+    [Key]
+    public long EmployeeId { get; set; }
     public bool IsActive { get; set; }
 
     public virtual ICollection<Privellge> Privillages { get; set; } = new List<Privellge>();
+    public virtual ApplicationUser User { get; set; } = new ApplicationUser();
     public virtual Branch? branch { get; set; }
 }

@@ -17,12 +17,10 @@ namespace Shipping.Repositories.Repos
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly ApplicationDbContext context;
-        private readonly UserManager<ApplicationUser> _userManager;
         
-        public EmployeeRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public EmployeeRepository(ApplicationDbContext context)
         {
             this.context = context;
-            this._userManager = userManager;
         }
         public async  Task Add(Employee employee)
         {
@@ -42,8 +40,7 @@ namespace Shipping.Repositories.Repos
 
         public async Task<Employee?> GetByid(string id)
         {
-            var user = await _userManager.FindByIdAsync(id);
-            return user as Employee;
+            return await context.Set<Employee>().FirstOrDefaultAsync(temp => temp.User.Id == id);
         }
 
         public async Task Savechanges()
