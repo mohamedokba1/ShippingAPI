@@ -33,6 +33,7 @@ public class SalesService : ISalesService
         var salesRep = new SalesRepresentative
         {
             CompanyPercentage = sale.CompanyPercentage,
+            Address=sale.Address,
             User = user
         };
         var claims = new List<Claim>
