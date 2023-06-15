@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
+using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 
@@ -8,9 +10,11 @@ namespace Shipping.Repositories.Repos;
 public class TraderRepository : ITraderRepository
 {
     private readonly ApplicationDbContext _context;
-    public TraderRepository(ApplicationDbContext context)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public TraderRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
     {
         _context = context;
+        _userManager = userManager;
     }
     public async Task<Trader?> AddTraderAsync(Trader trader)
     {
@@ -31,9 +35,10 @@ public class TraderRepository : ITraderRepository
     {
         return await _context.Set<Trader>().ToListAsync();
     }
-    public async Task<Trader?> GetTraderByIdAsync(long trader_id)
+    public async Task<Trader?> GetTraderByIdAsync(string trader_id)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.TraderId == trader_id);
+        var user = await _userManager.FindByIdAsync(trader_id);
+        return user as Trader;
     }
 
     public async Task SaveChangesAsync()

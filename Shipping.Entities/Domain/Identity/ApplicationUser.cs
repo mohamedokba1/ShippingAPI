@@ -7,7 +7,4 @@ namespace Shipping.Entities.Domain.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-    public long TraderId { get; set; }
-    public long EmployeeId { get; set; }
-    public long SalesRepresentativeId { get; set; }
 }

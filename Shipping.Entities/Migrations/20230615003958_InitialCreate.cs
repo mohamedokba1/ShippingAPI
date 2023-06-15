@@ -165,9 +165,6 @@ namespace Shipping.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TraderId = table.Column<long>(type: "bigint", nullable: false),
-                    EmployeeId = table.Column<long>(type: "bigint", nullable: false),
-                    SalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -183,6 +180,7 @@ namespace Shipping.Entities.Migrations
                     CostPerRefusedOrder = table.Column<double>(type: "float", nullable: true),
                     CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -201,6 +199,11 @@ namespace Shipping.Entities.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -309,24 +312,29 @@ namespace Shipping.Entities.Migrations
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     CustomerId = table.Column<long>(type: "bigint", nullable: false),
-                    TraderId = table.Column<long>(type: "bigint", nullable: false),
-                    TraderId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false),
-                    SalesRepresentativeId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SalesRepresentativeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TraderId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Orders", x => x.Order_Id);
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_SalesRepresentativeId1",
-                        column: x => x.SalesRepresentativeId1,
+                        name: "FK_Orders_AspNetUsers_SalesRepresentativeId",
+                        column: x => x.SalesRepresentativeId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Orders_AspNetUsers_TraderId1",
-                        column: x => x.TraderId1,
+                        name: "FK_Orders_AspNetUsers_TraderId",
+                        column: x => x.TraderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -505,6 +513,11 @@ namespace Shipping.Entities.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_ApplicationUserId",
+                table: "AspNetUsers",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_branchId",
                 table: "AspNetUsers",
                 column: "branchId");
@@ -547,14 +560,19 @@ namespace Shipping.Entities.Migrations
                 column: "ProductsProduct_Id");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_SalesRepresentativeId1",
+                name: "IX_Orders_SalesRepresentativeId",
                 table: "Orders",
-                column: "SalesRepresentativeId1");
+                column: "SalesRepresentativeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_TraderId1",
+                name: "IX_Orders_TraderId",
                 table: "Orders",
-                column: "TraderId1");
+                column: "TraderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivellgeSalesRepresentative_SalesRepresentativesId",

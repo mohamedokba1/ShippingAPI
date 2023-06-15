@@ -24,14 +24,14 @@ public class SalesService : ISalesService
         return Task.CompletedTask;
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task DeleteAsync(string id)
     {
         
         var sale = await _salesRepository.GetByIdAsync(id);
         if (sale != null)
         {
             
-            await _salesRepository.DeleteAsync(sale.SalesRepresentativeId);
+            await _salesRepository.DeleteAsync(sale.Id);
             _salesRepository.saveChanges();
         }
        
@@ -44,7 +44,7 @@ public class SalesService : ISalesService
         return _mapper.Map<IEnumerable<SalesReadDtos>>(sales);
     }
 
-    public async Task<SalesReadDtos> GetSaleByIdAsync(long id)
+    public async Task<SalesReadDtos> GetSaleByIdAsync(string id)
     {
         var sale = await _salesRepository.GetByIdAsync(id);
         if(sale != null)
@@ -58,7 +58,21 @@ public class SalesService : ISalesService
         }
     }
 
-    public async Task UpdateAsync(long id,SalesUpdateDtos sale)
+    public async Task<SalesReadDtos> GetSaleByEmailAsync(string email)
+    {
+        var sale = await _salesRepository.GetByEmailAsync(email);
+        if (sale != null)
+        {
+            return _mapper.Map<SalesReadDtos>(sale);
+
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public async Task UpdateAsync(string id,SalesUpdateDtos sale)
     {
         var salToUpdate=await _salesRepository.GetByIdAsync(id);
         if(salToUpdate != null)

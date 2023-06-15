@@ -28,7 +28,7 @@ namespace Shipping.API.Controllers
         [HttpGet]
         [Route("GetById/{id}")]
 
-        public async Task<ActionResult<EmployeeReadDto>> GetById(long id) 
+        public async Task<ActionResult<EmployeeReadDto>> GetById(string id) 
         { 
             EmployeeReadDto? employeeReadDto= await employeeService.GetByid(id);    
             if (employeeReadDto == null)
@@ -59,7 +59,7 @@ namespace Shipping.API.Controllers
         [HttpDelete]
         [Route("Delete")]
 
-        public async Task<ActionResult> Delete(long id) 
+        public async Task<ActionResult> Delete(string id) 
         { 
            await employeeService.Delete(id);
             return NoContent();
@@ -68,7 +68,7 @@ namespace Shipping.API.Controllers
         [HttpPut]
         [Route("update/{id}")]
 
-        public async Task<ActionResult> Update(long id , EmployeeupdateDto employeeupdateDto)
+        public async Task<ActionResult> Update(string id , EmployeeupdateDto employeeupdateDto)
         {
            await employeeService.Update(id, employeeupdateDto);
             return NoContent();

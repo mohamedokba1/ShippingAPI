@@ -31,8 +31,7 @@ public class OrderReadDto
     public string Government { get; set; } = string.Empty;
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType ShippingType { get; set; }
-    public long TraderId { get; set; }
-    public long SalesRepresentativeId { get; set; }
+    public string UserId { get; set; }
     public ICollection<CustomerReadDto>? Customers { get; set; }
 
 }

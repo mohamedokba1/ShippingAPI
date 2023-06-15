@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
+using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using System;
@@ -15,17 +17,19 @@ namespace Shipping.Repositories.Repos
     public class EmployeeRepository : IEmployeeRepository
     {
         private readonly ApplicationDbContext context;
-
-        public EmployeeRepository(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+        
+        public EmployeeRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             this.context = context;
+            this._userManager = userManager;
         }
         public async  Task Add(Employee employee)
         {
            await  context.Employees.AddAsync(employee);
         }         
 
-        public async Task Delete(long id)
+        public async Task Delete(string id)
         {
             var employee = GetByid(id);
              context.Remove(employee);
@@ -36,9 +40,10 @@ namespace Shipping.Repositories.Repos
             return await context.Employees.ToListAsync();
         }
 
-        public async Task<Employee?> GetByid(long id)
+        public async Task<Employee?> GetByid(string id)
         {
-            return await context.Employees.FirstOrDefaultAsync(e => e.EmployeeId == id);
+            var user = await _userManager.FindByIdAsync(id);
+            return user as Employee;
         }
 
         public async Task Savechanges()
@@ -46,7 +51,7 @@ namespace Shipping.Repositories.Repos
             await context.SaveChangesAsync();
         }
 
-        public async Task Update(long id, Employee? employee)
+        public async Task Update(string id, Employee? employee)
         {
 
         }

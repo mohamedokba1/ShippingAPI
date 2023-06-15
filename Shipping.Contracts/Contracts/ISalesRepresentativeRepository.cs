@@ -5,10 +5,11 @@ namespace Shipping.Repositories.Contracts;
 public interface ISalesRepresentativeRepository
 {
     Task AddAsync(SalesRepresentative sale);
-    Task UpdateAsync(long id,SalesRepresentative? sale);
-    Task DeleteAsync(long id);
+    Task UpdateAsync(string id,SalesRepresentative? sale);
+    Task DeleteAsync(string id);
     Task<IEnumerable<SalesRepresentative>> GetAllAsync();
-    Task<SalesRepresentative>? GetByIdAsync(long id);
+    Task<SalesRepresentative>? GetByIdAsync(string id);
+    Task<SalesRepresentative?> GetByEmailAsync(string email);
     Task saveChanges();
 
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shipping.Entities.Domain.Identity;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
@@ -36,9 +37,6 @@ public class Order
     public long CustomerId { get; set; }
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
 
-    public long TraderId { get; set; }
-    public virtual Trader? Trader { get; set; }
-
-    public long SalesRepresentativeId { get; set; }
-    public virtual SalesRepresentative? SalesRepresentative { get; set; }
+    public string UserId { get; set; }
+    public virtual ApplicationUser? User { get; set; }
 }
