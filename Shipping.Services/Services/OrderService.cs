@@ -52,7 +52,6 @@ public class OrderService : IOrderService
 
         var orderDtos = orders.Select(o => new OrderReadDto
         {
-            OrderId = o.Order_Id,
             State = o.State,
             CompanyBranch = o.CompanyBranch,
             PaymentMethod = o.PaymentMethod,
@@ -60,12 +59,12 @@ public class OrderService : IOrderService
             ExtraWeightCost = o.ExtraWeightCost,
             OrderDate = o.OrderDate,
             ShippingType = o.shipping_type,
-            //TraderId = o.TraderId,
-            //SalesRepresentativeId = o.SalesRepresentativeId,
-            //CustomerId = o.Customers.FirstOrDefault().Customer_Id,
-            //CustomerName = o.Customers.FirstOrDefault().Name,
-            //Government=o.Customers.FirstOrDefault().Goverment,
-            //City=o.Customers.FirstOrDefault().City,
+            CustomerId = o.Customers.FirstOrDefault().Customer_Id,
+            CustomerName = o.Customers.FirstOrDefault().Name,
+            Government=o.Customers.FirstOrDefault().Name,
+            City=o.Customers.FirstOrDefault().Name,
+            UserId = o.UserId,
+
         }).ToList();
 
 

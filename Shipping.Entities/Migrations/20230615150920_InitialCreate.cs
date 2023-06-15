@@ -168,12 +168,61 @@ namespace Shipping.Entities.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+<<<<<<<< HEAD:Shipping.Entities/Migrations/20230615150920_InitialCreate.cs
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+========
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUsers",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: true),
+                    branchId = table.Column<int>(type: "int", nullable: true),
+                    SalesRepresentative_Name = table.Column<string>(type: "nvarchar(70)", maxLength: 70, nullable: true),
+                    SalesRepresentative_Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CompanyPercentage = table.Column<double>(type: "float", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TraderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Trader_Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Trader_Password = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CostPerRefusedOrder = table.Column<double>(type: "float", nullable: true),
+                    CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ContactNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: true),
+                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_ApplicationUserId",
+                        column: x => x.ApplicationUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+>>>>>>>> 41a6dfe90cfb5b0216906d721a099eb2d9736e27:Shipping.Entities/Migrations/20230615003958_InitialCreate.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -227,6 +276,7 @@ namespace Shipping.Entities.Migrations
                 {
                     TraderId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+<<<<<<<< HEAD:Shipping.Entities/Migrations/20230615150920_InitialCreate.cs
                     TraderName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -235,15 +285,128 @@ namespace Shipping.Entities.Migrations
                     CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactNumber = table.Column<string>(type: "nvarchar(11)", maxLength: 11, nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+========
+                    State = table.Column<int>(type: "int", nullable: false),
+                    PaymentMethod = table.Column<int>(type: "int", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ExtraWeightCost = table.Column<double>(type: "float", nullable: false),
+                    CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    DefaultCost = table.Column<double>(type: "float", nullable: false),
+                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    shipping_type = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    SalesRepresentativeId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TraderId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+>>>>>>>> 41a6dfe90cfb5b0216906d721a099eb2d9736e27:Shipping.Entities/Migrations/20230615003958_InitialCreate.cs
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Traders", x => x.TraderId);
                     table.ForeignKey(
+<<<<<<<< HEAD:Shipping.Entities/Migrations/20230615150920_InitialCreate.cs
                         name: "FK_Traders_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+========
+                        name: "FK_Orders_AspNetUsers_SalesRepresentativeId",
+                        column: x => x.SalesRepresentativeId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_TraderId",
+                        column: x => x.TraderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PrivellgeSalesRepresentative",
+                columns: table => new
+                {
+                    PrivellgesPrivellge_Id = table.Column<int>(type: "int", nullable: false),
+                    SalesRepresentativesId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrivellgeSalesRepresentative", x => new { x.PrivellgesPrivellge_Id, x.SalesRepresentativesId });
+                    table.ForeignKey(
+                        name: "FK_PrivellgeSalesRepresentative_AspNetUsers_SalesRepresentativesId",
+                        column: x => x.SalesRepresentativesId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrivellgeSalesRepresentative_Privellges_PrivellgesPrivellge_Id",
+                        column: x => x.PrivellgesPrivellge_Id,
+                        principalTable: "Privellges",
+                        principalColumn: "Privellge_Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PrivellgeTrader",
+                columns: table => new
+                {
+                    PrivellgesPrivellge_Id = table.Column<int>(type: "int", nullable: false),
+                    TradersId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PrivellgeTrader", x => new { x.PrivellgesPrivellge_Id, x.TradersId });
+                    table.ForeignKey(
+                        name: "FK_PrivellgeTrader_AspNetUsers_TradersId",
+                        column: x => x.TradersId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PrivellgeTrader_Privellges_PrivellgesPrivellge_Id",
+                        column: x => x.PrivellgesPrivellge_Id,
+                        principalTable: "Privellges",
+                        principalColumn: "Privellge_Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SpecialPackages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ShippingCost = table.Column<double>(type: "float", nullable: false),
+                    Goverment_Id = table.Column<int>(type: "int", nullable: true),
+                    City_Id = table.Column<int>(type: "int", nullable: true),
+                    traderId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SpecialPackages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SpecialPackages_AspNetUsers_traderId",
+                        column: x => x.traderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_SpecialPackages_Cities_City_Id",
+                        column: x => x.City_Id,
+                        principalTable: "Cities",
+                        principalColumn: "City_Id");
+                    table.ForeignKey(
+                        name: "FK_SpecialPackages_Goverments_Goverment_Id",
+                        column: x => x.Goverment_Id,
+                        principalTable: "Goverments",
+                        principalColumn: "Goverment_Id");
+>>>>>>>> 41a6dfe90cfb5b0216906d721a099eb2d9736e27:Shipping.Entities/Migrations/20230615003958_InitialCreate.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -575,6 +738,19 @@ namespace Shipping.Entities.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+<<<<<<<< HEAD:Shipping.Entities/Migrations/20230615150920_InitialCreate.cs
+========
+                name: "IX_AspNetUsers_ApplicationUserId",
+                table: "AspNetUsers",
+                column: "ApplicationUserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_branchId",
+                table: "AspNetUsers",
+                column: "branchId");
+
+            migrationBuilder.CreateIndex(
+>>>>>>>> 41a6dfe90cfb5b0216906d721a099eb2d9736e27:Shipping.Entities/Migrations/20230615003958_InitialCreate.cs
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
@@ -630,6 +806,14 @@ namespace Shipping.Entities.Migrations
                 name: "IX_Orders_TraderId",
                 table: "Orders",
                 column: "TraderId");
+<<<<<<<< HEAD:Shipping.Entities/Migrations/20230615150920_InitialCreate.cs
+========
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_UserId",
+                table: "Orders",
+                column: "UserId");
+>>>>>>>> 41a6dfe90cfb5b0216906d721a099eb2d9736e27:Shipping.Entities/Migrations/20230615003958_InitialCreate.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_PrivellgeSalesRepresentative_SalesRepresentativesSalesRepresentativeId",

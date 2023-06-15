@@ -6,9 +6,6 @@ namespace Shipping.Entities.Domain.Models;
 
 public class Trader
 {
-    [Key]
-    [Column(TypeName="bigint")]
-    public long TraderId { get; set; }
     [Required]
     [StringLength(50)]
     public string TraderName { get; set; } = string.Empty;
@@ -27,6 +24,7 @@ public class Trader
     [Required]
     [StringLength(11)]
     public string ContactNumber { get; set; } = string.Empty;
+    public virtual ApplicationUser? ApplicationUser { get; set; }
 
     public virtual ApplicationUser User { get; set; } = new ApplicationUser();
     public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();

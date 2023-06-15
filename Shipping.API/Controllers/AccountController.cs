@@ -28,7 +28,7 @@ namespace Shipping.API.Controllers
         [Route("registerSales")]
         public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
         {
-            var salesRep = new ApplicationUser
+            var salesRep = new SalesRepresentative
             {
                 UserName = salesRepresentative.UserName,
                 Email = salesRepresentative.Email,
@@ -42,24 +42,24 @@ namespace Shipping.API.Controllers
             }
 
             var claims = new List<Claim>
-            {
-                 new Claim(ClaimTypes.NameIdentifier, salesRep.UserName),
-                 new Claim(ClaimTypes.Name, salesRep.UserName),
-                new Claim(ClaimTypes.Role, "SalesRepresentative"),
-            };
+        {
+            new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
+            new Claim(ClaimTypes.Name, salesRep.UserName),
+            new Claim(ClaimTypes.Role, "SalesRepresentative"),
+        };
             var data = await _userManager.AddClaimsAsync(salesRep, claims);
             if (!data.Succeeded)
             {
                 return BadRequest(result.Errors);
             }
 
-            return Ok("Admin Registered Successfully");
+            return Ok("SalesRepresentative Registered Successfully");
         }
         [HttpPost]
         [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
         {
-            var user = await _userManager.FindByNameAsync(credentials.Email);
+            var user = await _userManager.FindByEmailAsync(credentials.Email);
             if (user == null)
             {
                 return Unauthorized();
@@ -83,17 +83,21 @@ namespace Shipping.API.Controllers
                 claimsList.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
             }
 
-            var secretKeyString = _configuration.GetValue<string>("SecretKey");
-            var secretKeyBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
-            var secretKey = new SymmetricSecurityKey(secretKeyBytes);
 
-            var signingCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
+            var secretKeyString = _configuration.GetValue<string>("SecretKey");
+            var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
+            var secretKey = new SymmetricSecurityKey(secretyKeyInBytes);
+
+
+            var signingCredentials = new SigningCredentials(secretKey,
+                SecurityAlgorithms.HmacSha256Signature);
 
             var expiryDate = DateTime.Now.AddDays(2);
             var token = new JwtSecurityToken(
                 claims: claimsList,
                 expires: expiryDate,
                 signingCredentials: signingCredentials);
+
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenString = tokenHandler.WriteToken(token);

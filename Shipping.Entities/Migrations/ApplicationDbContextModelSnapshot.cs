@@ -17,7 +17,7 @@ namespace Shipping.Entities.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.5")
+                .HasAnnotation("ProductVersion", "7.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -508,17 +508,20 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("State")
                         .HasColumnType("int");
 
-                    b.Property<long?>("TraderId")
+                    b.Property<long>("TraderId")
                         .HasColumnType("bigint");
+
+                    b.Property<string>("TraderId1")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("shipping_type")
                         .HasColumnType("int");
 
                     b.HasKey("Order_Id");
 
-                    b.HasIndex("SalesRepresentativeId");
+                    b.HasIndex("SalesRepresentativeId1");
 
-                    b.HasIndex("TraderId");
+                    b.HasIndex("TraderId1");
 
                     b.ToTable("Orders");
                 });
@@ -653,6 +656,9 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("CompanyBranch")
                         .HasColumnType("nvarchar(max)");
 
@@ -677,8 +683,10 @@ namespace Shipping.Entities.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
+                    b.ToTable("AspNetUsers", t =>
+                        {
+                            t.Property("Address")
+                                .HasColumnName("Trader_Address");
 
                     b.HasKey("TraderId");
 
@@ -865,17 +873,21 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
                 {
-                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "SalesRepresentative")
+                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
                         .WithMany("Orders")
                         .HasForeignKey("SalesRepresentativeId");
 
-                    b.HasOne("Shipping.Entities.Domain.Models.Trader", "Trader")
+                    b.HasOne("Shipping.Entities.Domain.Models.Trader", null)
                         .WithMany("Orders")
                         .HasForeignKey("TraderId");
 
-                    b.Navigation("SalesRepresentative");
+                    b.HasOne("Shipping.Entities.Domain.Identity.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Trader");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
@@ -924,6 +936,15 @@ namespace Shipping.Entities.Migrations
                     b.Navigation("SalesRepresentativeId");
 
                     b.Navigation("TraderId");
+                });
+
+            modelBuilder.Entity("Shipping.Entities.Domain.Models.Trader", b =>
+                {
+                    b.HasOne("Shipping.Entities.Domain.Identity.ApplicationUser", "ApplicationUser")
+                        .WithMany()
+                        .HasForeignKey("ApplicationUserId");
+
+                    b.Navigation("ApplicationUser");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Branch", b =>

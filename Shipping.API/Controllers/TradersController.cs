@@ -25,7 +25,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(long id)
+        public async Task<IActionResult> GetById(string id)
         {
            TraderResponseDto? response = await _traderService.GetTraderByIdAsync(id);
            if(response == null)
@@ -76,7 +76,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut("{traderId}")]
-        public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
+        public async Task<IActionResult> UpdateTrader(string traderId, TraderUpdateDto traderUpdateDto)
         {
             bool isUpdated = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
             if(isUpdated)
@@ -89,7 +89,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete("{traderId}")]
-        public async Task<IActionResult> DeleteTrader(long traderId)
+        public async Task<IActionResult> DeleteTrader(string traderId)
         {
             TraderResponseDto? traderResponse = await _traderService.GetTraderByIdAsync(traderId);
             if(traderResponse == null) return NotFound();

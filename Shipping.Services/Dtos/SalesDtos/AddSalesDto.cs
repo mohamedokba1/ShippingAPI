@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 namespace Shipping.Services.Dtos;
 public class AddSalesDto
 {
-    [Key]
-    public long SalesRepresentative_Id { get; set; }
     [Required]
     [StringLength(70)]
     public string Name { get; set; } = string.Empty;
