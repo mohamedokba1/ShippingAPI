@@ -29,14 +29,21 @@ namespace Shipping.API.Controllers
         [Route("registerSales")]
         //public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
         //{
-        //    var salesRep = new SalesRepresentative
+        //    var user = new ApplicationUser
         //    {
-        //        UserName = salesRepresentative.UserName,
+        //        UserName= salesRepresentative.UserName,
         //        Email = salesRepresentative.Email,
         //        PhoneNumber = salesRepresentative.PhoneNumber
         //    };
+        //    var salesRep = new SalesRepresentative
+        //    {
+        //        CompanyPercentage = salesRepresentative.CompanyPercentage,
+        //        User = user
 
-        //    var result = await _userManager.CreateAsync(salesRep, salesRepresentative.Password);
+        //    };
+        //    var result = await _userManager.CreateAsync(user , salesRepresentative.Password);
+        //    var SalesObj = _salesService.AddAsync(salesRepresentative);
+
         //    if (!result.Succeeded)
         //    {
         //        return BadRequest(result.Errors);
@@ -44,11 +51,11 @@ namespace Shipping.API.Controllers
 
         //    var claims = new List<Claim>
         //{
-        //    new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
+        //    new Claim(ClaimTypes.NameIdentifier, salesRep.User.Id),
         //    new Claim(ClaimTypes.Name, salesRep.User.UserName),
         //    new Claim(ClaimTypes.Role, "SalesRepresentative"),
         //};
-        //    var data = await _userManager.AddClaimsAsync(salesRep, claims);
+        //    var data = await _userManager.AddClaimsAsync(SalesObj, claims);
         //    if (!data.Succeeded)
         //    {
         //        return BadRequest(result.Errors);
