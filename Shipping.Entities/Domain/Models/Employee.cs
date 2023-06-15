@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
-public class Employee:ApplicationUser
+public class Employee
 {
     [Key]
     [Column(TypeName = "bigint")]
@@ -20,6 +20,7 @@ public class Employee:ApplicationUser
     public string Password { get; set; } = string.Empty;
     public bool IsActive { get; set; }
 
+    public virtual ApplicationUser User { get; set; } = new ApplicationUser();
     public virtual ICollection<Privellge> Privillages { get; set; } = new List<Privellge>();
     public virtual Branch? branch { get; set; }
 }

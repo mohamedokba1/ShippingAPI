@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.IServices;
 using Shipping.Services.Dtos;
+using Microsoft.EntityFrameworkCore;
 
 namespace Shipping.API.Controllers
 {
@@ -9,9 +10,11 @@ namespace Shipping.API.Controllers
     public class TradersController : ControllerBase
     {
         private readonly ITraderService _traderService;
-        public TradersController(ITraderService traderService)
+        private readonly ILogger<TradersController> _logger;
+        public TradersController(ITraderService traderService, ILogger<TradersController> logger)
         {
             _traderService = traderService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -30,11 +33,42 @@ namespace Shipping.API.Controllers
            return Ok(response);
         }
 
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
+        {
+            var traders = _traderService.GetTradersPaginated();
+            _logger.LogError("traders", traders);
+            int totalRecords = await traders.CountAsync();
+
+            List<TraderResponseDto>? listOfTrsders = await traders
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+            PaginationResponse<TraderResponseDto> result =
+                new PaginationResponse<TraderResponseDto>()
+                {
+                    Data = listOfTrsders,
+                    PageNo = paginationParameters.PageNumber,
+                    PageSize = paginationParameters.PageSize,
+                    TotalRecords = totalRecords
+                };
+            return Ok(result);
+        }
+
+        [HttpGet("filtered")]
+        public async Task<IActionResult> GetFilteredTraders([FromQuery]string searchString)
+        {
+            if(string.IsNullOrEmpty(searchString) || string.IsNullOrWhiteSpace(searchString)) {
+                return BadRequest();
+            }
+            IEnumerable<TraderResponseDto>? traders = await _traderService.GetFilteredTradersAsync(searchString);
+            return Ok(traders?.ToList());
+        }
         [HttpPost]
         public async Task<IActionResult> Addtrader(TraderAddDto traderAddDto)
         {
             TraderResponseDto? response = await _traderService.AddTraderAsync(traderAddDto);
-            var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port ?? -1, "/api/traders/" + response?.Trader_Id.ToString());
+            var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port ?? -1, "/api/traders/" + response?.TraderId.ToString());
             string createdUri = uriBuilder.ToString();
             if(response == null)
                 return Problem();

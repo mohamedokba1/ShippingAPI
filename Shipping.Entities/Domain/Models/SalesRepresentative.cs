@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
-public class SalesRepresentative:ApplicationUser
+public class SalesRepresentative
 {
     [Key]
     [Column(TypeName = "int")]
@@ -26,6 +26,7 @@ public class SalesRepresentative:ApplicationUser
     [EmailAddress(ErrorMessage = "Entered Email is invalid")]
     public string Email { get; set; } = string.Empty;
 
+    public virtual ApplicationUser User { get; set; } = new ApplicationUser();
     public virtual ICollection<Goverment> Goverments { get; set; } = new HashSet<Goverment>();
     public virtual ICollection<Branch> Branchs { get; set; } = new HashSet<Branch>();
     public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();

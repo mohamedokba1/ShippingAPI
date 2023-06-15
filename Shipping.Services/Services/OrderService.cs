@@ -60,12 +60,12 @@ public class OrderService : IOrderService
             ExtraWeightCost = o.ExtraWeightCost,
             OrderDate = o.OrderDate,
             ShippingType = o.shipping_type,
-            TraderId = o.TraderId,
-            SalesRepresentativeId = o.SalesRepresentativeId,
-            CustomerId = o.Customers.FirstOrDefault().Customer_Id,
-            CustomerName = o.Customers.FirstOrDefault().Name,
-            Government=o.Customers.FirstOrDefault().Goverment,
-            City=o.Customers.FirstOrDefault().City,
+            //TraderId = o.TraderId,
+            //SalesRepresentativeId = o.SalesRepresentativeId,
+            //CustomerId = o.Customers.FirstOrDefault().Customer_Id,
+            //CustomerName = o.Customers.FirstOrDefault().Name,
+            //Government=o.Customers.FirstOrDefault().Goverment,
+            //City=o.Customers.FirstOrDefault().City,
         }).ToList();
 
 

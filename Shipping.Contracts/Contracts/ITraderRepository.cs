@@ -10,4 +10,6 @@ public interface ITraderRepository
     Task<Trader?> AddTraderAsync(Trader trader);
     Task UpdateAsync(Trader trader);
     Task SaveChangesAsync();
+    IQueryable<Trader> GetTradersPaginated();
+    Task<IEnumerable<Trader>> GetFilteredTradersAsync(string searchSrting);
 }

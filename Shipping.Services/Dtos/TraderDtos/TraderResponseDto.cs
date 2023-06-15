@@ -4,7 +4,7 @@ namespace Shipping.Services.Dtos;
 
 public class TraderResponseDto
 {
-    public long Trader_Id { get; set; }
+    public long TraderId { get; set; }
     public string TraderName { get; set; } = string.Empty;
     public string? Email { get; set; }
     public string Address { get; set; } = string.Empty;
@@ -12,7 +12,6 @@ public class TraderResponseDto
     public double CostPerRefusedOrder { get; set; }
     public string? CompanyBranch { get; set; }
     public string ContactNumber { get; set; } = string.Empty;
-    public bool IsDeleted { get; set; }
-    public ICollection<OrderResponseDto> Orders { get; set; }
-    public ICollection<Privellge> Privellges { get; set; }
+    //public ICollection<OrderResponseDto> Orders { get; set; }
+    //public ICollection<Privellge> Privellges { get; set; }
 }

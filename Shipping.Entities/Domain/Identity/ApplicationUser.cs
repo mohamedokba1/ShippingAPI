@@ -1,13 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+using Shipping.Entities.Domain.Models;
 
 namespace Shipping.Entities.Domain.Identity;
 
 public class ApplicationUser : IdentityUser
 {
-    public long TraderId { get; set; }
-    public long EmployeeId { get; set; }
-    public long SalesRepresentativeId { get; set; }
+    public ICollection<Trader> TraderId { get; set; } = new HashSet<Trader>();
+    public ICollection<Employee> EmployeeId { get; set; } = new HashSet<Employee>();
+    public ICollection<SalesRepresentative> SalesRepresentativeId { get; set; } = new HashSet<SalesRepresentative>();
 }

@@ -38,8 +38,11 @@ public class MappingProfile : Profile
         CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
         CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
-        CreateMap<SalesUpdateDtos, SalesRepresentative>().ForMember(dest => dest.SalesRepresentativeId, src => src.MapFrom(src => src.SalesRepresentative_Id)).ReverseMap();
+        //CreateMap<SalesUpdateDtos, SalesRepresentative>().ForMember(dest => dest.SalesRepresentativeId, src => src.MapFrom(src => src.SalesRepresentative_Id)).ReverseMap();
 
-
+        CreateMap<OrderResponseDto, Order>()
+            .ReverseMap();
+        CreateMap<OrderAddDto, Order>().ReverseMap();
+        CreateMap<OrderUpdateDto, Order>().ReverseMap();
     }
 }

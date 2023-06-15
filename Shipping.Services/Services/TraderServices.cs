@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using AutoMapper.Configuration;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
@@ -68,5 +70,22 @@ public class TraderServices : ITraderService
             return true;
         }
         else { return false; }
+    }
+
+    public IQueryable<TraderResponseDto> GetTradersPaginated()
+    {
+        IQueryable traders = _traderRepository.GetTradersPaginated();
+        return traders.ProjectTo<TraderResponseDto>(_mapper.ConfigurationProvider);
+    }
+
+    public async Task<IEnumerable<TraderResponseDto>> GetFilteredTradersAsync(string searchString)
+    {
+        IEnumerable<Trader>? traders =  await _traderRepository.GetFilteredTradersAsync(searchString);
+        List<TraderResponseDto> trdaersResponse = new List<TraderResponseDto>();
+        foreach (Trader trader in traders)
+        {
+            trdaersResponse.Add(_mapper.Map<TraderResponseDto>(trader));
+        }
+        return trdaersResponse;
     }
 }

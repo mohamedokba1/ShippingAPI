@@ -9,4 +9,6 @@ public interface ITraderService
     Task<TraderResponseDto?> AddTraderAsync(TraderAddDto traderAddDto);
     Task<bool> UpdateTraderAsync(long trader_id, TraderUpdateDto traderUpdateDto);
     Task<bool> DeleteTraderAsync(long trader_id);
+    IQueryable<TraderResponseDto> GetTradersPaginated();
+    Task<IEnumerable<TraderResponseDto>> GetFilteredTradersAsync(string searchString);
 }

@@ -31,9 +31,9 @@ public class TraderRepository : ITraderRepository
     {
         return await _context.Set<Trader>().ToListAsync();
     }
-    public async Task<Trader?> GetTraderByIdAsync(long trader_id)
+    public async Task<Trader?> GetTraderByIdAsync(long traderId)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.TraderId == trader_id);
+        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.TraderId == traderId);
     }
 
     public async Task SaveChangesAsync()
@@ -45,5 +45,15 @@ public class TraderRepository : ITraderRepository
     {
         _context.Set<Trader>().Update(trader);
         await Task.CompletedTask;
+    }
+
+    public IQueryable<Trader> GetTradersPaginated()
+    {
+        return _context.Set<Trader>().AsQueryable();
+    }
+
+    public async Task<IEnumerable<Trader>> GetFilteredTradersAsync(string searchSrting)
+    {
+        return await _context.Set<Trader>().Where(trader => trader.TraderName.Contains(searchSrting)).ToListAsync();
     }
 }

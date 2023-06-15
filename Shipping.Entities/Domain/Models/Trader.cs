@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
 
-public class Trader:ApplicationUser
+public class Trader
 {
     [Key]
     [Column(TypeName="bigint")]
@@ -28,6 +28,7 @@ public class Trader:ApplicationUser
     [StringLength(11)]
     public string ContactNumber { get; set; } = string.Empty;
 
+    public virtual ApplicationUser User { get; set; } = new ApplicationUser();
     public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
     public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
 }

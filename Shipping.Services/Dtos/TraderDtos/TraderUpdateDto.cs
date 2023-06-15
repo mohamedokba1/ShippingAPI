@@ -4,7 +4,6 @@ namespace Shipping.Services.Dtos;
 
 public class TraderUpdateDto
 {
-
     [Required(ErrorMessage = "{0} can not be blank")]
     [StringLength(50)]
     public string TraderName { get; set; } = string.Empty;

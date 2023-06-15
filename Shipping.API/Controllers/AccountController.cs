@@ -1,10 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
-using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
@@ -21,7 +18,7 @@ namespace Shipping.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISalesService _salesService;
 
-        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager,ISalesService salesService)
+        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService)
         {
             _configuration = configuration;
             _userManager = userManager;
@@ -31,14 +28,11 @@ namespace Shipping.API.Controllers
         [Route("registerSales")]
         public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
         {
-            var salesRep= new SalesRepresentative
+            var salesRep = new ApplicationUser
             {
                 UserName = salesRepresentative.UserName,
                 Email = salesRepresentative.Email,
-                Address = salesRepresentative.Address,
-                Name = salesRepresentative.Name,
-                PhoneNumber = salesRepresentative.PhoneNumber,
-                CompanyPercentage = salesRepresentative.CompanyPercentage
+                PhoneNumber = salesRepresentative.PhoneNumber
             };
 
             var result = await _userManager.CreateAsync(salesRep, salesRepresentative.Password);
@@ -48,11 +42,11 @@ namespace Shipping.API.Controllers
             }
 
             var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, salesRep.Name),
-            new Claim(ClaimTypes.Name, salesRep.UserName),
-            new Claim(ClaimTypes.Role, "SalesRepresentative"),
-        };
+            {
+                 new Claim(ClaimTypes.NameIdentifier, salesRep.UserName),
+                 new Claim(ClaimTypes.Name, salesRep.UserName),
+                new Claim(ClaimTypes.Role, "SalesRepresentative"),
+            };
             var data = await _userManager.AddClaimsAsync(salesRep, claims);
             if (!data.Succeeded)
             {
@@ -77,7 +71,7 @@ namespace Shipping.API.Controllers
                 return Unauthorized();
             }
 
-            var claimsList = new List<Claim> 
+            var claimsList = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user?.Email)
