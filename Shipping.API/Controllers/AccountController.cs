@@ -18,15 +18,11 @@ namespace Shipping.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISalesService _salesService;
-        private readonly ITraderService _traderService;
-        private readonly IEmployeeService _employeeService;
-        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService,ITraderService traderService, IEmployeeService employeeService)
+        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService)
         {
             _configuration = configuration;
             _userManager = userManager;
             _salesService = salesService;
-            _traderService = traderService;
-            _employeeService = employeeService;
         }
         [HttpPost]
         [Route("registerSales")]
@@ -34,20 +30,6 @@ namespace Shipping.API.Controllers
         {
             await _salesService.AddAsync(salesRepresentative);
             return Ok("SalesRepresentative Registered Successfully");
-        }
-        [HttpPost]
-        [Route("registerTrader")]
-        public async Task<ActionResult> RegisterTrader(TraderAddDto trader)
-        {
-            await _traderService.AddTraderAsync(trader);
-            return Ok("Trader Registered Successfully");
-        }
-        [HttpPost]
-        [Route("registerEmployee")]
-        public async Task<ActionResult> RegisterEmployee(EmployeeAddDto employee)
-        {
-            await _employeeService.Add(employee);
-            return Ok("Employee Registered Successfully");
         }
 
         [HttpPost]

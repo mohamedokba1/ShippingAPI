@@ -94,38 +94,4 @@ public class TraderServices : ITraderService
         }
         return trdaersResponse;
     }
-
-    public async Task AddTraderAsync2(TraderAddDto traderAddDto)
-    {
-
-            var user = new ApplicationUser
-            {
-                UserName = traderAddDto.TraderName,
-                Email = traderAddDto.Email,
-                PhoneNumber = traderAddDto.ContactNumber,
-                PasswordHash = traderAddDto.Password
-            };
-
-            var Trader = new Trader
-            {
-                CompanyBranch = traderAddDto.CompanyBranch,
-                CostPerRefusedOrder = traderAddDto.CostPerRefusedOrder,
-                Address = traderAddDto.Address,
-                User = user
-            };
-            var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.Role, "Trader")
-        };
-
-            var claimResult = await _userManager.AddClaimsAsync(user, claims);
-
-            await _userManager.CreateAsync(user, Trader.User.PasswordHash);
-            await _traderRepository.AddTraderAsync(Trader);
-            await _traderRepository.SaveChangesAsync();
-
-
-    }
 }
