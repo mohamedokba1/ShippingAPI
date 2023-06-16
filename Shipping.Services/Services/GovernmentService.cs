@@ -59,12 +59,18 @@ namespace Shipping.Services.Services
 
         public  async Task Update(int id, GovermentUpdateDto govermentdto)
         {
-            Goverment goverment = await govermentRepository.GetByid(id); 
-            if (goverment != null)
+            Goverment governmentToUpdate = await govermentRepository.GetByid(id);
+            if (governmentToUpdate != null)
             {
-                goverment =mapper.Map<Goverment>(govermentdto);
+                mapper.Map(govermentdto, governmentToUpdate);
+                await govermentRepository.Savechanges();
 
-                await govermentRepository.Update(id, goverment);
+
+                //governmentToUpdate.GovermentName = govermentdto.GovermentName;
+                //governmentToUpdate.State = govermentdto.State;
+                
+
+
             }
 
         }
