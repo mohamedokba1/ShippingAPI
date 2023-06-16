@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 
@@ -10,17 +8,14 @@ namespace Shipping.Repositories.Repos;
 public class TraderRepository : ITraderRepository
 {
     private readonly ApplicationDbContext _context;
-    public TraderRepository(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+    public TraderRepository(ApplicationDbContext context)
     {
         _context = context;
     }
-    public async Task<Trader?> AddTraderAsync(Trader trader)
+    public async Task AddTraderAsync(Trader trader)
     {
-        _context.Set<Trader>().Add(trader);
-        int result = await _context.SaveChangesAsync();
-        if(result == 1)
-            return trader;
-        return null;
+        await _context.Set<Trader>().AddAsync(trader);
+        await _context.SaveChangesAsync();
     }
 
     public async Task DeleteTraderAsync(Trader trader)
@@ -33,9 +28,9 @@ public class TraderRepository : ITraderRepository
     {
         return await _context.Set<Trader>().ToListAsync();
     }
-    public async Task<Trader?> GetTraderByIdAsync(string trader_id)
+    public async Task<Trader?> GetTraderByIdAsync(long traderId)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(temp => temp.User.Id == trader_id);
+        return await _context.Set<Trader>().FirstOrDefaultAsync(trader => trader.TraderId == traderId);
     }
 
     public async Task SaveChangesAsync()
@@ -56,6 +51,6 @@ public class TraderRepository : ITraderRepository
 
     public async Task<IEnumerable<Trader>> GetFilteredTradersAsync(string searchSrting)
     {
-        return await _context.Set<Trader>().Where(trader => trader.User.UserName.Contains(searchSrting)).ToListAsync();
+        return await _context.Set<Trader>().Where(trader => trader.UserName.Contains(searchSrting)).ToListAsync();
     }
 }

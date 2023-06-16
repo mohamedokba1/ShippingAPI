@@ -8,6 +8,7 @@ using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Shipping.Services.Dtos.AccountDtos;
 
 namespace Shipping.API.Controllers
 {
@@ -18,12 +19,18 @@ namespace Shipping.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISalesService _salesService;
+        private readonly ITraderService _traderService;
 
-        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService)
+        public AccountController(
+            IConfiguration configuration,
+            UserManager<ApplicationUser> userManager,
+            ISalesService salesService,
+            ITraderService traderService)
         {
             _configuration = configuration;
             _userManager = userManager;
             _salesService = salesService;
+            _traderService = traderService;
         }
         [HttpPost]
         [Route("registerSales")]
@@ -52,7 +59,7 @@ namespace Shipping.API.Controllers
 
             var claimsList = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user?.Email)
             };
 

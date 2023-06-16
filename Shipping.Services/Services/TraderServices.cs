@@ -7,6 +7,9 @@ using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using Shipping.Services.Validations;
 using System.ComponentModel.DataAnnotations;
+using Shipping.Entities.Domain.Identity;
+using Microsoft.AspNetCore.Identity;
+using Shipping.Services.Dtos.AccountDtos;
 
 namespace Shipping.Services.Services;
 
@@ -14,29 +17,71 @@ public class TraderServices : ITraderService
 {
     private readonly ITraderRepository _traderRepository;
     private readonly IMapper _mapper;
-    public TraderServices(ITraderRepository traderRepository, IMapper mapper)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public TraderServices(
+        ITraderRepository traderRepository,
+        IMapper mapper,
+        UserManager<ApplicationUser> userManager)
     {
         _traderRepository = traderRepository;
         _mapper = mapper;
+        _userManager = userManager;
     }
-
-    public async Task<TraderResponseDto?> AddTraderAsync(TraderAddDto traderAddDto)
+    public async Task<List<ValidationResult>?> AddUserAndTrader(TraderAddDto traderAddDto)
     {
         List<ValidationResult>? validationResult = ValidateModel.ModelValidation(traderAddDto);
-        Trader newtrader = _mapper.Map<Trader>(traderAddDto);
-        Trader? addedTrader =  await _traderRepository.AddTraderAsync(newtrader);
-        if (addedTrader != null)
-            return _mapper.Map<TraderResponseDto>(addedTrader);
+        if(validationResult?.Count == 0)
+        {
+            ApplicationUser? checkuserEmail = await _userManager.FindByEmailAsync(traderAddDto.Email);
+            if (checkuserEmail is null)
+            {
+                ApplicationUser? checkUserName = await _userManager.FindByNameAsync(traderAddDto.UserName);
+                if (checkUserName is null)
+                {
+                    ApplicationUser user = _mapper.Map<ApplicationUser>(traderAddDto);
+                    IdentityResult result = await _userManager.CreateAsync(user, traderAddDto.Password);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ValidationResult err = new ValidationResult(error.Description);
+                            validationResult.Add(err);
+                        }
+                        return validationResult;
+                    }
+                    await _userManager.AddToRoleAsync(user, "trader");
+                    ApplicationUser? addedUser = await _userManager.FindByEmailAsync(traderAddDto.Email);
+                    traderAddDto.User = addedUser;
+                }
+                else
+                {
+                    validationResult.Add(new ValidationResult("usre name is already exist"));
+                    return validationResult;
+                }
+            }
+            else
+            {
+                validationResult.Add(new ValidationResult("Email is already exist"));
+                return validationResult;
+            }
+                
+            await _traderRepository.AddTraderAsync(_mapper.Map<TraderAddDto, Trader>(traderAddDto));
+            return validationResult;
+        }
         else
-            return null;
+            return validationResult;
+        
     }
 
-    public async Task<bool> DeleteTraderAsync(string trader_id)
+    public async Task<bool> DeleteTraderAsync(long trader_id)
     {
         Trader? trader = await _traderRepository.GetTraderByIdAsync(trader_id);
         if (trader != null)
         {
             await _traderRepository.DeleteTraderAsync(trader);
+            ApplicationUser? user = await _userManager.FindByEmailAsync(trader.Email);
+            if (user != null)
+                await _userManager.DeleteAsync(user);
             return true;
         }
         else
@@ -54,22 +99,27 @@ public class TraderServices : ITraderService
         return trdaersResponse;
     }
 
-    public async Task<TraderResponseDto> GetTraderByIdAsync(string id)
+    public async Task<TraderResponseDto> GetTraderByIdAsync(long id)
     {
         Trader? trader = await _traderRepository.GetTraderByIdAsync(id);
         return _mapper.Map<TraderResponseDto>(trader);
     }
 
-    public async Task<bool> UpdateTraderAsync(string traderId, TraderUpdateDto traderUpdateDto)
+    public async Task<List<ValidationResult>?> UpdateTraderAsync(long traderId, TraderUpdateDto traderUpdateDto)
     {
-        Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
-        if (trader != null)
+        List<ValidationResult>? validationResults = ValidateModel.ModelValidation(traderUpdateDto);
+        if (validationResults?.Count == 0)
         {
-            _mapper.Map(traderUpdateDto, trader);
-            await _traderRepository.SaveChangesAsync();
-            return true;
+            Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
+            if (trader != null)
+            {
+                _mapper.Map(traderUpdateDto, trader);
+                await _traderRepository.SaveChangesAsync();
+            }
+            return validationResults;
         }
-        else { return false; }
+        else
+            return validationResults;
     }
 
     public IQueryable<TraderResponseDto> GetTradersPaginated()
@@ -88,4 +138,6 @@ public class TraderServices : ITraderService
         }
         return trdaersResponse;
     }
+
+ 
 }

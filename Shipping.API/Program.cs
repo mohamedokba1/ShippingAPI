@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
@@ -113,6 +114,7 @@ namespace Shipping.API
             builder.Services.AddAutoMapper(typeof(Program));
 
             #endregion
+
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
