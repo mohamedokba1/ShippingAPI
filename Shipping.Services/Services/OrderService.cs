@@ -50,26 +50,41 @@ public class OrderService : IOrderService
     {
         var orders = await orderRepository.GetAllAsync();
 
-        var orderDtos = orders.Select(o => new OrderReadDto
+        if (orders == null)
         {
-            State = o.State,
-            CompanyBranch = o.CompanyBranch,
-            PaymentMethod = o.PaymentMethod,
-            DefaultCost = o.DefaultCost,
-            ExtraWeightCost = o.ExtraWeightCost,
-            OrderDate = o.OrderDate,
-            ShippingType = o.shipping_type,
-            CustomerId = o.Customers.FirstOrDefault().Customer_Id,
-            CustomerName = o.Customers.FirstOrDefault().Name,
-            Government=o.Customers.FirstOrDefault().Name,
-            City=o.Customers.FirstOrDefault().Name,
-            SalesRepresentativeId = o.SalesRepresentative.User.Id,
-            TraderId=o.Trader.User.Id
+            return null;
+        }
 
-        }).ToList();
+        var orderReadDtos = new List<OrderReadDto>();
 
+        foreach (var order in orders)
+        {
+            foreach (var customer in order.Customers)
+            {
+                var orderReadDto = new OrderReadDto
+                {
+                    OrderId = order.Order_Id,
+                    State = order.State,
+                    PaymentMethod = order.PaymentMethod,
+                    OrderDate = order.OrderDate,
+                    ExtraWeightCost = order.ExtraWeightCost,
+                    CompanyBranch = order.CompanyBranch,
+                    DefaultCost = order.DefaultCost,
+                    CustomerId = customer.Customer_Id,
+                    City = customer.City,
+                    Government = customer.Goverment,
+                    CustomerName = customer.Name,
+                    ShippingType = order.shipping_type,
+                    TraderId = order.TraderId,
+                    SalesRepresentativeId = order.SalesRepresentativeId
+                };
 
-        return orderDtos;
+                orderReadDtos.Add(orderReadDto);
+            }
+        }
+
+        return orderReadDtos;
+
     }
 
     public async Task<OrderResponseDto> GetByIdAsync(long id)

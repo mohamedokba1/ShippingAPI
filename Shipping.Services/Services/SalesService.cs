@@ -27,12 +27,14 @@ public class SalesService : ISalesService
         {
             UserName = sale.UserName,
             Email = sale.Email,
-            PhoneNumber = sale.PhoneNumber
+            PhoneNumber = sale.PhoneNumber,
+            PasswordHash=sale.Password
         };
 
         var salesRep = new SalesRepresentative
         {
             CompanyPercentage = sale.CompanyPercentage,
+            Address=sale.Address,
             User = user
         };
         var claims = new List<Claim>
@@ -65,7 +67,6 @@ public class SalesService : ISalesService
 
     public async Task<IEnumerable<SalesReadDtos>> GetAllSalesAsync()
     {
-        
         var sales= await _salesRepository.GetAllAsync();
         return _mapper.Map<IEnumerable<SalesReadDtos>>(sales);
     }
@@ -84,20 +85,17 @@ public class SalesService : ISalesService
         }
     }
 
-    public async Task<SalesReadDtos> GetSaleByEmailAsync(string email)
+    public async Task<long> GetSalesRepresentativeIdByEmail(string email)
     {
-        var sale = await _salesRepository.GetByEmailAsync(email);
-        if (sale != null)
-        {
-            return _mapper.Map<SalesReadDtos>(sale);
+        var salesRepresentative = await _salesRepository.GetByEmailAsync(email);
 
-        }
-        else
+        if (salesRepresentative == null)
         {
-            return null;
+            throw new Exception("Sales Representative not found.");
         }
+
+        return salesRepresentative.SalesRepresentativeId;
     }
-
     public async Task UpdateAsync(string id,SalesUpdateDtos sale)
     {
         var salToUpdate=await _salesRepository.GetByIdAsync(id);

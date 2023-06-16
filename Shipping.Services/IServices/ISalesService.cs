@@ -8,7 +8,7 @@ public interface ISalesService
 {
     public Task<IEnumerable<SalesReadDtos>> GetAllSalesAsync();
     public Task<SalesReadDtos> GetSaleByIdAsync(string id);
-    public Task<SalesReadDtos> GetSaleByEmailAsync(string email);
+    public Task<long> GetSalesRepresentativeIdByEmail(string email);
     public Task AddAsync(AddSalesDto sale);
     public Task UpdateAsync(string id ,SalesUpdateDtos sale);
     public Task DeleteAsync(string id);

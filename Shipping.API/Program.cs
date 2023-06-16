@@ -81,6 +81,9 @@ namespace Shipping.API
 
             #region Register repositories and services
 
+            builder.Services.AddScoped<IBranchService, BranchService>();
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+
             builder.Services.AddScoped<ICityService, CityService>();
             builder.Services.AddScoped<ICityRepository, CityRepository>();
 

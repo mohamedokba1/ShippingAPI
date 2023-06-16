@@ -44,8 +44,4 @@ public class CityRepository : ICityRepository
         await _context.SaveChangesAsync();
     }
 
-    public IEnumerable<City> GetAll()
-    {
-        throw new NotImplementedException();
-    }
 }
