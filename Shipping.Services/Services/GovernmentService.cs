@@ -65,9 +65,6 @@ namespace Shipping.Services.Services
                 mapper.Map(govermentdto, governmentToUpdate);
                 await govermentRepository.Savechanges();
 
-
-                //governmentToUpdate.GovermentName = govermentdto.GovermentName;
-                //governmentToUpdate.State = govermentdto.State;
                 
 
 
