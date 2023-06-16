@@ -111,11 +111,18 @@ public class TraderServices : ITraderService
         List<ValidationResult>? validationResults = ValidateModel.ModelValidation(traderUpdateDto);
         if (validationResults?.Count == 0)
         {
-            Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
-            if (trader != null)
+            var checkUserName = await _userManager.FindByNameAsync(traderUpdateDto.UserName);
+            if (checkUserName == null) 
             {
-                _mapper.Map(traderUpdateDto, trader);
-                await _traderRepository.SaveChangesAsync();
+                Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
+                if (trader != null)
+                {
+                    ApplicationUser? user = await _userManager.FindByEmailAsync(trader.User.Email);
+                    _mapper.Map<TraderUpdateDto, ApplicationUser>(traderUpdateDto, user);
+                    await _userManager.UpdateAsync(user);
+                    _mapper.Map(traderUpdateDto, trader);
+                    await _traderRepository.SaveChangesAsync();
+                }  
             }
             return validationResults;
         }

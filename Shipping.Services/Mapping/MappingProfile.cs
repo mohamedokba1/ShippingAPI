@@ -15,6 +15,7 @@ public class MappingProfile : Profile
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
         CreateMap<TraderAddDto, Trader>().ReverseMap();
         CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
+        CreateMap<ApplicationUser, TraderUpdateDto>().ReverseMap();
 
         CreateMap<GovermentReadDto, Employee>().ReverseMap();
         CreateMap<EmployeeAddDto, Employee>().ReverseMap();
