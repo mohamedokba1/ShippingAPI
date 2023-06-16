@@ -34,6 +34,7 @@ public class BranchService:IBranchService
         {
             return new BranchReadDto
             {
+                Id=branch.Id,
                 branchName = branch.branchName,
                 State = branch.State,
                 CreatedAt = branch.CreatedAt
@@ -47,6 +48,7 @@ public class BranchService:IBranchService
         {
             var branch = new Branch
             {
+                Id = branchAddDto.Id,
                 branchName = branchAddDto.branchName,
                 State = branchAddDto.State,
                 CreatedAt = branchAddDto.CreatedAt
