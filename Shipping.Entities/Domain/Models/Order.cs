@@ -33,7 +33,10 @@ public class Order
 
     public long ProductId { get; set; }
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public long CustomerId { get; set; }
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+    public long TraderId { get; set; }
     public virtual Trader? Trader { get; set; }
+    public long SalesRepresentativeId { get; set; }
     public virtual SalesRepresentative? SalesRepresentative { get; set; }
 }

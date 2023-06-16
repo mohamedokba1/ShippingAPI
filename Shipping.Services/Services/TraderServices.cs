@@ -7,6 +7,10 @@ using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using Shipping.Services.Validations;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using Shipping.Entities.Domain.Identity;
+using Shipping.Repositories.Repos;
+using System.Security.Claims;
 
 namespace Shipping.Services.Services;
 
@@ -14,10 +18,12 @@ public class TraderServices : ITraderService
 {
     private readonly ITraderRepository _traderRepository;
     private readonly IMapper _mapper;
-    public TraderServices(ITraderRepository traderRepository, IMapper mapper)
+    private readonly UserManager<ApplicationUser> _userManager;
+    public TraderServices(ITraderRepository traderRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
     {
         _traderRepository = traderRepository;
         _mapper = mapper;
+        _userManager = userManager;
     }
 
     public async Task<TraderResponseDto?> AddTraderAsync(TraderAddDto traderAddDto)
@@ -87,5 +93,39 @@ public class TraderServices : ITraderService
             trdaersResponse.Add(_mapper.Map<TraderResponseDto>(trader));
         }
         return trdaersResponse;
+    }
+
+    public async Task AddTraderAsync2(TraderAddDto traderAddDto)
+    {
+
+            var user = new ApplicationUser
+            {
+                UserName = traderAddDto.TraderName,
+                Email = traderAddDto.Email,
+                PhoneNumber = traderAddDto.ContactNumber,
+                PasswordHash = traderAddDto.Password
+            };
+
+            var Trader = new Trader
+            {
+                CompanyBranch = traderAddDto.CompanyBranch,
+                CostPerRefusedOrder = traderAddDto.CostPerRefusedOrder,
+                Address = traderAddDto.Address,
+                User = user
+            };
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, user.Id),
+        new Claim(ClaimTypes.Name, user.UserName),
+            new Claim(ClaimTypes.Role, "Trader")
+        };
+
+            var claimResult = await _userManager.AddClaimsAsync(user, claims);
+
+            await _userManager.CreateAsync(user, Trader.User.PasswordHash);
+            await _traderRepository.AddTraderAsync(Trader);
+            await _traderRepository.SaveChangesAsync();
+
+
     }
 }

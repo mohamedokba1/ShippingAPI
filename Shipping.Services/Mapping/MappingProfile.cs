@@ -39,8 +39,8 @@ public class MappingProfile : Profile
         CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
 
-        CreateMap<OrderResponseDto, Order>()
-            .ReverseMap();
+        CreateMap<OrderResponseDto, Order>().ReverseMap();
+        CreateMap<OrderReadDto, Order>().ReverseMap();
         CreateMap<OrderAddDto, Order>().ReverseMap();
         CreateMap<OrderUpdateDto, Order>().ReverseMap();
     }

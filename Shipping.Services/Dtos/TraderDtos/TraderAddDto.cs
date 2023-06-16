@@ -17,7 +17,7 @@ public class TraderAddDto
     [DataType(DataType.Password)]
     public string Password { get; set; } = string.Empty;
     [Required(ErrorMessage = "Cost per refused order can not be blank")]
-    public double? CostPerRefusedOrder { get; set; }
+    public double CostPerRefusedOrder { get; set; }
     public string? CompanyBranch { get; set; }
     [Phone(ErrorMessage = "Invalid phone number")]
     [Required(ErrorMessage = "{0} can not be blank")]

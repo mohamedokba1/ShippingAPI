@@ -28,11 +28,18 @@ namespace Shipping.API.Controllers
 
         }
         [HttpGet]
-        [Route("email")]
-        public async Task<ActionResult<SalesReadDtos>> GetSaleByEmail(string email)
+        [Route("{email}")]
+        public async Task<ActionResult<long>> GetSalesRepresentativeIdByEmail(string email)
         {
-            return Ok(await _salesService.GetSaleByEmailAsync(email));
-
+            try
+            {
+                var salesRepresentativeId = await _salesService.GetSalesRepresentativeIdByEmail(email);
+                return salesRepresentativeId;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [HttpDelete]
         [Route("{id}")]
