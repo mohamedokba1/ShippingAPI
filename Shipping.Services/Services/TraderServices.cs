@@ -50,6 +50,7 @@ public class TraderServices : ITraderService
                         return validationResult;
                     }
                     await _userManager.AddToRoleAsync(user, "trader");
+                    await _userManager.UpdateAsync(user);
                     ApplicationUser? addedUser = await _userManager.FindByEmailAsync(traderAddDto.Email);
                     traderAddDto.User = addedUser;
                 }
