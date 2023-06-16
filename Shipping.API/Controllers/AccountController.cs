@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
-using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;

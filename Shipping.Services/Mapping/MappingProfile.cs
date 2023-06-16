@@ -22,6 +22,10 @@ public class MappingProfile : Profile
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
         CreateMap<GovermentUpdateDto, Goverment>().ReverseMap();
 
+        CreateMap<BranchReadDto, Branch>().ReverseMap();
+        CreateMap<BranchAddDto, Branch>().ReverseMap();
+        CreateMap<BranchUpdateDto, Branch>().ReverseMap();
+
         CreateMap<CityReadDto, City>().ReverseMap();
         CreateMap<CityAddDto, City>().ReverseMap();
         CreateMap<CityUpdateDto, City>().ReverseMap();
@@ -43,5 +47,7 @@ public class MappingProfile : Profile
         CreateMap<OrderReadDto, Order>().ReverseMap();
         CreateMap<OrderAddDto, Order>().ReverseMap();
         CreateMap<OrderUpdateDto, Order>().ReverseMap();
+
+       
     }
 }
