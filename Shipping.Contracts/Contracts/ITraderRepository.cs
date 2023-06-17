@@ -5,10 +5,14 @@ namespace Shipping.Repositories.Contracts;
 public interface ITraderRepository
 {
     Task<IEnumerable<Trader>> GetAllTradersAsync();
+<<<<<<< HEAD
     Task<Trader?> GetTraderByIdAsync(string trader_id);
     Task<Trader?> GetByEmailAsync(string email);
+=======
+    Task<Trader?> GetTraderByIdAsync(long trader_id);
+>>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
     Task DeleteTraderAsync(Trader trader);
-    Task<Trader?> AddTraderAsync(Trader trader);
+    Task AddTraderAsync(Trader trader);
     Task UpdateAsync(Trader trader);
     Task SaveChangesAsync();
     IQueryable<Trader> GetTradersPaginated();
