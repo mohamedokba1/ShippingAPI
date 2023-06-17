@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
-using AutoMapper.Configuration;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
@@ -9,7 +8,6 @@ using Shipping.Services.Validations;
 using System.ComponentModel.DataAnnotations;
 using Shipping.Entities.Domain.Identity;
 using Microsoft.AspNetCore.Identity;
-using Shipping.Services.Dtos.AccountDtos;
 
 namespace Shipping.Services.Services;
 

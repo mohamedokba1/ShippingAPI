@@ -1,6 +1,4 @@
-﻿using Shipping.Entities.Domain.Identity;
-using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.AccountDtos;
+﻿using Shipping.Services.Dtos;
 using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.IServices;

@@ -7,7 +7,6 @@ using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Shipping.Services.Dtos.AccountDtos;
 
 namespace Shipping.API.Controllers
 {
@@ -23,7 +22,6 @@ namespace Shipping.API.Controllers
             _configuration = configuration;
             _userManager = userManager;
             _salesService = salesService;
-            _traderService = traderService;
         }
         [HttpPost]
         [Route("registerSales")]

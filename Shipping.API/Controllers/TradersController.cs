@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.AccountDtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
 
@@ -76,6 +75,7 @@ namespace Shipping.API.Controllers
                  return Ok(traderAddDto);
             return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
         }
+
         [HttpPut("{traderId}")]
         public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
         {

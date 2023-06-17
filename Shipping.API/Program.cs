@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
-using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
@@ -22,22 +21,12 @@ namespace Shipping.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("Shipping", p => p.AllowAnyHeader().
-                AllowAnyMethod().
-                AllowAnyOrigin().
-                WithOrigins("http://localhost:4200").
-                WithMethods("PUT", "POST", "DELETE"));
-            });
-
             #region CORS
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "AllowedOrigins",
-                    builder => builder.WithOrigins("", "*"));
-
+                options.AddPolicy("Shipping", p => p.AllowAnyHeader()
+                .WithOrigins("http://localhost:4200")
+                .WithMethods("PUT", "POST", "DELETE", "GET"));
             });
             #endregion
 
