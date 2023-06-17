@@ -73,6 +73,7 @@ public class OrderService : IOrderService
                     CustomerId = customer.Customer_Id,
                     City = customer.City,
                     Government = customer.Goverment,
+                    Phone=customer.Phone1,
                     CustomerName = customer.Name,
                     ShippingType = order.shipping_type,
                     TraderId = order.TraderId,
