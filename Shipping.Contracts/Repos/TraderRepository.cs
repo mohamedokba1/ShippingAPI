@@ -32,7 +32,12 @@ public class TraderRepository : ITraderRepository
     {
         return await _context.Set<Trader>().FirstOrDefaultAsync(trader => trader.TraderId == traderId);
     }
-
+    public async Task<Trader?> GetByEmailAsync(string email)
+    {
+        return _context.Set<Trader>()
+            .Include(sr => sr.User)
+            .FirstOrDefault(sr => sr.User.Email == email);
+    }
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

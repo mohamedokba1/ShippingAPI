@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+<<<<<<< HEAD
+using Shipping.Services.Services;
+=======
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
+>>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 
 namespace Shipping.API.Controllers
 {
@@ -33,7 +37,20 @@ namespace Shipping.API.Controllers
                 return NotFound();
             return Ok(response);
         }
-
+        [HttpGet]
+        [Route("email/{email}")]
+        public async Task<ActionResult<long>> GetTraderIdByEmail(string email)
+        {
+            try
+            {
+                var traderId = await _traderService.GetTraderIdByEmail(email);
+                return traderId;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
         [HttpGet("paginated")]
         public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
         {

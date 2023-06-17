@@ -68,7 +68,29 @@ public class OrderService : IOrderService
         var ordersList = new List<OrderResponseDto>();
         foreach (var order in orders)
         {
-            ordersList.Add(_mapper.Map<OrderResponseDto>(order));
+            foreach (var customer in order.Customers)
+            {
+                var orderReadDto = new OrderReadDto
+                {
+                    OrderId = order.Order_Id,
+                    State = order.State,
+                    PaymentMethod = order.PaymentMethod,
+                    OrderDate = order.OrderDate,
+                    ExtraWeightCost = order.ExtraWeightCost,
+                    CompanyBranch = order.CompanyBranch,
+                    DefaultCost = order.DefaultCost,
+                    CustomerId = customer.Customer_Id,
+                    City = customer.City,
+                    Government = customer.Goverment,
+                    Phone=customer.Phone1,
+                    CustomerName = customer.Name,
+                    ShippingType = order.shipping_type,
+                    TraderId = order.TraderId,
+                    SalesRepresentativeId = order.SalesRepresentativeId
+                };
+
+                orderReadDtos.Add(orderReadDto);
+            }
         }
         return ordersList;
     }
