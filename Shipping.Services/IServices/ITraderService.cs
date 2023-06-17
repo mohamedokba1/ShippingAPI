@@ -7,6 +7,7 @@ public interface ITraderService
 {
     Task<IEnumerable<TraderResponseDto>?> GetAllTradersAsync();
     Task<TraderResponseDto> GetTraderByIdAsync(long id);
+    Task<TraderResponseDto> GetTraderByEmailAsync(string trdaerEmail);
     Task<List<ValidationResult>?> AddUserAndTrader(TraderAddDto traderAddDto);
     Task<List<ValidationResult>?> UpdateTraderAsync(long trader_id, TraderUpdateDto traderUpdateDto);
     Task<bool> DeleteTraderAsync(long trader_id);

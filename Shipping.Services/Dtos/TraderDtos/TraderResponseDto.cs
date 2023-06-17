@@ -12,6 +12,6 @@ public class TraderResponseDto
     public double CostPerRefusedOrder { get; set; }
     public string? CompanyBranch { get; set; }
     public string ContactNumber { get; set; } = string.Empty;
-    //public ICollection<OrderResponseDto> Orders { get; set; }
-    //public ICollection<Privellge> Privellges { get; set; }
+    public ICollection<OrderResponseDto> Orders { get; set; }
+    public ICollection<Privellge> Privellges { get; set; }
 }

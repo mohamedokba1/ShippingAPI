@@ -4,11 +4,11 @@ namespace Shipping.Repositories.Contracts;
 
 public interface IProductRepository
 {
-    Task AddAsync(Product product);
-    Task UpdateAsync(long id, Product? product);
-    Task DeleteAsync(Product product);
-    Task <IEnumerable<Product>> GetAllAsync();
-    Task <Product>? GetByIdAsync(long id);
-    Task saveChanges();
+    Task AddProductAsync(Product product);
+    Task UpdateProductAsync(long id, Product? product);
+    Task DeleteProductAsync(Product product);
+    Task <IEnumerable<Product>> GetAllProductsAsync(Order order);
+    Task <Product?> GetByIdAsync(long id);
+    Task SaveChangesAsync();
     
 }

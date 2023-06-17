@@ -13,40 +13,62 @@ namespace Shipping.Repositories.Repos
         {
             _context = context;
         }
-        public async Task<IEnumerable<Order>> GetAllAsync()
+
+        public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
-            return await _context.Set<Order>().Include(c=>c.Customers).ToListAsync();
+            return await _context.Set<Order>()
+                .Include(c => c.Customers)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Order>> GetAllTraderOrdersAsync(Trader trader)
+        {
+            return await _context.Set<Order>()
+                .Include(c=> c.Customers)
+                .Where(order => order.Trader == trader)
+                .ToListAsync();
+        }
+        public async Task<IEnumerable<Order>> GetAllSalesOrdersAsync(SalesRepresentative salesRepresentative)
+        {
+            return await _context.Set<Order>()
+                .Include(c => c.Customers)
+                .Where(order => order.SalesRepresentative == salesRepresentative)
+                .ToListAsync();
         }
 
-        public async Task<Order?> GetByIdAsync(long id)
+        public async Task<Order?> GetOrderByIdAsync(long id)
         {
-            return await _context.Set<Order>().FirstOrDefaultAsync(order => order.Order_Id == id);
+            return await _context.Set<Order>().FirstOrDefaultAsync(order => order.OrderId == id);
         }
 
-        public async Task AddAsync(Order order)
+        public async Task<Order?> AddOrderAsync(Order order)
         {
             await _context.Set<Order>().AddAsync(order);
+            await SaveChangesAsync();
+            return order;
         }
 
-        public async Task UpdateAsync(Order order)
+        public async Task UpdateOrderAsync(Order order)
         {
             _context.Set<Order>().Update(order);
             await Task.CompletedTask;
-
         }
 
-        public async Task DeleteAsync(Order order)
+        public async Task<bool> DeleteOrderAsync(Order order)
         {
-            Order? result = await GetByIdAsync(order.Order_Id);
+            Order? result = await GetOrderByIdAsync(order.OrderId);
             if (result is not null)
             {
-                //result.IsDeleted = true;
+                result.IsDeleted = true;
+                await SaveChangesAsync();
+                return true;
             }
+            return false;
         }
 
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
         }
+
     }
 }

@@ -53,4 +53,9 @@ public class TraderRepository : ITraderRepository
     {
         return await _context.Set<Trader>().Where(trader => trader.UserName.Contains(searchSrting)).ToListAsync();
     }
+
+    public async Task<Trader?> GetTraderByEmailAsync(string traderEmail)
+    {
+        return await _context.Set<Trader>().FirstOrDefaultAsync(trader => trader.Email == traderEmail);
+    }
 }
