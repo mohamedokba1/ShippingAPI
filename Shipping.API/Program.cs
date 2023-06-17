@@ -21,22 +21,12 @@ namespace Shipping.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-
-            builder.Services.AddCors(options =>
-            {
-                options.AddPolicy("Shipping", p => p.AllowAnyHeader().
-                AllowAnyMethod().
-                AllowAnyOrigin().
-                WithOrigins("http://localhost:4200").
-                WithMethods("PUT", "POST", "DELETE"));
-            });
-
             #region CORS
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy(name: "AllowedOrigins",
-                    builder => builder.WithOrigins("", "*"));
-
+                options.AddPolicy("Shipping", p => p.AllowAnyHeader()
+                .WithOrigins("http://localhost:4200")
+                .WithMethods("PUT", "POST", "DELETE", "GET"));
             });
             #endregion
 
@@ -116,6 +106,7 @@ namespace Shipping.API
             builder.Services.AddAutoMapper(typeof(Program));
 
             #endregion
+
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())

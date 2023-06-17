@@ -3,16 +3,18 @@ using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.ProductDtos;
 using Shipping.Services.Dtos.SalesDtos;
-
+using Shipping.Entities.Domain.Identity;
 namespace Shipping.Services.Mapping;
 
 public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TraderAddDto, Trader>().ReverseMap();
         CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
+        CreateMap<TraderAddDto, Trader>().ReverseMap();
+        CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
+        CreateMap<ApplicationUser, TraderUpdateDto>().ReverseMap();
 
         CreateMap<GovermentReadDto, Employee>().ReverseMap();
         CreateMap<EmployeeAddDto, Employee>().ReverseMap();
