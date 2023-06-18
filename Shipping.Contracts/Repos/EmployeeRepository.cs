@@ -27,20 +27,20 @@ namespace Shipping.Repositories.Repos
            await  context.Employees.AddAsync(employee);
         }         
 
-        public async Task Delete(string id)
+        public async Task Delete(long id)
         {
-            var employee = GetByid(id);
-             context.Remove(employee);
+            var employee = await GetByid(id);
         }
 
         public async Task<IEnumerable<Employee>> Getall()
         {
-            return await context.Employees.ToListAsync();
+             return await context.Employees.Include(e=>e.branch).Include(e=>e.Privillage).ToListAsync();
+
         }
 
-        public async Task<Employee?> GetByid(string id)
+        public async Task<Employee?> GetByid(long id)
         {
-            return await context.Set<Employee>().FirstOrDefaultAsync(temp => temp.User.Id == id);
+            return await context.Set<Employee>().Include(e=>e.branch).Include(e=>e.Privillage).FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
         public async Task Savechanges()
@@ -48,7 +48,7 @@ namespace Shipping.Repositories.Repos
             await context.SaveChangesAsync();
         }
 
-        public async Task Update(string id, Employee? employee)
+        public async Task Update(long id, Employee? employee)
         {
 
         }

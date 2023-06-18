@@ -110,6 +110,10 @@ namespace Shipping.API
 
             builder.Services.AddScoped<ITraderRepository, TraderRepository>();
             builder.Services.AddScoped<ITraderService, TraderServices>();
+
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+            builder.Services.AddScoped<IBranchService, BranchService>();
+            
             #endregion 
 
             #region Auto Mapper

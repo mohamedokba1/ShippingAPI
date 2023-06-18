@@ -11,7 +11,9 @@ public class Privellge
     [Required]
     public string PrivellgeName { get; set; } = string.Empty;
 
+    public DateTime date { get; set; }
+
     public virtual ICollection<Trader> Traders { get; set; } = new HashSet<Trader>();
-    public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
+    public  ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
     public virtual ICollection<SalesRepresentative> SalesRepresentatives { get; set; } = new HashSet<SalesRepresentative>();
 }

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 
 public interface IBranchRepository
 {
+     public  interface IBranchRepository
+    {
     Task<IEnumerable<Branch>> GetAllAsync();
     Task<Branch> GetByIdAsync(int id);
     Task AddAsync(Branch entity);

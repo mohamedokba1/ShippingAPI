@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
+using Shipping.Entities.Migrations;
 using Shipping.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
@@ -12,44 +13,80 @@ namespace Shipping.Repositories.Repos
 {
     public class PrivellgeRepository : IPrivellageRepository
     {
-        public ApplicationDbContext context { get; }
+        private readonly ApplicationDbContext context;
 
         public PrivellgeRepository(ApplicationDbContext _context)
         {
             context = _context;
         }
-        public  async Task<IEnumerable<Privellge>> GetAllAsync()
+
+        public async Task Add(Privellge privilege)
         {
-            return await context.Set<Privellge>().ToListAsync();
+            await context.Privellges.AddAsync(privilege);
         }
 
-        public async Task<Privellge> GetByIdAsync(long id)
+        public async Task Delete(int id)
         {
-            return await context.Set<Privellge>().FindAsync(id);
+
+                var privilege =    await GetByid(id);
+                context.Privellges.Remove(privilege);
         }
 
-        public async Task AddAsync(Privellge privellge)
+        public async Task<IEnumerable<Privellge>> Getall()
         {
-             await context.Set<Privellge>().AddAsync(privellge);
+            return await context.Privellges.ToListAsync();
         }
 
-        public async Task UpdateAsync(Privellge privellge)
+        public async Task<Privellge?> GetByid(int id)
         {
-             context.Set<Privellge>().Update(privellge);
-             await Task.CompletedTask;
+            return await context.Privellges.FirstOrDefaultAsync(e => e.Privellge_Id == id);
+        }
+
+        public async Task Savechanges()
+        {
+           await context.SaveChangesAsync();
+        }
+
+        public async Task Update(int id, Privellge privilege)
+        {
 
         }
 
-        public async Task DeleteAsync(Privellge privellge)
-        {
-            context.Set<Privellge>().Remove(privellge);
-            await Task.CompletedTask;
-        }
 
-        public async Task SaveChangesAsync()
-        {
-            await context.SaveChangesAsync();
-        }
+
+        //public async Task Add(Privellge privellge)
+        //{
+        //    await context.Privellges.AddAsync(privellge);
+        //}
+
+        //public async Task Delete(long id)
+        //{
+        //    var privilege =    await GetByid(id);
+        //    context.Privellges.Remove(privilege);
+        //}
+
+        //public async Task<IEnumerable<Privellge>> Getall()
+        //{
+        //    return await context.Privellges.ToListAsync();
+
+        //}
+
+        //public async Task<Privellge?> GetByid(long id)
+        //{
+        //    return await context.Set<Privellge>().FirstOrDefaultAsync(e => e.Privellge_Id == id);
+        //}
+
+        //public async Task Savechanges()
+        //{
+        //    await context.SaveChangesAsync();
+        //}
+
+        //public async Task Update(long id, Privellge privellge)
+        //{
+
+        //}
+
+
 
     }
 }

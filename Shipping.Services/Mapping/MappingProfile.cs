@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
+using Microsoft.Data.SqlClient;
 using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.SalesDtos;
+using System.Diagnostics;
+
 using Shipping.Entities.Domain.Identity;
 namespace Shipping.Services.Mapping;
 
@@ -15,9 +19,21 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
         CreateMap<ApplicationUser, TraderUpdateDto>().ReverseMap();
 
-        CreateMap<GovermentReadDto, Employee>().ReverseMap();
-        CreateMap<EmployeeAddDto, Employee>().ReverseMap();
-        CreateMap<EmployeeupdateDto, Employee>().ReverseMap();
+        CreateMap<Employee, EmployeeReadDto>().
+        ForMember(dest => dest.PrivellgeName, src => src.MapFrom(src => src.Privillage.PrivellgeName))
+     .   ForMember(dest => dest.branchName, src => src.MapFrom(src => src.branch.branchName)).ReverseMap();
+
+
+          
+
+        CreateMap<EmployeeAddDto, Employee>()
+         .ForMember(dest=>dest.branchid,src=>src.MapFrom(src=>src.branchid))
+         .ForMember(dest=>dest.privillageid,src=>src.MapFrom(src=>src.Privellge_Id)).ReverseMap();
+            
+        CreateMap<EmployeeupdateDto, Employee>()
+            .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
+         .ForMember(dest => dest.privillageid, src => src.MapFrom(src => src.Privellge_Id)).ReverseMap();
+
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
@@ -46,6 +62,13 @@ public class MappingProfile : Profile
         CreateMap<OrderResponseDto, Order>().ReverseMap();
         CreateMap<OrderAddDto, Order>().ReverseMap();
         CreateMap<OrderUpdateDto, Order>().ReverseMap();
+
+        CreateMap<BranchReadDto , Branch>().ReverseMap();
+
+        CreateMap<Privellge , PrivellageDto>().ReverseMap();
+        CreateMap<PrivilegeAddDto,Privellge>().ReverseMap();
+        CreateMap<PrivllageUpdateDto, Privellge>().ReverseMap();
+
 
        
     }
