@@ -23,7 +23,9 @@ public class CityService: ICityService
         {
             CityId = city.City_Id,
             CityName = city.CityName,
-            NormalShippingCost = city.NormalShippingCost
+            NormalShippingCost = city.NormalShippingCost,
+            PickupShippingCost= city.PickupShippingCost,
+            govermentName=city.goverment.GovermentName
         });
     }
     public async Task<CityReadDto> GetByIdAsync(int id)
@@ -48,6 +50,7 @@ public class CityService: ICityService
             {
                 CityName = cityAddDto.CityName,
                 NormalShippingCost = cityAddDto.NormalShippingCost,
+                PickupShippingCost = cityAddDto.PickupShippingCost,
                 GovermentId = cityAddDto.GovernmentId
             };
             ValidateModel.ModelValidation(city);
@@ -67,6 +70,7 @@ public class CityService: ICityService
             {
                 city.CityName = cityUpdateDto.CityName;
                 city.NormalShippingCost = cityUpdateDto.NormalShippingCost;
+                city.PickupShippingCost = cityUpdateDto.NormalShippingCost;
                 ValidateModel.ModelValidation(city);
 
                 await _cityRepository.UpdateAsync(city);
