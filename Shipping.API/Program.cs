@@ -17,10 +17,9 @@ namespace Shipping.API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
-            //options =>
-            //   options.Filters.Add<GlobalErrorHandling>()
-
+            builder.Services.AddControllers(options =>
+               options.Filters.Add<GlobalErrorHandling>());
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -132,7 +131,7 @@ namespace Shipping.API
             }
             app.UseCors("Shipping");
             app.UseRouting();
-            //app.UseExceptionHandler("/error");
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

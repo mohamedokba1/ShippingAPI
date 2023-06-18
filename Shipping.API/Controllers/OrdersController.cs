@@ -23,6 +23,10 @@ namespace Shipping.API.Controllers
         public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll(string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
+            if (orders == null)
+            {
+                return BadRequest("Trader not found");
+            }
             return Ok(orders);
         }
 

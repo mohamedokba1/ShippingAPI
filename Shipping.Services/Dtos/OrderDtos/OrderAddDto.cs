@@ -14,7 +14,8 @@ public class OrderAddDto
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public double TotalCost { get; set; }
-    public int TotalWeight { get; set; }
+    public double TotalWeight { get; set; }
+    public double DeliverToVillageCost { get; set; }
     public bool DeliveredToVillage { get; set; }
     public ShippingType shipping_type { get; set; }
     public ICollection<Product> Products { get; set; } = new HashSet<Product>();

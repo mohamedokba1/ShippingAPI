@@ -38,6 +38,36 @@ public class OrderService : IOrderService
             Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderIdByEmailAsync(userEmail));
             if (currentTrader != null)
             {
+                switch (orderAddDto.PaymentMethod)
+                {
+                    case PaymentType.Cash:
+                        foreach (Product product in orderAddDto.Products)
+                        {
+                            orderAddDto.TotalCost += product.Price;
+                            orderAddDto.TotalWeight += product.Weight;
+                        }
+                        if (orderAddDto.DeliveredToVillage)
+                        {
+                            orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                        }
+                        orderAddDto.TotalCost += orderAddDto.DefaultCost;
+                        break;
+                    case PaymentType.Visa:
+                        foreach (Product product in orderAddDto.Products)
+                        {
+                            orderAddDto.TotalWeight += product.Weight;
+                        }
+                        if(orderAddDto.DeliveredToVillage)
+                        {
+                            orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                        }
+                        orderAddDto.TotalCost += orderAddDto.DefaultCost;
+                        break;
+                    case PaymentType.PackageForPackage:
+                        break;
+                    default:
+                        break;
+                }
                 Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
                 if (order != null)
                 {

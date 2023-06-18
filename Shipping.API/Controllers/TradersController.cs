@@ -4,6 +4,7 @@ using Shipping.Services.Services;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shipping.API.Controllers
 {
@@ -82,6 +83,8 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "admin", Policy = "add")]
+        [Authorize(Roles = "admin", Policy = "add")]
         public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
         {
             var errors = await _traderService.AddUserAndTrader(traderAddDto);
