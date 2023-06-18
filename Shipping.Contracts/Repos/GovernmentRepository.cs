@@ -41,14 +41,18 @@ namespace Shipping.Repositories.Repos
 
         }
 
+        
+
         public async Task Savechanges()
         {
-            await context.SaveChangesAsync();
-
+             context.SaveChanges();
         }
 
         public async Task Update(int id, Goverment? goverment)
         {
+            
         }
+
+
     }
 }

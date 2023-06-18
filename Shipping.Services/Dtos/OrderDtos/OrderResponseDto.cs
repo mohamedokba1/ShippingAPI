@@ -16,4 +16,5 @@ public class OrderResponseDto
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
+    public ICollection<Product>? Products { get; set; }
 }

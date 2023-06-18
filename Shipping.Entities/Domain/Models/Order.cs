@@ -1,5 +1,4 @@
-﻿using Shipping.Entities.Domain.Identity;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Shipping.Entities.Domain.Models;
@@ -19,7 +18,7 @@ public class Order
 {
     [Key]
     [Column(TypeName = "bigint")]
-    public long Order_Id { get; set; }
+    public long OrderId { get; set; }
     public OrderState State { get; set; } = OrderState.New;
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
@@ -29,11 +28,18 @@ public class Order
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
+    public double TotalCost { get; set; }
+    public int TotalWeight { get; set; }
+    public bool DeliveredToVillage { get; set; }
     public bool IsDeleted { get; set; }
+
 
     public long ProductId { get; set; }
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public long CustomerId { get; set; }
     public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
+    public long TraderId { get; set; }
     public virtual Trader? Trader { get; set; }
+    public long SalesRepresentativeId { get; set; }
     public virtual SalesRepresentative? SalesRepresentative { get; set; }
 }

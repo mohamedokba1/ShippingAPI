@@ -3,20 +3,21 @@ using AutoMapper.Execution;
 using Microsoft.Data.SqlClient;
 using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.Branch;
-using Shipping.Services.Dtos.ProductDtos;
 using Shipping.Services.Dtos.SalesDtos;
 using System.Diagnostics;
 
+using Shipping.Entities.Domain.Identity;
 namespace Shipping.Services.Mapping;
 
 public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TraderAddDto, Trader>().ReverseMap();
         CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
+        CreateMap<TraderAddDto, Trader>().ReverseMap();
+        CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
+        CreateMap<ApplicationUser, TraderUpdateDto>().ReverseMap();
 
         CreateMap<Employee, EmployeeReadDto>().
         ForMember(dest => dest.PrivellgeName, src => src.MapFrom(src => src.Privillage.PrivellgeName))
@@ -38,6 +39,10 @@ public class MappingProfile : Profile
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
         CreateMap<GovermentUpdateDto, Goverment>().ReverseMap();
 
+        CreateMap<BranchReadDto, Branch>().ReverseMap();
+        CreateMap<BranchAddDto, Branch>().ReverseMap();
+        CreateMap<BranchUpdateDto, Branch>().ReverseMap();
+
         CreateMap<CityReadDto, City>().ReverseMap();
         CreateMap<CityAddDto, City>().ReverseMap();
         CreateMap<CityUpdateDto, City>().ReverseMap();
@@ -46,10 +51,9 @@ public class MappingProfile : Profile
         CreateMap<CustomerAddDto, Customer>().ReverseMap();
         CreateMap<CustomerUpdateDto, Customer>().ReverseMap();
 
-        CreateMap<ProductReadDtos, Product>().ReverseMap();
-        CreateMap<ProductUpdateDtos, Product>().ForMember(dest=>dest.Product_Id,src=>src.MapFrom(src=>src.Product_Id)).ReverseMap();
-        CreateMap<AddProductDto,Product>().ReverseMap();
-        CreateMap<ProductDeletDtos,Product>().ReverseMap();
+        CreateMap<ProductResponseDto, Product>().ReverseMap();
+        CreateMap<ProductUpdateDto, Product>().ReverseMap();
+        CreateMap<ProductAddDto,Product>().ReverseMap();
 
         CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
         CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
@@ -65,5 +69,7 @@ public class MappingProfile : Profile
         CreateMap<PrivilegeAddDto,Privellge>().ReverseMap();
         CreateMap<PrivllageUpdateDto, Privellge>().ReverseMap();
 
+
+       
     }
 }

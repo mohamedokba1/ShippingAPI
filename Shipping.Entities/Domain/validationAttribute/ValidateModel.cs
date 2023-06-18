@@ -15,6 +15,6 @@ public static class ValidateModel
             return validationResults;
         }
         else
-            return null;
+            return new List<ValidationResult>();
     }
 }

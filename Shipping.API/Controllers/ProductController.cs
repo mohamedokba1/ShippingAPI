@@ -1,9 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Shipping.Entities.Domain.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.ProductDtos;
 using Shipping.Services.IServices;
 
 namespace Shipping.API.Controllers
@@ -12,62 +8,58 @@ namespace Shipping.API.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _productService;
-        
-        public ProductController(IProductService productService)
-        {
-            _productService = productService;
-            
-        }
-        [HttpGet]
-        public async Task< ActionResult<IEnumerable<ProductReadDtos>> >GetAllProduct()
-        {
-            return Ok( await _productService.GetProductsAsync());
+        //private readonly IProductService _productService;
 
-        }
-        [HttpGet]
-        [Route("{id}")]
-        public async Task< ActionResult<ProductReadDtos>> GetProduct(long id)
-        {
-            
-            return Ok(await _productService.GetProductByIdAsync(id));
-        }
+        //public ProductController(IProductService productService)
+        //{
+        //    _productService = productService;
 
-        [HttpPut]
-        [Route("{id}")]
-        public async Task<ActionResult> updateProduct(long id , ProductUpdateDtos product)
-        {
-            
+        //}
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<ProductResponseDto>>> GetAllProduct()
+        //{
+        //    return Ok(await _productService.GetAllProductsAsync());
 
-                try
-                {
-                    await _productService.UpdateAsync(id, product);
-                    return NoContent();
+        //}
+        //[HttpGet]
+        //[Route("{id}")]
+        //public async Task<ActionResult<ProductResponseDto>> GetProduct(long id)
+        //{
 
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest(ex.Message);
+        //    return Ok(await _productService.GetProductByIdAsync(id));
+        //}
 
-                }
-            
-            
-        }
+        //[HttpPut]
+        //[Route("{id}")]
+        //public async Task<ActionResult> updateProduct(long id, ProductUpdateDto product)
+        //{
+        //    try
+        //    {
+        //        await _productService.UpdateAsync(id, product);
+        //        return NoContent();
 
-        [HttpDelete]
-        [Route("{id}")]
-        public async Task<ActionResult> DeleteProduct(long id)
-        {
-        
-            await _productService.DeleteAsync(id);
-            return NoContent();
-        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return BadRequest(ex.Message);
 
-        [HttpPost]
-        public async Task<ActionResult> AddProduct(AddProductDto product)
-        {
-            await _productService.AddAsync(product);
-            return CreatedAtAction(nameof(GetProduct), new {id=product.Product_Id}, product);
-        }
+        //    }
+        //}
+
+        //[HttpDelete]
+        //[Route("{id}")]
+        //public async Task<ActionResult> DeleteProduct(long id)
+        //{
+
+        //    await _productService.DeleteAsync(id);
+        //    return NoContent();
+        //}
+
+        //[HttpPost]
+        //public async Task<ActionResult> AddProduct(ProductAddDto product)
+        //{
+        //    await _productService.AddAsync(product);
+        //    return CreatedAtAction(nameof(GetProduct), new { id = product.Product_Id }, product);
+        //}
     }
 }

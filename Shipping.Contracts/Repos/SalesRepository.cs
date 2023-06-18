@@ -52,7 +52,9 @@ namespace Shipping.Repositories.Repos
 
         public async Task<SalesRepresentative?> GetByEmailAsync(string email)
         {
-            return await context.Set<SalesRepresentative>().FirstOrDefaultAsync(temp => temp.User.Email == email);
+            return context.Set<SalesRepresentative>()
+                .Include(sr => sr.User)
+                .FirstOrDefault(sr => sr.User.Email == email);
         }
         public async Task saveChanges()
         {
@@ -65,6 +67,5 @@ namespace Shipping.Repositories.Repos
             await Task.CompletedTask;
         }
 
-        
     }
 }

@@ -30,9 +30,10 @@ public class OrderReadDto
     public string City { get; set; } = string.Empty;
     public string Government { get; set; } = string.Empty;
     public string CustomerName { get; set; } = string.Empty;
+    public string Phone { get; set; } = string.Empty;
     public ShippingType ShippingType { get; set; }
-    public string TraderId { get; set; }
-    public string SalesRepresentativeId { get; set; }
+    public long TraderId { get; set; }
+    public long SalesRepresentativeId { get; set; }
     public ICollection<CustomerReadDto>? Customers { get; set; }
 
 }

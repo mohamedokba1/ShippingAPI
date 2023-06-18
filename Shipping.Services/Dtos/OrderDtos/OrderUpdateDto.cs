@@ -15,5 +15,6 @@ public class OrderUpdateDto
     public double DefaultCost { get; set; }
     public string CustomerName { get; set; } = string.Empty;
     public ShippingType shipping_type { get; set; }
-    //public bool IsDeleted { get; set; }
+    public bool IsDeleted { get; set; }
+    public ICollection<Product>? Products { get; set; }
 }

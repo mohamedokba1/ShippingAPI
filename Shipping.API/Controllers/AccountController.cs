@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
-using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
@@ -18,7 +17,6 @@ namespace Shipping.API.Controllers
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISalesService _salesService;
-
         public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService)
         {
             _configuration = configuration;
@@ -32,7 +30,6 @@ namespace Shipping.API.Controllers
             await _salesService.AddAsync(salesRepresentative);
             return Ok("SalesRepresentative Registered Successfully");
         }
-
 
         [HttpPost]
         [Route("login")]
@@ -52,7 +49,7 @@ namespace Shipping.API.Controllers
 
             var claimsList = new List<Claim>
             {
-                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, user.Id),
                 new Claim(ClaimTypes.Name, user?.Email)
             };
 
