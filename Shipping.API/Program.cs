@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shipping.API.ErrorHandling;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories;
@@ -16,7 +17,8 @@ namespace Shipping.API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options => 
+               options.Filters.Add<GlobalErrorHandling>());
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -125,6 +127,7 @@ namespace Shipping.API
             }
             app.UseCors("Shipping");
             app.UseRouting();
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
