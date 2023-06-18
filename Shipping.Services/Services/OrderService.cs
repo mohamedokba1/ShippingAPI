@@ -60,38 +60,42 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<IEnumerable<OrderReadDto>> GetAllOrdersAsync(string userEmail)
+    public async Task<IEnumerable<OrderReadDto>?> GetAllOrdersAsync(string userEmail)
     {
         var currentTrader = await _traderService.GetTraderIdByEmailAsync(userEmail);
-        var orders = await _orderRepository.GetAllTraderOrdersAsync(_mapper.Map<Trader>(currentTrader));
-        var ordersList = new List<OrderReadDto>();
-        foreach (var order in orders)
+        if(currentTrader != null)
         {
-            foreach (var customer in order.Customers)
+            var orders = await _orderRepository.GetAllTraderOrdersAsync(_mapper.Map<Trader>(currentTrader));
+            var ordersList = new List<OrderReadDto>();
+            foreach (var order in orders)
             {
-                var orderReadDto = new OrderReadDto
+                foreach (var customer in order.Customers)
                 {
-                    OrderId = order.OrderId,
-                    State = order.State,
-                    PaymentMethod = order.PaymentMethod,
-                    OrderDate = order.OrderDate,
-                    ExtraWeightCost = order.ExtraWeightCost,
-                    CompanyBranch = order.CompanyBranch,
-                    DefaultCost = order.DefaultCost,
-                    CustomerId = customer.Customer_Id,
-                    City = customer.City,
-                    Government = customer.Goverment,
-                    Phone=customer.Phone1,
-                    CustomerName = customer.Name,
-                    ShippingType = order.shipping_type,
-                    TraderId = order.TraderId,
-                    SalesRepresentativeId = order.SalesRepresentativeId
-                };
+                    var orderReadDto = new OrderReadDto
+                    {
+                        OrderId = order.OrderId,
+                        State = order.State,
+                        PaymentMethod = order.PaymentMethod,
+                        OrderDate = order.OrderDate,
+                        ExtraWeightCost = order.ExtraWeightCost,
+                        CompanyBranch = order.CompanyBranch,
+                        DefaultCost = order.DefaultCost,
+                        CustomerId = customer.Customer_Id,
+                        City = customer.City,
+                        Government = customer.Goverment,
+                        Phone = customer.Phone1,
+                        CustomerName = customer.Name,
+                        ShippingType = order.shipping_type,
+                        TraderId = order.TraderId,
+                        SalesRepresentativeId = order.SalesRepresentativeId
+                    };
 
-                ordersList.Add(orderReadDto);
+                    ordersList.Add(orderReadDto);
+                }
             }
+            return ordersList;
         }
-        return ordersList;
+        return null;
     }
     
     public async Task<OrderResponseDto?> GetOrderByIdAsync(long id)

@@ -85,22 +85,22 @@ namespace Shipping.API.Controllers
         public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
         {
             var errors = await _traderService.AddUserAndTrader(traderAddDto);
-            if (errors is null)
-                 return Ok(traderAddDto);
-            return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+            if (errors?.Count == 0)
+                 return Created("Trader created successfully", traderAddDto);
+            return BadRequest(string.Join(", ", errors?.Select(err => err.ErrorMessage)));
         }
 
         [HttpPut("{traderId}")]
         public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
         {
             List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
-            if (errors is null)
+            if (errors?.Count == 0)
             {
                 TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
                 return Ok(updatedTrader);
             }
             else
-                return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+                return BadRequest(string.Join(", ", errors?.Select(err => err.ErrorMessage)));
         }
 
         [HttpDelete("{traderId}")]

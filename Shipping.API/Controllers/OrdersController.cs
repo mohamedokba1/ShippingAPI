@@ -5,20 +5,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.API.Controllers
 {
-    [Route("api/orders")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly HttpContextAccessor _httpContextAccessor;
         private readonly ITraderService _traderService;
-        public OrderController(
+        public OrdersController(
             IOrderService orderService,
-            HttpContextAccessor httpContextAccessor,
             ITraderService traderService)
         {
             _orderService = orderService;
-            _httpContextAccessor = httpContextAccessor;
             _traderService = traderService;
         }
 
