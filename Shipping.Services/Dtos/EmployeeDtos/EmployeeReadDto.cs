@@ -4,7 +4,7 @@ namespace Shipping.Services.Dtos
 {
     public record EmployeeReadDto
     {
-        public long Employee_Id { get; init; }
+        public long EmployeeId { get; init; }
 
         [Required]
         [StringLength(70)]
@@ -16,6 +16,10 @@ namespace Shipping.Services.Dtos
         public  string Password { get; init; } = string.Empty;
         public  bool IsActive { get; init; }
 
-      //  public  virtual ICollection<Privellge> Privillages { get; init; } = new List<Privellge>();
+        [Phone]
+        public string? PhoneNumber { get; set; } 
+        public string PrivellgeName { get ; init; } = string.Empty;
+        public string branchName { get; init; } = string.Empty;
+
     }
 }

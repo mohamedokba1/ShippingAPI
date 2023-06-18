@@ -4,9 +4,10 @@ namespace Shipping.Services.IServices;
 
 public interface IPrivellageService
 {
-    Task<IEnumerable<PrivellageDto>> GetAllAsync();
-    Task<PrivellageDto> GetByIdAsync(long id);
-    Task AddAsync(PrivellageDto privellgeDto);
-    Task UpdateAsync(PrivellageDto privellgeDto, long id);
-    Task DeleteAsync(long id);
+    Task<IEnumerable<PrivellageDto>> Getall();
+    Task<PrivellageDto> GetByid(int id);
+    Task Add(PrivilegeAddDto privilege);
+    Task Update(int id, PrivllageUpdateDto privilege);
+    Task Delete(int id);
+    Task Savechanges();
 }

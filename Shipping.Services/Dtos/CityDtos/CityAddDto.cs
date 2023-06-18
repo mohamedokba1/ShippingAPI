@@ -12,6 +12,10 @@ public class CityAddDto
     [Required(ErrorMessage = "Normal shipping cost is required")]
     [Range(0, double.MaxValue, ErrorMessage = "Normal shipping cost must be a positive value")]
     public double NormalShippingCost { get; set; }
+
+    [Required(ErrorMessage = "Pickup shipping cost is required")]
+    [Range(0, double.MaxValue, ErrorMessage = "Pickup shipping cost must be a positive value")]
+    public double PickupShippingCost { get; set; }
     public int GovernmentId { get; set; }
 
 }

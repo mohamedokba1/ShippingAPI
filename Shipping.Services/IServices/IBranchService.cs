@@ -1,4 +1,5 @@
 ﻿using Shipping.Services.Dtos;
+using Shipping.Services.Dtos.Branch;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +15,4 @@ public interface IBranchService
     public Task UpdateAsync(BranchUpdateDto branchUpdateDto, int id);
     public Task DeleteAsync(int id);
     public Task SaveChangesAsync();
-
 }

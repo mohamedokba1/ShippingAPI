@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shipping.API.ErrorHandling;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories;
@@ -13,10 +14,11 @@ namespace Shipping.API
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
+            builder.Services.AddControllers(options => 
+               options.Filters.Add<GlobalErrorHandling>());
 
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -35,13 +37,12 @@ namespace Shipping.API
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
 
 
-            
+
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             #endregion
 
             #region Identity
-
             builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>(options =>
             {
                 options.Password.RequireUppercase = true;
@@ -61,10 +62,20 @@ namespace Shipping.API
                 options.DefaultAuthenticateScheme = "Dev";
                 options.DefaultChallengeScheme = "Dev";
             })
-            .AddJwtBearer("Dev", options =>
+            .AddJwtBearer("Dev", _ =>
             {
                 var secretKeyString = builder.Configuration.GetValue<string>("SecretKey");
                 var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
+            });
+            #endregion
+
+            #region Authorization
+            builder.Services.AddAuthorization(options =>
+            {
+                options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin"));
+                options.AddPolicy("TradersOnly", policy => policy.RequireRole("trader"));
+                options.AddPolicy("EmployeesOnly", policy => policy.RequireRole("employee"));
+                options.AddPolicy("salesrepresentativesOnly", policy => policy.RequireRole("salesrepresentative"));
             });
             #endregion
 
@@ -79,14 +90,14 @@ namespace Shipping.API
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-            builder.Services.AddScoped<IOrderService,OrderService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
-            builder.Services.AddScoped<IPrivellageService,PrivellageService>();
+            builder.Services.AddScoped<IPrivellageService, PrivellageService>();
             builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
-            builder.Services.AddScoped<IGovermentRepository,GovernmentRepository>();
+            builder.Services.AddScoped<IGovermentRepository, GovernmentRepository>();
 
             builder.Services.AddScoped<IEmployeeService, EmployeeService>();
             builder.Services.AddScoped<IGovernmentService, GovernmentService>();
@@ -99,6 +110,10 @@ namespace Shipping.API
 
             builder.Services.AddScoped<ITraderRepository, TraderRepository>();
             builder.Services.AddScoped<ITraderService, TraderServices>();
+
+            builder.Services.AddScoped<IBranchRepository, BranchRepository>();
+            builder.Services.AddScoped<IBranchService, BranchService>();
+            
             #endregion 
 
             #region Auto Mapper
@@ -107,7 +122,7 @@ namespace Shipping.API
 
             #endregion
 
-
+            builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
@@ -116,13 +131,26 @@ namespace Shipping.API
             }
             app.UseCors("Shipping");
             app.UseRouting();
-
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
-            app.UseCors("AllowedOrigins");
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();
 
+            using (var scope = app.Services.CreateScope())
+            {
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationUserRole>>();
+
+                List<string> roles = new List<string> { "admin", "trader", "employee", "salesrepresentative" };
+                foreach(var role in roles)
+                {
+                    bool roleExist = await roleManager.RoleExistsAsync(role);
+                    if(!roleExist)
+                    {
+                        await roleManager.CreateAsync(new ApplicationUserRole() { Name = role});
+                    }
+                } 
+            }
             app.Run();
         }
     }

@@ -2,66 +2,49 @@
 using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Shipping.Repositories.Repos
+namespace Shipping.Repositories.Repos;
+
+public class ProductRepository : IProductRepository
 {
+    private readonly ApplicationDbContext _context;
 
-
-    public class ProductRepository : IProductRepository
+    public ProductRepository(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext context;
+        _context = context;
+    }
+    
+    public async Task AddProductAsync(Product product)
+    {
+        await _context.Set<Product>().AddAsync(product);
+        await SaveChangesAsync();
+    }
 
-        public ProductRepository(ApplicationDbContext _context)
-        {
-            context = _context;
-        }
+    public async Task DeleteProductAsync(Product product)
+    {
+        _context.Set<Product>().Remove(product);
+        await SaveChangesAsync();
+    }
+
+    public  async Task<IEnumerable<Product>> GetAllProductsAsync(Order order)
+    {
+        return await _context.Set<Product>()
+            .Where(product => product.Order == order)
+            .ToListAsync();
+    }
+
+    public async Task<Product?> GetByIdAsync(long id)
+    {
+        return await _context.Set<Product>().FindAsync(id);
+    }
+
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
         
-
-        public async Task AddAsync(Product product)
-        {
-            await context.Set<Product>().AddAsync(product);
-            await saveChanges();
-             
-        }
-
-        public async Task DeleteAsync(Product product)
-        {
-          
-            context.Set<Product>().Remove(product);
-            await saveChanges();
-        }
-
-       
-       
-
-        public  async Task<IEnumerable<Product>> GetAllAsync()
-        {
-            return await context.Set<Product>().ToListAsync();
-        }
-
-
-
-        public async Task<Product>? GetByIdAsync(long id)
-        {
-            return await context.Set<Product>().FindAsync(id);
-        }
-
-        public async Task saveChanges()
-        {
-            context.SaveChanges();
-            
-        }
-
-        public async Task UpdateAsync(long id, Product? product)
-        {
-
-            await saveChanges();
-        }
+    }
+    public async Task UpdateProductAsync(long id, Product? product)
+    {
+        
     }
 }

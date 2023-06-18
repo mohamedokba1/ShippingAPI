@@ -2,7 +2,6 @@
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.ProductDtos;
 using Shipping.Services.IServices;
 
 namespace Shipping.Services.Services
@@ -16,64 +15,42 @@ namespace Shipping.Services.Services
             _productRepository = productRepository;
             _mapper = mapper;
         }
-        public Task AddAsync(AddProductDto product)
+        public async Task AddProductAsync(ProductAddDto productAddDto)
         {
-              Product ProductToAdd=_mapper.Map<Product>(product);
-            
-              _productRepository.AddAsync(ProductToAdd);
-            
-              return Task.CompletedTask;
+              Product ProductToAdd = _mapper.Map<Product>(productAddDto);
+              await _productRepository.AddProductAsync(ProductToAdd);
         }
 
-       
-
-        public async Task DeleteAsync(long id)
+        public async Task DeleteProductAsync(long productId)
         {
-            var productToDelete = await _productRepository.GetByIdAsync( id);
-            if (productToDelete != null)
-            {
-                await _productRepository.DeleteAsync(productToDelete);
-                
-            }
+            var product = await _productRepository.GetByIdAsync(productId);
+            if (product != null)
+                await _productRepository.DeleteProductAsync(product);
         }
 
-        public  async Task<ProductReadDtos>? GetProductByIdAsync(long id)
+        public  async Task<ProductResponseDto?> GetProductByIdAsync(long id)
         {
-            
             var productFromDB=await _productRepository.GetByIdAsync(id);
             if(productFromDB != null)
-            {
-                return _mapper.Map<ProductReadDtos>(productFromDB);
-            }
-            else
-            {
-                return null;
-            }
+                return _mapper.Map<ProductResponseDto>(productFromDB);
+
+            return null;
         }
 
-        public async Task<IEnumerable<ProductReadDtos>> GetProductsAsync()
+        public async Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync(Order order)
         {
-            var allProduct=await  _productRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<ProductReadDtos>>(allProduct);
+            var allProduct = await  _productRepository.GetAllProductsAsync(order);
+            return _mapper.Map<IEnumerable<ProductResponseDto>>(allProduct);
         }
 
-        public  async Task UpdateAsync(long id, ProductUpdateDtos product)
+        public  async Task UpdateProductAsync(long id, ProductUpdateDto productUpdateDto)
         {
-            Product productToUpdate =await  _productRepository.GetByIdAsync(id);
-            if (productToUpdate != null)
+            Product? product = await _productRepository.GetByIdAsync(id);
+            if(product != null) 
             {
-                
-
-                productToUpdate.ProductName = product.ProductName;
-                productToUpdate.Price = product.Price;
-                productToUpdate.Weight = product.Weight;
-               
-                
+                _mapper.Map<ProductUpdateDto, Product>(productUpdateDto, product);
+                await _productRepository.SaveChangesAsync();
             }
-
-            
-             
         }
-
     }
 }

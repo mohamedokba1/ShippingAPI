@@ -47,8 +47,8 @@ public class TraderServices : ITraderService
                         }
                         return validationResult;
                     }
-                    await _userManager.AddToRoleAsync(user, "trader");
-                    await _userManager.UpdateAsync(user);
+                    //await _userManager.AddToRoleAsync(user, "trader");
+                    //await _userManager.UpdateAsync(user);
                     ApplicationUser? addedUser = await _userManager.FindByEmailAsync(traderAddDto.Email);
                     traderAddDto.User = addedUser;
                 }
@@ -69,7 +69,6 @@ public class TraderServices : ITraderService
         }
         else
             return validationResult;
-        
     }
 
     public async Task<bool> DeleteTraderAsync(long trader_id)
@@ -145,15 +144,14 @@ public class TraderServices : ITraderService
         return trdaersResponse;
     }
 
-    public async Task<long> GetTraderIdByEmail(string email)
+    public async Task<long> GetTraderIdByEmailAsync(string email)
     {
-        var trader = await _traderRepository.GetByEmailAsync(email);
+        var trader = await _traderRepository.GetTraderByEmailAsync(email);
 
         if (trader == null)
         {
             throw new Exception("Trader not found.");
         }
-
         return trader.TraderId;
     }
 }
