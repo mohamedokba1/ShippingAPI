@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
+using Shipping.Services.Services;
 
 namespace Shipping.API.Controllers
 {
@@ -16,62 +17,72 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
+        [Route("Getall")]
+
         public async Task<ActionResult<IEnumerable<PrivellageDto>>> GetAll()
         {
-            var privellages = await privellageService.GetAllAsync();
+            var privellages = await privellageService.Getall();
             return Ok(privellages);
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetById(long id)
+        [Route("GetById/{id}")]
+
+        public async Task<ActionResult<PrivellageDto>> GetById(int id)
         {
-            var privellage = await privellageService.GetByIdAsync(id);
+            var privellage = await privellageService.GetByid(id);
             if (privellage == null)
                 return NotFound();
             return Ok(privellage);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(PrivellageDto privellage)
+        [Route("Add")]
+
+        public async Task<ActionResult> Add(PrivilegeAddDto privellageaddDto)
         {
-            if (privellage == null)
-                return BadRequest("Privellage is Null.");
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            await privellageService.AddAsync(privellage);
-
-            return CreatedAtAction(nameof(privellage), new { id = privellage.Id }, privellage);
+            try
+            {
+                await privellageService.Add(privellageaddDto);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPut]
-        public async Task<ActionResult> Update(long id, PrivellageDto privellage)
+        [Route("update/{id}")]
+
+
+        public async Task<ActionResult> Update(int id,PrivllageUpdateDto privellagedto)
         {
-            if (id != privellage.Id)
-                return BadRequest("Privellage is Null.");
-
-            if (!ModelState.IsValid)
+            try
             {
-                return BadRequest(ModelState);
+                await privellageService.Update(id, privellagedto);
+                return Ok("update privilege is sucees");
             }
-            var oldPrivellge = await privellageService.GetByIdAsync(id);
-            if (oldPrivellge == null)
-                return NotFound();
-
-            await privellageService.UpdateAsync(oldPrivellge, id);
-            return NoContent();
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            
         }
 
         [HttpDelete]
-        public async Task<ActionResult> Delete(long id)
+        [Route("Delete")]
+        public async Task<ActionResult> Delete(int id)
         {
-            var privellage = await privellageService.GetByIdAsync(id);
-            if (privellage == null)
-                return NotFound();
-
-            await privellageService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await privellageService.Delete(id);
+                return Ok("Seleted successfully");
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -3,78 +3,79 @@ using Shipping.Services.IServices;
 using Shipping.Services.Validations;
 using Shipping.Services.Dtos;
 using Shipping.Entities.Domain.Models;
+using AutoMapper;
 
 namespace Shipping.Services.Services;
 
 public class PrivellageService : IPrivellageService
 {
     private readonly IPrivellageRepository privellageRepository;
+    private readonly IMapper mapper;
 
-    public PrivellageService(IPrivellageRepository _privellageRepository)
+    public PrivellageService(IPrivellageRepository _privellageRepository,IMapper mapper)
     {
         privellageRepository = _privellageRepository;
+        this.mapper = mapper;
     }
-    public async Task AddAsync(PrivellageDto privellgeDto)
+
+    public async Task Add(PrivilegeAddDto privilegedto)
     {
-        if(privellgeDto != null)
+        Privellge p = mapper.Map<Privellge>(privilegedto);
+        await privellageRepository.Add(p);
+        await privellageRepository.Savechanges();
+
+    }
+
+    public async Task Delete(int id)
+    {
+        Privellge privFromDb = await privellageRepository.GetByid(id);
+        if(privFromDb != null)
         {
-            Privellge? privellage = new Privellge
-            {
-                PrivellgeName = privellgeDto.PrivellgeName,
-            };
-            ValidateModel.ModelValidation(privellage);
-            await privellageRepository.AddAsync(privellage);
-            await privellageRepository.SaveChangesAsync();
+            await privellageRepository.Delete(id);
+            await privellageRepository.Savechanges();
+
+        }
+        else
+        {
+            throw new Exception("this privilege not found");
         }
     }
 
-    public async Task DeleteAsync(long id)
+    public async Task<IEnumerable<PrivellageDto>> Getall()
     {
-        var privellge = await privellageRepository.GetByIdAsync(id);
-        if (privellge != null)
-        {
-            ValidateModel.ModelValidation(privellge);
+        var privilegesFromDb = await privellageRepository.Getall();
+        return mapper.Map<IEnumerable<PrivellageDto>>(privilegesFromDb);
+    }
 
-            await privellageRepository.DeleteAsync(privellge);
-            await privellageRepository.SaveChangesAsync();
+    public async Task<PrivellageDto> GetByid(int id)
+    {
+        var privFromDb = await privellageRepository.GetByid(id);
+        if(privFromDb == null)
+        {
+            return null;
         }
+        return mapper.Map<PrivellageDto>(privFromDb);
     }
 
-    public async Task<IEnumerable<PrivellageDto>> GetAllAsync()
+    public async Task Savechanges()
     {
-        var privellges = await privellageRepository.GetAllAsync();
-        return privellges.Select(p => new PrivellageDto
-        {
-           PrivellgeName = p.PrivellgeName
-        });
+        await privellageRepository.Savechanges();
+
     }
 
-    public async Task<PrivellageDto> GetByIdAsync(long id)
+    public async Task Update(int id, PrivllageUpdateDto privilegedto)
     {
-        var privellge = await privellageRepository.GetByIdAsync(id);
-        if (privellge != null)
+        Privellge privfromdb = await privellageRepository.GetByid(id);
+        if(privfromdb != null)
         {
-            return new PrivellageDto
-            {
-                PrivellgeName = privellge.PrivellgeName
-            };
+            mapper.Map(privilegedto, privfromdb);
+            await privellageRepository.Savechanges();
         }
-        return null;
-    }
-
-    public async Task UpdateAsync(PrivellageDto privellgeDto, long id)
-    {
-        if (privellgeDto != null)
+        else
         {
-            Privellge? privellge = await privellageRepository.GetByIdAsync(id);
-            if (privellge != null)
-            {
-                privellge.PrivellgeName = privellgeDto.PrivellgeName;
-                ValidateModel.ModelValidation(privellge);
-
-                await privellageRepository.UpdateAsync(privellge);
-                await privellageRepository.SaveChangesAsync();
-            }
+            throw new Exception("this privilege is not found");
         }
     }
 }
+
+

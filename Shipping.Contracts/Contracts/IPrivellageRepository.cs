@@ -4,10 +4,14 @@ namespace Shipping.Repositories.Contracts;
 
 public interface IPrivellageRepository
 {
-    Task<IEnumerable<Privellge>> GetAllAsync();
-    Task<Privellge> GetByIdAsync(long id);
-    Task AddAsync(Privellge privellge);
-    Task UpdateAsync(Privellge privellge);
-    Task DeleteAsync(Privellge privellge);
-    Task SaveChangesAsync();
+    Task<IEnumerable<Privellge>> Getall();
+    Task<Privellge> GetByid(int id);
+    Task Add(Privellge privilege);
+    Task Update(int id, Privellge privilege);
+    Task Delete(int id);
+    Task Savechanges();
+
+
+
+
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230616175226_emp.privilage")]
+    partial class empprivilage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -426,7 +429,7 @@ namespace Shipping.Entities.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("branchid")
+                    b.Property<int?>("branchId")
                         .HasColumnType("int");
 
                     b.Property<int>("privillageid")
@@ -436,7 +439,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("branchid");
+                    b.HasIndex("branchId");
 
                     b.HasIndex("privillageid");
 
@@ -529,9 +532,6 @@ namespace Shipping.Entities.Migrations
                     b.Property<string>("PrivellgeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
 
                     b.HasKey("Privellge_Id");
 
@@ -804,9 +804,7 @@ namespace Shipping.Entities.Migrations
 
                     b.HasOne("Shipping.Entities.Domain.Models.Branch", "branch")
                         .WithMany("Employees")
-                        .HasForeignKey("branchid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("branchId");
 
                     b.HasOne("Shipping.Entities.Domain.Models.Privellge", "Privillage")
                         .WithMany("Employees")

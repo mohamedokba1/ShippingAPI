@@ -26,12 +26,23 @@ namespace Shipping.Services.Services
         {
             Employee e =   mapper.Map<Employee>(employeeDto);
             await employeeRepository.Add(e);
+           await employeeRepository.Savechanges();
 
         }
 
-        public async Task Delete(string id)
+        public async Task Delete(long id)
         {
-             await employeeRepository.Delete(id);
+            Employee employeeFromDb = await employeeRepository.GetByid(id);
+            if(employeeFromDb != null)
+            {
+                employeeFromDb.IsActive = false;
+
+                await employeeRepository.Savechanges();
+            }
+            else
+            {
+                throw new Exception("this employee not found");
+            }
         }
 
         public async Task<IEnumerable<EmployeeReadDto>> Getall()
@@ -40,7 +51,7 @@ namespace Shipping.Services.Services
             return mapper.Map<IEnumerable<EmployeeReadDto>>(employeesfromDb);
         }
 
-        public async Task<EmployeeReadDto> GetByid(string id)
+        public async Task<EmployeeReadDto> GetByid(long id)
         {
             var employeefromDb = await employeeRepository.GetByid(id);
 
@@ -56,14 +67,19 @@ namespace Shipping.Services.Services
             await employeeRepository.Savechanges();
         }
 
-        public async Task Update(string id, EmployeeupdateDto employeeDto)
+        public async Task Update(long id, EmployeeupdateDto employeeDto)
         {
-            Employee empfromDb =await employeeRepository.GetByid(id);
-            if(empfromDb != null)
+            Employee empFromDb =await employeeRepository.GetByid(id);
+            if(empFromDb != null)
             {
-                empfromDb = mapper.Map<Employee>(empfromDb);
-              await   employeeRepository.Update(id, empfromDb);
+                mapper.Map(employeeDto, empFromDb);
 
+                await employeeRepository.Savechanges(); 
+
+            }
+            else
+            {
+                throw new Exception("this employee is not found");
             }
         }
     }
