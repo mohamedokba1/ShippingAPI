@@ -23,6 +23,7 @@ namespace Shipping.API.Controllers
         {
             var privellages = await privellageService.Getall();
             return Ok(privellages);
+
         }
 
         [HttpGet]

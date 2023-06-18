@@ -1,6 +1,5 @@
 ﻿using Shipping.Repositories.Contracts;
 using Shipping.Services.IServices;
-using Shipping.Services.Validations;
 using Shipping.Services.Dtos;
 using Shipping.Entities.Domain.Models;
 using AutoMapper;

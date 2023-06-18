@@ -69,7 +69,6 @@ public class TraderServices : ITraderService
         }
         else
             return validationResult;
-        
     }
 
     public async Task<bool> DeleteTraderAsync(long trader_id)
@@ -145,8 +144,7 @@ public class TraderServices : ITraderService
         return trdaersResponse;
     }
 
-<<<<<<< HEAD
-    public async Task<long> GetTraderIdByEmail(string email)
+    public async Task<long> GetTraderIdByEmailAsync(string email)
     {
         var trader = await _traderRepository.GetByEmailAsync(email);
 
@@ -154,10 +152,6 @@ public class TraderServices : ITraderService
         {
             throw new Exception("Trader not found.");
         }
-
         return trader.TraderId;
     }
-=======
- 
->>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 }

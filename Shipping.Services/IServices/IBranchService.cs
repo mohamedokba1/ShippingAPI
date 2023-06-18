@@ -15,6 +15,4 @@ public interface IBranchService
     public Task UpdateAsync(BranchUpdateDto branchUpdateDto, int id);
     public Task DeleteAsync(int id);
     public Task SaveChangesAsync();
-
-}
 }

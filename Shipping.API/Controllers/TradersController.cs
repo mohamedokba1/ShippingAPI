@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-<<<<<<< HEAD
-using Shipping.Services.Services;
-=======
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
->>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 
 namespace Shipping.API.Controllers
 {
@@ -43,7 +39,7 @@ namespace Shipping.API.Controllers
         {
             try
             {
-                var traderId = await _traderService.GetTraderIdByEmail(email);
+                var traderId = await _traderService.GetTraderIdByEmailAsync(email);
                 return traderId;
             }
             catch (Exception ex)
