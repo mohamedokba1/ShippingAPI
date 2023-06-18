@@ -22,11 +22,9 @@ namespace Shipping.API.Controllers
             _traderService = traderService;
         }
 
-        [HttpGet("{userId}")]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll(string userEmail)
         {
-            var userId = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
-
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
             return Ok(orders);
         }
