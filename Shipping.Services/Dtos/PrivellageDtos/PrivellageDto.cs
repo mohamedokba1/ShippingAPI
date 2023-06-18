@@ -2,6 +2,8 @@
 
 public class PrivellageDto
 {
-    public long Id { get; set; }
+    public int Privellge_Id { get; set; }
     public string PrivellgeName { get; set; } = string.Empty;
+    public DateTime date { get; set; }
+
 }

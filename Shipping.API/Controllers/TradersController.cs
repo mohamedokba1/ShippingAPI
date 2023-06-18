@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Shipping.Services.IServices;
-using Shipping.Services.Dtos;
 using Microsoft.EntityFrameworkCore;
+using Shipping.Services.Dtos;
+using Shipping.Services.IServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.API.Controllers
 {
@@ -20,19 +21,32 @@ namespace Shipping.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            IEnumerable<TraderResponseDto>? response =  await _traderService.GetAllTradersAsync();
+            IEnumerable<TraderResponseDto>? response = await _traderService.GetAllTradersAsync();
             return Ok(response?.ToList());
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(string id)
+        public async Task<IActionResult> GetById(long id)
         {
-           TraderResponseDto? response = await _traderService.GetTraderByIdAsync(id);
-           if(response == null)
+            TraderResponseDto? response = await _traderService.GetTraderByIdAsync(id);
+            if (response == null)
                 return NotFound();
-           return Ok(response);
+            return Ok(response);
         }
-
+        [HttpGet]
+        [Route("email/{email}")]
+        public async Task<ActionResult<long>> GetTraderIdByEmail(string email)
+        {
+            try
+            {
+                var traderId = await _traderService.GetTraderIdByEmailAsync(email);
+                return traderId;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
         [HttpGet("paginated")]
         public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
         {
@@ -56,55 +70,46 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet("filtered")]
-        public async Task<IActionResult> GetFilteredTraders([FromQuery]string searchString)
+        public async Task<IActionResult> GetFilteredTraders([FromQuery] string searchString)
         {
-            if(string.IsNullOrEmpty(searchString) || string.IsNullOrWhiteSpace(searchString)) {
+            if (string.IsNullOrEmpty(searchString) || string.IsNullOrWhiteSpace(searchString))
+            {
                 return BadRequest();
             }
             IEnumerable<TraderResponseDto>? traders = await _traderService.GetFilteredTradersAsync(searchString);
             return Ok(traders?.ToList());
         }
+
         [HttpPost]
-        public async Task<IActionResult> Addtrader(TraderAddDto traderAddDto)
+        public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
         {
-            TraderResponseDto? response = await _traderService.AddTraderAsync(traderAddDto);
-            var uriBuilder = new UriBuilder(Request.Scheme, Request.Host.Host, Request.Host.Port ?? -1, "/api/traders/" + response?.TraderId.ToString());
-            string createdUri = uriBuilder.ToString();
-            if(response == null)
-                return Problem();
-            return Created(createdUri, response);
+            var errors = await _traderService.AddUserAndTrader(traderAddDto);
+            if (errors is null)
+                 return Ok(traderAddDto);
+            return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
         }
 
         [HttpPut("{traderId}")]
-        public async Task<IActionResult> UpdateTrader(string traderId, TraderUpdateDto traderUpdateDto)
+        public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
         {
-            bool isUpdated = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
-            if(isUpdated)
+            List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
+            if (errors is null)
             {
                 TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
                 return Ok(updatedTrader);
             }
             else
-                return BadRequest();
+                return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
         }
 
         [HttpDelete("{traderId}")]
-        public async Task<IActionResult> DeleteTrader(string traderId)
+        public async Task<IActionResult> DeleteTrader(long traderId)
         {
-            TraderResponseDto? traderResponse = await _traderService.GetTraderByIdAsync(traderId);
-            if(traderResponse == null) return NotFound();
-            else
-            {
-                bool isDeleted = await _traderService.DeleteTraderAsync(traderId);
-                if (isDeleted)
-                {
-                    return NoContent();
-                }
-                else
-                {
-                    return StatusCode(500);
-                }
-            }
+            bool isDeleted = await _traderService.DeleteTraderAsync(traderId);
+            if (isDeleted)
+                return NoContent();
+
+            return NotFound();
         }
     }
 }

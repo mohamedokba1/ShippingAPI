@@ -5,9 +5,9 @@ namespace Shipping.Repositories.Contracts;
 public interface IEmployeeRepository
 {
     Task<IEnumerable<Employee>> Getall();
-    Task<Employee> GetByid(string id);
+    Task<Employee> GetByid(long id);
     Task Add(Employee employee);
-    Task Update(string id, Employee employee);
-    Task Delete(string id);
+    Task Update(long id, Employee employee);
+    Task Delete(long id);
     Task Savechanges();
 }

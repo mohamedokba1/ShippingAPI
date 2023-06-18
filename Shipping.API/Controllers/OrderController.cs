@@ -1,24 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/orders")]
     [ApiController]
     public class OrderController : ControllerBase
     {
-        private readonly IOrderService orderService;
-        public OrderController(IOrderService _orderService)
+        private readonly IOrderService _orderService;
+        private readonly HttpContextAccessor _httpContextAccessor;
+        private readonly ITraderService _traderService;
+        public OrderController(
+            IOrderService orderService,
+            HttpContextAccessor httpContextAccessor,
+            ITraderService traderService)
         {
-            orderService = _orderService;
+            _orderService = orderService;
+            _httpContextAccessor = httpContextAccessor;
+            _traderService = traderService;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll()
+        [HttpGet("{userId}")]
+        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll(string userEmail)
         {
-            var orders = await orderService.GetAllAsync();
+            var userId = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
+
+            var orders = await _orderService.GetAllOrdersAsync(userEmail);
             return Ok(orders);
         }
 
@@ -26,38 +35,35 @@ namespace Shipping.API.Controllers
         [Route("{id}")]
         public async Task<ActionResult<OrderReadDto>> GetById(long id)
         {
-            var order = await orderService.GetByIdAsync(id);
+            var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
                 return NotFound();
             return Ok(order);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(OrderAddDto order)
+        public async Task<ActionResult> Add(OrderAddDto order, string userEmail)
         {
-            if (order == null)
-                return BadRequest("Order is Null.");
-
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            await orderService.AddAsync(order);
-
-            return CreatedAtAction(nameof(order), new { id = order.Id}, order);
+            List<ValidationResult>? errors =  await _orderService.AddOrderAsync(order, userEmail);
+            if(errors?.Count ==0)
+            {
+                return Ok(order);
+            }
+            else
+                return BadRequest();
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(long id, [FromBody] OrderUpdateDto order)
+        public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var oldOrder = await orderService.GetByIdAsync(id);
+            var oldOrder = await _orderService.GetOrderByIdAsync(id);
             if (oldOrder == null)
                 return NotFound();
-            
-            await orderService.UpdateAsync(order, id);
             return NoContent();
         }
 
@@ -65,11 +71,11 @@ namespace Shipping.API.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Delete(long id)
         {
-            var order = await orderService.GetByIdAsync(id);
+            var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
                 return NotFound();
             
-            await orderService.DeleteAsync(id);
+            await _orderService.DeleteOrderAsync(id);
             return NoContent();
         }
     }

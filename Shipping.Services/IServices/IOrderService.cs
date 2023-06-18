@@ -1,13 +1,13 @@
 ﻿using Shipping.Services.Dtos;
+using System.ComponentModel.DataAnnotations;
 
-namespace Shipping.Services.IServices
+namespace Shipping.Services.IServices;
+
+public interface IOrderService
 {
-    public interface IOrderService
-    {
-        Task<IEnumerable<OrderReadDto>> GetAllAsync();
-        Task<OrderResponseDto> GetByIdAsync(long id);
-        Task AddAsync(OrderAddDto orderDto);
-        Task UpdateAsync(OrderUpdateDto orderUpdateDto, long id);
-        Task DeleteAsync(long id);
-    }
+    Task<IEnumerable<OrderReadDto>> GetAllOrdersAsync(string email);
+    Task<OrderResponseDto?> GetOrderByIdAsync(long id);
+    Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail);
+    Task UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto);
+    Task DeleteOrderAsync(long id);
 }

@@ -1,17 +1,13 @@
 ﻿using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
-using Shipping.Services.Dtos.ProductDtos;
 
 namespace Shipping.Services.IServices;
 
 public interface IProductService
 {
-    public Task<IEnumerable<ProductReadDtos>> GetProductsAsync();
-    
-    public  Task<ProductReadDtos>? GetProductByIdAsync(long id);
-    public Task AddAsync(AddProductDto product);
-    public Task UpdateAsync(long id,ProductUpdateDtos product);
-    public Task DeleteAsync(long id);
-    
-
+    public Task<IEnumerable<ProductResponseDto>> GetAllProductsAsync(Order order);
+    public  Task<ProductResponseDto?> GetProductByIdAsync(long id);
+    public Task AddProductAsync(ProductAddDto product);
+    public Task UpdateProductAsync(long id, ProductUpdateDto product);
+    public Task DeleteProductAsync(long id);
 }
