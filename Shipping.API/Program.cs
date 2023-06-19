@@ -17,9 +17,9 @@ namespace Shipping.API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers(options => 
+            builder.Services.AddControllers(options =>
                options.Filters.Add<GlobalErrorHandling>());
-
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -122,7 +122,7 @@ namespace Shipping.API
 
             #endregion
 
-            builder.Services.AddHttpContextAccessor();
+            //builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

@@ -27,8 +27,8 @@ public class TraderAddDto
     [Required(ErrorMessage = "{0} can not be blank")]
     [StringLength(11)]
     public string PhoneNumber { get; set; } = string.Empty;
-    [Required]
-    public ICollection<Privellge> Privellges { get; set; }
+    [JsonIgnore]
+    public ICollection<Privellge>? Privellges { get; set; }
     [JsonIgnore]
     public ApplicationUser? User { get; set; }
 }
