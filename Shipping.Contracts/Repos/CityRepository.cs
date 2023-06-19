@@ -20,7 +20,7 @@ public class CityRepository : ICityRepository
 
     public async Task<City> GetByIdAsync(int id)
     {
-        return await _context.Set<City>().FindAsync(id);
+        return await _context.Set<City>().Include(c => c.goverment).FirstOrDefaultAsync(c=>c.City_Id==id);
     }
 
     public async Task AddAsync(City entity)
