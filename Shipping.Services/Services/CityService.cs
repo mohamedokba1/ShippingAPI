@@ -37,7 +37,9 @@ public class CityService: ICityService
             {
                 CityId = city.City_Id,
                 CityName = city.CityName,
-                NormalShippingCost = city.NormalShippingCost
+                NormalShippingCost = city.NormalShippingCost,
+                PickupShippingCost=city.PickupShippingCost,
+                govermentName = city.goverment!.GovermentName,
             };
         }
         return null!;
@@ -70,7 +72,7 @@ public class CityService: ICityService
             {
                 city.CityName = cityUpdateDto.CityName;
                 city.NormalShippingCost = cityUpdateDto.NormalShippingCost;
-                city.PickupShippingCost = cityUpdateDto.NormalShippingCost;
+                city.PickupShippingCost = cityUpdateDto.PickupShippingCost;
                 ValidateModel.ModelValidation(city);
 
                 await _cityRepository.UpdateAsync(city);
