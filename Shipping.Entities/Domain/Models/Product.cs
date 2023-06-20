@@ -14,6 +14,7 @@ public class Product
     public double Weight { get; set; }
     [Required]
     public double Price { get; set; }
+    public int Quantity { get; set; }
     public long OrderId { get; set; }
 
     public virtual Order Order { get; set; }

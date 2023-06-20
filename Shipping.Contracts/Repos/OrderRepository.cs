@@ -17,24 +17,10 @@ namespace Shipping.Repositories.Repos
         public async Task<IEnumerable<Order>> GetAllOrdersAsync()
         {
             return await _context.Set<Order>()
-                .Include(c => c.Customers)
+                .Include(c => c.Customer)
+                .Include(p => p.Products)
                 .ToListAsync();
         }
-        public async Task<IEnumerable<Order>> GetAllTraderOrdersAsync(Trader trader)
-        {
-            return await _context.Set<Order>()
-                .Include(c=> c.Customers)
-                .Where(order => order.Trader == trader)
-                .ToListAsync();
-        }
-        public async Task<IEnumerable<Order>> GetAllSalesOrdersAsync(SalesRepresentative salesRepresentative)
-        {
-            return await _context.Set<Order>()
-                .Include(c => c.Customers)
-                .Where(order => order.SalesRepresentative == salesRepresentative)
-                .ToListAsync();
-        }
-
         public async Task<Order?> GetOrderByIdAsync(long id)
         {
             return await _context.Set<Order>().FirstOrDefaultAsync(order => order.OrderId == id);
@@ -70,5 +56,22 @@ namespace Shipping.Repositories.Repos
             await _context.SaveChangesAsync();
         }
 
+        public async Task<IEnumerable<Order>> GetAllTraderOrdersAsync(long traderId)
+        {
+            return await _context.Set<Order>()
+                .Include(c => c.Customer)
+                .Include(p => p.Products)
+                .Where(order => order.TraderId == traderId)
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Order>> GetAllSalesOrdersAsync(long salesId)
+        {
+            return await _context.Set<Order>()
+                .Include(c => c.Customer)
+                .Include(p => p.Products)
+                .Where(order => order.SalesRepresentativeId == salesId)
+                .ToListAsync();
+        }
     }
 }

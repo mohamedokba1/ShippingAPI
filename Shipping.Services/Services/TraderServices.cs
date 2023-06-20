@@ -147,6 +147,6 @@ public class TraderServices : ITraderService
     public async Task<long?> GetTraderIdByEmailAsync(string email)
     {
         Trader? trader = await _traderRepository.GetTraderByEmailAsync(email);
-        return trader?.TraderId;
+        return  trader?.TraderId;
     }
 }

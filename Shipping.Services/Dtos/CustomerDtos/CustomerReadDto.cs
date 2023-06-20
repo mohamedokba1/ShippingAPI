@@ -1,7 +1,4 @@
-﻿using Shipping.Entities.Domain.Models;
-using System.ComponentModel.DataAnnotations;
-
-namespace Shipping.Services.Dtos;
+﻿namespace Shipping.Services.Dtos;
 public class CustomerReadDto
 {
     public long CustomerId { get; set; }
@@ -12,5 +9,4 @@ public class CustomerReadDto
     public string Village { get; set; } = string.Empty;
     public string Phone1 { get; set; } = string.Empty;
     public string Phone2 { get; set; } = string.Empty;
-    public ICollection<OrderReadDto>? Orders { get; set; }
 }

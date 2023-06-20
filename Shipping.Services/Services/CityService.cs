@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Services.Dtos;
@@ -11,10 +9,12 @@ namespace Shipping.Services.Services;
 public class CityService: ICityService
 {
     private readonly ICityRepository _cityRepository;
+    private readonly IMapper _mapper;
 
-    public CityService(ICityRepository cityRepository)
+    public CityService(ICityRepository cityRepository, IMapper mapper)
     {
         _cityRepository = cityRepository;
+        _mapper = mapper;
     }
     public async Task<IEnumerable<CityReadDto>> GetAllAsync()
     {
@@ -92,6 +92,11 @@ public class CityService: ICityService
     public async Task SaveChangesAsync()
     {
         await _cityRepository.SaveChangesAsync();
+    }
+
+    public async Task<CityReadDto?> GetByNameAsync(string cityName)
+    {
+        return _mapper.Map<CityReadDto>(await _cityRepository.GetByNameAsync(cityName));
     }
 }
 

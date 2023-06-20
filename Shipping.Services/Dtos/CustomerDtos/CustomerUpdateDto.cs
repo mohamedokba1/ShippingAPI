@@ -3,8 +3,6 @@
 namespace Shipping.Services.Dtos;
 public class CustomerUpdateDto
 {
-    public long CustomerId { get; set; }
-
     [Required]
     public string Name { get; set; }=string.Empty;
     [DataType(DataType.EmailAddress)]

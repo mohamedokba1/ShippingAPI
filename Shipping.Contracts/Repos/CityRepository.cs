@@ -18,7 +18,7 @@ public class CityRepository : ICityRepository
         return await _context.Set<City>().Include(c=>c.goverment).ToListAsync();
     }
 
-    public async Task<City> GetByIdAsync(int id)
+    public async Task<City?> GetByIdAsync(int id)
     {
         return await _context.Set<City>().FindAsync(id);
     }
@@ -45,4 +45,8 @@ public class CityRepository : ICityRepository
         await _context.SaveChangesAsync();
     }
 
+    public async Task<City?> GetByNameAsync(string cityName)
+    {
+        return await _context.Set<City>().FirstOrDefaultAsync(city => city.CityName == cityName);
+    }
 }

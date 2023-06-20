@@ -12,6 +12,8 @@ public class ProductAddDto
     [Required]
     public double Weight { get; set; }
     [Required]
+    public int Quantity { get; set; }
+    [Required]
     public double Price { get; set; }
     [JsonIgnore]
     public Order? Order { get; set; }

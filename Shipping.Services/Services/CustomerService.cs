@@ -1,114 +1,51 @@
-﻿using Shipping.Services.Validations;
+﻿using AutoMapper;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
-using Shipping.Entities.Domain.Models;
 
 namespace Shipping.Services.Services;
-public class CustomerService: ICustomerService
+public class CustomerService : ICustomerService
 {
     private readonly ICustomerRepository _customerRepository;
+    private readonly IMapper _mapper;
 
-    public CustomerService(ICustomerRepository customerRepository)
+    public CustomerService(ICustomerRepository customerRepository, IMapper mapper)
     {
         _customerRepository = customerRepository;
+        _mapper = mapper;
     }
 
     public async Task<IEnumerable<CustomerReadDto>> GetAllAsync()
     {
-        var customers = await _customerRepository.GetAllAsync();
-        return customers.Select(customer => new CustomerReadDto
-        {
-            CustomerId = customer.Customer_Id,
-            Email = customer.Email,
-            Name = customer.Name,
-            Goverment = customer.Goverment,
-            City = customer.City,
-            Village = customer.Village,
-            Phone1 = customer.Phone1,
-            Phone2 = customer.Phone2,
-            //OrderId=customer.Order_Id
-        });
+        return _mapper.Map<IEnumerable<CustomerReadDto>>(await _customerRepository.GetAllAsync());
     }
 
-    public async Task<CustomerReadDto> GetByIdAsync(long id)
+    public async Task<CustomerReadDto?> GetByIdAsync(long id)
     {
-        var customer = await _customerRepository.GetByIdAsync(id);
-        if (customer != null)
-        {
-            return new CustomerReadDto
-            {
-                CustomerId = customer.Customer_Id,
-                Email = customer.Email,
-                Name = customer.Name,
-                Goverment = customer.Goverment,
-                City = customer.City,
-                Village = customer.Village,
-                Phone1 = customer.Phone1,
-                Phone2 = customer.Phone2
-            };
-        }
-        return null;
+        return _mapper.Map<CustomerReadDto>(await _customerRepository.GetByIdAsync(id));
     }
 
-    public async Task AddAsync(CustomerAddDto customerAddDto)
+    public async Task<int> AddAsync(CustomerAddDto customerAddDto)
     {
-        if (customerAddDto != null)
-        {
-            var customer = new Customer
-            {
-                Email = customerAddDto.Email,
-                Name = customerAddDto.Name,
-                Goverment = customerAddDto.Goverment,
-                City = customerAddDto.City,
-                Village = customerAddDto.Village,
-                Phone1 = customerAddDto.Phone1,
-                Phone2 = customerAddDto.Phone2
-            };
-            ValidateModel.ModelValidation(customer);
-
-            await _customerRepository.AddAsync(customer);
-            await _customerRepository.SaveChangesAsync();
-        }
+        await _customerRepository.AddAsync(_mapper.Map<Customer>(customerAddDto));
+        return await _customerRepository.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(CustomerUpdateDto customerUpdateDto, long id)
     {
-        if (customerUpdateDto != null)
-        {
-            var customer = await _customerRepository.GetByIdAsync(id);
-            if (customer != null)
-            {
-                customer.Email = customerUpdateDto.Email;
-                customer.Name = customerUpdateDto.Name;
-                customer.Goverment = customerUpdateDto.Goverment;
-                customer.City = customerUpdateDto.City;
-                customer.Village = customerUpdateDto.Village;
-                customer.Phone1 = customerUpdateDto.Phone1;
-                customer.Phone2 = customerUpdateDto.Phone2;
-                ValidateModel.ModelValidation(customer);
-
-                await _customerRepository.UpdateAsync(customer);
-                await _customerRepository.SaveChangesAsync();
-            }
-        }
+        Customer? customer = _mapper.Map<Customer>(await GetByIdAsync(id));
+        if (customer != null)
+            await _customerRepository.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(long id)
     {
-            var customer = await _customerRepository.GetByIdAsync(id);
-            if (customer != null)
-            {
-                ValidateModel.ModelValidation(customer);
-
-                await _customerRepository.DeleteAsync(customer);
-                await _customerRepository.SaveChangesAsync();
-            }
+        Customer? customer = _mapper.Map<Customer>(await GetByIdAsync(id));
+        if(customer != null)
+        {
+            await _customerRepository.DeleteAsync(customer);
+            await _customerRepository.SaveChangesAsync();
+        }
     }
-
-    public async Task SaveChangesAsync()
-    {
-        await _customerRepository.SaveChangesAsync();
-    }
-
 }
 

@@ -7,7 +7,7 @@ public class Customer
 {
     [Key]
     [Column(TypeName = "bigint")]
-    public long Customer_Id { get; set; }
+    public long CustomerId { get; set; }
     [DataType(DataType.EmailAddress)]
     public string Email { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;

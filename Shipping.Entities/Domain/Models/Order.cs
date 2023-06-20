@@ -25,21 +25,19 @@ public class Order
     public DateTime OrderDate { get; set; }
     public double ExtraWeightCost { get; set; }
     public string CompanyBranch { get; set; } = string.Empty;
-    public double DefaultCost { get; set; }
-    public string CustomerName { get; set; } = string.Empty;
-    public ShippingType shipping_type { get; set; }
+    public string City { get; set; } = string.Empty;
+    public string Government { get; set; } = string.Empty;
+    public ShippingType ShippingType { get; set; }
     public double TotalCost { get; set; }
     public int TotalWeight { get; set; }
     public bool DeliveredToVillage { get; set; }
     public bool IsDeleted { get; set; }
 
-
-    public long ProductId { get; set; }
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
-    public long CustomerId { get; set; }
-    public virtual ICollection<Customer> Customers { get; set; } = new List<Customer>();
-    public long TraderId { get; set; }
+    public long? CustomerId { get; set; }
+    public virtual Customer Customer { get; set; }
+    public long? TraderId { get; set; }
     public virtual Trader? Trader { get; set; }
-    public long SalesRepresentativeId { get; set; }
+    public long? SalesRepresentativeId { get; set; }
     public virtual SalesRepresentative? SalesRepresentative { get; set; }
 }

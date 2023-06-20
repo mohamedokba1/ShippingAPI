@@ -20,7 +20,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll(string userEmail)
+        public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll(string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
             if (orders == null)
@@ -32,7 +32,7 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetById(long id)
+        public async Task<ActionResult<OrderResponseDto>> GetById(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
@@ -56,14 +56,10 @@ namespace Shipping.API.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
-            if (oldOrder == null)
-                return NotFound();
-            return NoContent();
+            if (oldOrder != null)
+                await _orderService.UpdateOrderAsync(id, order);
+            return NotFound();
         }
 
         [HttpDelete]
