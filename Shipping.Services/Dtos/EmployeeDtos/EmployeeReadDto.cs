@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shipping.Entities.Domain.Models;
+using Shipping.Entities.Migrations;
+using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos
 {
@@ -17,9 +19,14 @@ namespace Shipping.Services.Dtos
         public  bool IsActive { get; init; }
 
         [Phone]
-        public string? PhoneNumber { get; set; } 
-        public string PrivellgeName { get ; init; } = string.Empty;
-        public string branchName { get; init; } = string.Empty;
+        public string? PhoneNumber { get; init; } 
 
+       // public string PrivellgeName { get ; init; } = string.Empty;
+       // public string branchName { get; init; } = string.Empty;
+
+        public BranchReadDto? Branch { get; init ; }  
+        public PrivellageDto? Privellage { get; init;}
+
+       
     }
 }

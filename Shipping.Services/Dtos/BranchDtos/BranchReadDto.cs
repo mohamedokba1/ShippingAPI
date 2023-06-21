@@ -16,6 +16,5 @@ public class BranchReadDto
     public string branchName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool State { get; set; }
-    public virtual ICollection<EmployeeReadDto> Employees { get; set; }
-    public virtual SalesReadDtos? salesPerson { get; set; }
+   
 }

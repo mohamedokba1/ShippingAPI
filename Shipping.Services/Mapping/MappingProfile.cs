@@ -19,20 +19,23 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
         CreateMap<ApplicationUser, TraderUpdateDto>().ReverseMap();
 
-        CreateMap<Employee, EmployeeReadDto>().
-        ForMember(dest => dest.PrivellgeName, src => src.MapFrom(src => src.Privillage.PrivellgeName))
-     .   ForMember(dest => dest.branchName, src => src.MapFrom(src => src.branch.branchName)).ReverseMap();
 
+        CreateMap<Employee, EmployeeReadDto>()
+           .ForMember(dest => dest.Branch, src => src.MapFrom(src => src.branch))
+           .ForMember(dest => dest.Privellage, src => src.MapFrom(src => src.Privillage))
+            .ReverseMap();
 
           
 
         CreateMap<EmployeeAddDto, Employee>()
          .ForMember(dest=>dest.branchid,src=>src.MapFrom(src=>src.branchid))
          .ForMember(dest=>dest.privillageid,src=>src.MapFrom(src=>src.Privellge_Id)).ReverseMap();
-            
+
         CreateMap<EmployeeupdateDto, Employee>()
             .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
          .ForMember(dest => dest.privillageid, src => src.MapFrom(src => src.Privellge_Id)).ReverseMap();
+
+
 
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
@@ -56,7 +59,21 @@ public class MappingProfile : Profile
         CreateMap<ProductAddDto,Product>().ReverseMap();
 
         CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
-        CreateMap<SalesReadDtos, SalesRepresentative>().ReverseMap();
+
+        CreateMap<SalesReadDtos, SalesRepresentative>().
+            ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
+            .ForPath(dest => dest.User.PhoneNumber, opt => opt.MapFrom(opt => opt.PhoneNumber))
+             .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
+             .ReverseMap();
+        
+        CreateMap<SalesUpdateDtos, SalesRepresentative>().
+            ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
+            .ForPath(dest => dest.User.PhoneNumber, opt => opt.MapFrom(opt => opt.PhoneNumber))
+             .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
+             .ReverseMap();
+
+
+
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
 
 

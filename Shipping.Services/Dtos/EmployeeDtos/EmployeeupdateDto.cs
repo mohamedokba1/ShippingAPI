@@ -29,6 +29,9 @@ namespace Shipping.Services.Dtos
         [Required]
         public int Privellge_Id { get; init; }
 
+        //public BranchReadDto? Branch { get; init; }
+        //public PrivellageDto? Privellage { get; init; }
+
 
     }
 }

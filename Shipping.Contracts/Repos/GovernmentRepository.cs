@@ -18,9 +18,14 @@ namespace Shipping.Repositories.Repos
         {
             this.context = context;
         }
-        public async Task Add(Goverment goverment)
+
+        public async Task<IEnumerable<Goverment?>>  GetRange(List<int> ids)
         {
-         await    context.Goverments.AddAsync(goverment);
+            return await context.Set<Goverment>().Where(g=> ids.Contains(g.Goverment_Id)).ToListAsync();
+        }
+         public async Task Add(Goverment goverment)
+        {
+         await    context.Set<Goverment>().AddAsync(goverment);
         }
 
         public async Task Delete(int id)

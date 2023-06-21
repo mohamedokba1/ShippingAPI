@@ -28,26 +28,26 @@ namespace Shipping.Repositories.Repos
             
         }
 
-        public async Task DeleteAsync(string id)
+        public async Task DeleteAsync(long id)
         {
             var salee = await context.Set<SalesRepresentative>().FindAsync(id);
             if (salee != null)
             {
-               context.Remove(salee);
-                context.SaveChanges();
+                salee.IsActive = false;
+                await Task.CompletedTask;
+
             }
-            await Task.CompletedTask;
 
         }
 
         public async Task<IEnumerable<SalesRepresentative>> GetAllAsync()
         {
-            return await context.Set<SalesRepresentative>().ToListAsync();
+            return await context.Set<SalesRepresentative>().Include(s=>s.Branches).Include(s=>s.Goverments).Include(s=>s.User).ToListAsync();
         }
 
-        public async Task<SalesRepresentative?> GetByIdAsync(string id)
+        public async Task<SalesRepresentative?> GetByIdAsync(long id)
         {
-            return await context.Set<SalesRepresentative>().FirstOrDefaultAsync(temp => temp.User.Id == id);
+            return await context.Set<SalesRepresentative>().Include(s => s.Branches).Include(s => s.Goverments).Include(s => s.User).FirstOrDefaultAsync(s=>s.SalesRepresentativeId==id);
         }
 
         public async Task<SalesRepresentative?> GetByEmailAsync(string email)
@@ -61,10 +61,9 @@ namespace Shipping.Repositories.Repos
             await context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(string id ,SalesRepresentative? sale)
+        public async Task UpdateAsync(long id ,SalesRepresentative? sale)
         {
-            context.Update(sale);
-            await Task.CompletedTask;
+
         }
 
     }

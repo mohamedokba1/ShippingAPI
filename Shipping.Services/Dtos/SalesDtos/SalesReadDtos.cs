@@ -1,4 +1,6 @@
-﻿using Shipping.Entities.Domain.Models;
+﻿using Microsoft.Identity.Client;
+using Shipping.Entities.Domain.Identity;
+using Shipping.Entities.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,23 +12,28 @@ namespace Shipping.Services.Dtos.SalesDtos
 {
     public class SalesReadDtos
     {
-        
-        [Required]
-        [StringLength(70)]
+        public long SalesRepresentativeId { get; set; }
+
+
         public string Name { get; set; } = string.Empty;
-        public string UserName { get; set; } = string.Empty;
-        [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; } = string.Empty;
-        [Required]
-        [StringLength(11)]
+        
+        public  string UserName { get; set; } = string.Empty;
+
+        public string password { get; set; } = string.Empty;
+
+
+        public  string Email { get; set; } = string.Empty;
         public string PhoneNumber { get; set; } = string.Empty;
-        [Required]
-        public double CompanyPercentage { get; set; }
         public string Address { get; set; } = string.Empty;
-        [Required]
-        [EmailAddress(ErrorMessage = "Entered Email is invalid")]
-        public string Email { get; set; } = string.Empty;
+
+        public double CompanyPercentage { get; set; }
+
+        public DiscountType discountType { get; set; }
+        public bool IsActive { get; set; }
+
+
+        public ICollection<BranchReadDto>? Branches { get; set; } 
+        public ICollection<GovermentReadDto>? Goverments { get; set; }   
 
     }
 }

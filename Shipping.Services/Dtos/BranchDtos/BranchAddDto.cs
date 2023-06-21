@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 public class BranchAddDto
 {
-    public int Id;
+    [Required]
     public string branchName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool State { get; set; }

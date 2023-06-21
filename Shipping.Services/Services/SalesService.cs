@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
+using Shipping.Repositories.Repos;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.SalesDtos;
 using Shipping.Services.IServices;
@@ -15,14 +17,36 @@ public class SalesService : ISalesService
     private readonly ISalesRepresentativeRepository _salesRepository;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
-    public SalesService(ISalesRepresentativeRepository salesRepository,IMapper mapper, UserManager<ApplicationUser> userManager)
+    private readonly IBranchRepository branchRepository;
+    private readonly IGovermentRepository governmentRepository;
+
+    public SalesService(ISalesRepresentativeRepository salesRepository,
+        IMapper mapper, 
+        UserManager<ApplicationUser> userManager ,
+        IBranchRepository branchRepository,
+        IGovermentRepository governmentRepository)
     {
         _salesRepository = salesRepository;
         _mapper = mapper;
         _userManager = userManager;
+        this.branchRepository = branchRepository;
+        this.governmentRepository = governmentRepository;
     }
     public async Task AddAsync(AddSalesDto sale)
     {
+       var branches = await branchRepository.GetRange(sale.BranchesIds);
+        var governments = await governmentRepository.GetRange(sale.GovernmentsIds);
+
+        if(branches.Count()!=sale.BranchesIds.Count)
+        {
+            throw new Exception("these branches dont found ");
+        }
+
+        if (governments.Count()!=sale.GovernmentsIds.Count)
+        {
+            throw new Exception("these governments dont found ");
+
+        }
         var user = new ApplicationUser
         {
             UserName = sale.UserName,
@@ -33,9 +57,15 @@ public class SalesService : ISalesService
 
         var salesRep = new SalesRepresentative
         {
+            Name = sale.Name,
+            Password=sale.Password,
             CompanyPercentage = sale.CompanyPercentage,
-            Address=sale.Address,
-            User = user
+            DiscountType = sale.DiscountType,
+            IsActive= sale.IsActive,
+            Address = sale.Address,
+            User = user,
+            Branches = branches.ToList() , 
+            Goverments = governments.ToList() ,
         };
         var claims = new List<Claim>
     {
@@ -52,15 +82,19 @@ public class SalesService : ISalesService
     }
 
 
-    public async Task DeleteAsync(string id)
+    public async Task DeleteAsync(long id)
     {
         
         var sale = await _salesRepository.GetByIdAsync(id);
         if (sale != null)
         {
             
-            await _salesRepository.DeleteAsync(sale.User.Id);
-            _salesRepository.saveChanges();
+            await _salesRepository.DeleteAsync(id);
+             await _salesRepository.saveChanges();
+        }
+        else
+        {
+            throw new Exception("this salesRepresentator is not found");
         }
        
     }
@@ -71,7 +105,7 @@ public class SalesService : ISalesService
         return _mapper.Map<IEnumerable<SalesReadDtos>>(sales);
     }
 
-    public async Task<SalesReadDtos> GetSaleByIdAsync(string id)
+    public async Task<SalesReadDtos> GetSaleByIdAsync(long id)
     {
         var sale = await _salesRepository.GetByIdAsync(id);
         if(sale != null)
@@ -90,20 +124,23 @@ public class SalesService : ISalesService
         var salesRepresentative = await _salesRepository.GetByEmailAsync(email);
         return salesRepresentative?.SalesRepresentativeId;
     }
-    public async Task UpdateAsync(string id,SalesUpdateDtos sale)
+    public async Task UpdateAsync(long id,SalesUpdateDtos sale)
     {
         var salToUpdate=await _salesRepository.GetByIdAsync(id);
         if(salToUpdate != null)
-        {    
-            salToUpdate.User.PhoneNumber = sale.PhoneNumber;
-            salToUpdate.Address = sale.Address;
-            salToUpdate.User.Email = sale.Email;
-            salToUpdate.User.UserName = sale.Name;
-            salToUpdate.User.PasswordHash = sale.Password;
-            salToUpdate.CompanyPercentage = sale.CompanyPercentage;
-            salToUpdate.User.UserName = sale.UserName;
+        {
+
+            _mapper.Map(sale, salToUpdate);
+
             await _salesRepository.saveChanges();
+
         }
-        
-    }
+        else
+        {
+            throw new Exception("this employee is not found");
+        }
+        await _salesRepository.saveChanges();
+        }
+
 }
+

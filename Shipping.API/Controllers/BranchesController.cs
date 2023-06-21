@@ -50,7 +50,7 @@ namespace Shipping.API.Controllers
             }
             await _branchService.AddAsync(branch);
 
-            return CreatedAtAction(nameof(GetBranch), new { id = branch.Id }, branch);
+            return Ok("added success");
         }
 
         [HttpPut]

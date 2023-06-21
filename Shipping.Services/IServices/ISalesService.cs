@@ -6,10 +6,10 @@ namespace Shipping.Services.IServices;
 
 public interface ISalesService
 {
-    Task<IEnumerable<SalesReadDtos>> GetAllSalesAsync();
-    Task<SalesReadDtos> GetSaleByIdAsync(string id);
-    Task<long?> GetSalesRepresentativeIdByEmail(string email);
-    Task AddAsync(AddSalesDto sale);
-    Task UpdateAsync(string id ,SalesUpdateDtos sale);
-    Task DeleteAsync(string id);
+    public Task<IEnumerable<SalesReadDtos>> GetAllSalesAsync();
+    public Task<SalesReadDtos> GetSaleByIdAsync(long id);
+    public Task<long?> GetSalesRepresentativeIdByEmail(string email);
+    public Task AddAsync(AddSalesDto sale);
+    public Task UpdateAsync(long id ,SalesUpdateDtos sale);
+    public Task DeleteAsync(long id);
 }

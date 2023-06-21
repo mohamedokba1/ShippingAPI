@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 public class BranchUpdateDto
 {
-    [Key]
     public int Id { get; set; }
+    [Required] 
     public string branchName { get; set; } = string.Empty;
+    [Required]
     public DateTime CreatedAt { get; set; }
-    public bool State { get; set; }
 }
