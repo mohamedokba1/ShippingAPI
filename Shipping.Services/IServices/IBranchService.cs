@@ -6,8 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+ namespace Shipping.Services.IServices;
 
-public interface IBranchService
+
+  public interface IBranchService
 {
     public Task<IEnumerable<BranchReadDto>> GetAllAsync();
     public Task<BranchReadDto>? GetByIdAsync(int id);
@@ -17,4 +19,4 @@ public interface IBranchService
     public Task SaveChangesAsync();
 
 }
-}
+

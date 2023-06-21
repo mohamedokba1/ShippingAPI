@@ -11,4 +11,5 @@ public interface IGovermentRepository
     Task Delete(int id);
 
     Task Savechanges();
+    Task<IEnumerable<Goverment?>> GetRange(List<int> ids);
 }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
@@ -36,7 +35,7 @@ public class OrderService : IOrderService
         List<ValidationResult>? validationResults = ValidateModel.ModelValidation(orderAddDto);
         if (validationResults is null)
         {
-            Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderByEmailAsync(userEmail));
+            Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderIdByEmailAsync(userEmail));
             if (currentTrader != null)
             {
                 Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
@@ -50,7 +49,7 @@ public class OrderService : IOrderService
         else
             return validationResults;
     }
-    
+
     public async Task DeleteOrderAsync(long id)
     {
         Order? order = await _orderRepository.GetOrderByIdAsync(id);
@@ -61,18 +60,18 @@ public class OrderService : IOrderService
         }
     }
 
-    public async Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync(string userEmail)
+    public async Task<IEnumerable<OrderReadDto>> GetAllOrdersAsync(string userEmail)
     {
-        var currentTrader = await _traderService.GetTraderByEmailAsync(userEmail);
+        var currentTrader = await _traderService.GetTraderIdByEmailAsync(userEmail);
         var orders = await _orderRepository.GetAllTraderOrdersAsync(_mapper.Map<Trader>(currentTrader));
-        var ordersList = new List<OrderResponseDto>();
+        var ordersList = new List<OrderReadDto>();
         foreach (var order in orders)
         {
             foreach (var customer in order.Customers)
             {
                 var orderReadDto = new OrderReadDto
                 {
-                    OrderId = order.Order_Id,
+                    OrderId = order.OrderId,
                     State = order.State,
                     PaymentMethod = order.PaymentMethod,
                     OrderDate = order.OrderDate,
@@ -82,19 +81,19 @@ public class OrderService : IOrderService
                     CustomerId = customer.Customer_Id,
                     City = customer.City,
                     Government = customer.Goverment,
-                    Phone=customer.Phone1,
+                    Phone = customer.Phone1,
                     CustomerName = customer.Name,
                     ShippingType = order.shipping_type,
                     TraderId = order.TraderId,
                     SalesRepresentativeId = order.SalesRepresentativeId
                 };
 
-                orderReadDtos.Add(orderReadDto);
+                ordersList.Add(orderReadDto);
             }
         }
         return ordersList;
     }
-    
+
     public async Task<OrderResponseDto?> GetOrderByIdAsync(long id)
     {
         var order = await _orderRepository.GetOrderByIdAsync(id);
@@ -102,7 +101,7 @@ public class OrderService : IOrderService
             return _mapper.Map<OrderResponseDto>(order);
         return null;
     }
-    
+
     public async Task UpdateOrderAsync(long id, OrderUpdateDto OrderUpdateDto)
     {
         if (OrderUpdateDto != null)
@@ -112,4 +111,5 @@ public class OrderService : IOrderService
             await _orderRepository.SaveChangesAsync();
         }
     }
+
 }

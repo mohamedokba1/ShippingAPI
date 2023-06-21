@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230619090737_sales.addIsactive")]
+    partial class salesaddIsactive
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace Shipping.Entities.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("BranchSalesRepresentative", b =>
-                {
-                    b.Property<int>("BranchesId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("SalesRepresentativesSalesRepresentativeId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("BranchesId", "SalesRepresentativesSalesRepresentativeId");
-
-                    b.HasIndex("SalesRepresentativesSalesRepresentativeId");
-
-                    b.ToTable("BranchSalesRepresentative");
-                });
 
             modelBuilder.Entity("CustomerOrder", b =>
                 {
@@ -313,7 +301,12 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("salesPersonSalesRepresentativeId")
+                        .HasColumnType("bigint");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("salesPersonSalesRepresentativeId");
 
                     b.ToTable("Branches");
                 });
@@ -588,19 +581,8 @@ namespace Shipping.Entities.Migrations
                     b.Property<double>("CompanyPercentage")
                         .HasColumnType("float");
 
-                    b.Property<int>("DiscountType")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Password")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -681,21 +663,6 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Traders");
-                });
-
-            modelBuilder.Entity("BranchSalesRepresentative", b =>
-                {
-                    b.HasOne("Shipping.Entities.Domain.Models.Branch", null)
-                        .WithMany()
-                        .HasForeignKey("BranchesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
-                        .WithMany()
-                        .HasForeignKey("SalesRepresentativesSalesRepresentativeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("CustomerOrder", b =>
@@ -807,6 +774,15 @@ namespace Shipping.Entities.Migrations
                         .HasForeignKey("TradersTraderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Shipping.Entities.Domain.Models.Branch", b =>
+                {
+                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "salesPerson")
+                        .WithMany("Branchs")
+                        .HasForeignKey("salesPersonSalesRepresentativeId");
+
+                    b.Navigation("salesPerson");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.City", b =>
@@ -936,6 +912,8 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
                 {
+                    b.Navigation("Branchs");
+
                     b.Navigation("Orders");
                 });
 

@@ -28,7 +28,7 @@ public class TraderServices : ITraderService
     public async Task<List<ValidationResult>?> AddUserAndTrader(TraderAddDto traderAddDto)
     {
         List<ValidationResult>? validationResult = ValidateModel.ModelValidation(traderAddDto);
-        if(validationResult?.Count == 0)
+        if (validationResult?.Count == 0)
         {
             ApplicationUser? checkuserEmail = await _userManager.FindByEmailAsync(traderAddDto.Email);
             if (checkuserEmail is null)
@@ -63,13 +63,12 @@ public class TraderServices : ITraderService
                 validationResult.Add(new ValidationResult("Email is already exist"));
                 return validationResult;
             }
-                
+
             await _traderRepository.AddTraderAsync(_mapper.Map<TraderAddDto, Trader>(traderAddDto));
             return validationResult;
         }
         else
             return validationResult;
-        
     }
 
     public async Task<bool> DeleteTraderAsync(long trader_id)
@@ -110,7 +109,7 @@ public class TraderServices : ITraderService
         if (validationResults?.Count == 0)
         {
             var checkUserName = await _userManager.FindByNameAsync(traderUpdateDto.UserName);
-            if (checkUserName == null) 
+            if (checkUserName == null)
             {
                 Trader? trader = await _traderRepository.GetTraderByIdAsync(traderId);
                 if (trader != null)
@@ -120,7 +119,7 @@ public class TraderServices : ITraderService
                     await _userManager.UpdateAsync(user);
                     _mapper.Map(traderUpdateDto, trader);
                     await _traderRepository.SaveChangesAsync();
-                }  
+                }
             }
             return validationResults;
         }
@@ -136,7 +135,7 @@ public class TraderServices : ITraderService
 
     public async Task<IEnumerable<TraderResponseDto>> GetFilteredTradersAsync(string searchString)
     {
-        IEnumerable<Trader>? traders =  await _traderRepository.GetFilteredTradersAsync(searchString);
+        IEnumerable<Trader>? traders = await _traderRepository.GetFilteredTradersAsync(searchString);
         List<TraderResponseDto> trdaersResponse = new List<TraderResponseDto>();
         foreach (Trader trader in traders)
         {
@@ -145,8 +144,7 @@ public class TraderServices : ITraderService
         return trdaersResponse;
     }
 
-<<<<<<< HEAD
-    public async Task<long> GetTraderIdByEmail(string email)
+    public async Task<long> GetTraderIdByEmailAsync(string email)
     {
         var trader = await _traderRepository.GetByEmailAsync(email);
 
@@ -154,10 +152,6 @@ public class TraderServices : ITraderService
         {
             throw new Exception("Trader not found.");
         }
-
         return trader.TraderId;
     }
-=======
- 
->>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 }

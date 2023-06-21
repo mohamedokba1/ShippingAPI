@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Shipping.Repositories;
 
 public class BranchRepository:IBranchRepository
 {
@@ -22,7 +23,11 @@ public class BranchRepository:IBranchRepository
         return await _context.Set<Branch>().ToListAsync();
     }
 
-    public async Task<Branch> GetByIdAsync(int id)
+    public async Task<IEnumerable<Branch?>> GetRange(List<int> ids)
+    {
+        return await _context.Set<Branch>().Where(b => ids.Contains(b.Id)).ToListAsync();
+    }
+    public async Task<Branch?> GetByIdAsync(int id)
     {
         return await _context.Set<Branch>().FindAsync(id);
     }
@@ -40,7 +45,8 @@ public class BranchRepository:IBranchRepository
 
     public async Task DeleteAsync(Branch entity)
     {
-        _context.Set<Branch>().Remove(entity);
+        entity.State = false; 
+        //_context.Set<Branch>().Remove(entity);
         await Task.CompletedTask;
     }
 

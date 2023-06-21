@@ -50,7 +50,7 @@ namespace Shipping.API.Controllers
             }
             await _branchService.AddAsync(branch);
 
-            return CreatedAtAction(nameof(GetBranch), new { id = branch.Id }, branch);
+            return Ok("added success");
         }
 
         [HttpPut]
@@ -74,7 +74,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        public async Task<ActionResult> DeleteCity(int id)
+        public async Task<ActionResult> Deletebranch(int id)
         {
             var ExistingBranch = await _branchService.GetByIdAsync(id);
             if (ExistingBranch == null)

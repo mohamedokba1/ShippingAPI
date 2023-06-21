@@ -1,6 +1,7 @@
 ﻿using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Services.Dtos;
+using Shipping.Services.IServices;
 using Shipping.Services.Validations;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-public class BranchService:IBranchService
+public class BranchService: IBranchService
 {
     private readonly IBranchRepository _branchRepository;
 
@@ -22,6 +23,7 @@ public class BranchService:IBranchService
         var branches = await _branchRepository.GetAllAsync();
         return branches.Select(branch => new BranchReadDto
         {
+            Id = branch.Id, 
             branchName = branch.branchName,
             State = branch.State,
             CreatedAt = branch.CreatedAt
@@ -48,7 +50,6 @@ public class BranchService:IBranchService
         {
             var branch = new Branch
             {
-                Id = branchAddDto.Id,
                 branchName = branchAddDto.branchName,
                 State = branchAddDto.State,
                 CreatedAt = branchAddDto.CreatedAt
@@ -70,7 +71,6 @@ public class BranchService:IBranchService
             if (branch != null)
             {
                 branch.branchName = branchUpdateDto.branchName;
-                branch.State = branchUpdateDto.State;
                 branch.CreatedAt= branchUpdateDto.CreatedAt;
 
                 ValidateModel.ModelValidation(branch);

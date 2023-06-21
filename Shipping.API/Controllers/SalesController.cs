@@ -22,7 +22,7 @@ namespace Shipping.API.Controllers
         }
         [HttpGet]
         [Route("id")]
-        public async Task<ActionResult<SalesReadDtos>> GetSaleById(string id)
+        public async Task<ActionResult<SalesReadDtos>> GetSaleById(long id)
         {
             return Ok(await _salesService.GetSaleByIdAsync(id));
 
@@ -42,25 +42,49 @@ namespace Shipping.API.Controllers
             }
         }
         [HttpDelete]
-        [Route("{id}")]
-        public async Task<ActionResult> DeleteSale(string id)
+        public async Task<ActionResult> DeleteSale(long id)
         {
-            await _salesService.DeleteAsync(id);
-            return NoContent();
+            try
+            {
+                await _salesService.DeleteAsync(id);
+                return NoContent();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> UpdateSale(string id, SalesUpdateDtos sale)
+        public async Task<ActionResult> UpdateSale(long id, SalesUpdateDtos sale)
         {
-            await _salesService.UpdateAsync(id, sale);
-            return NoContent();
+            try
+            {
+                await _salesService.UpdateAsync(id, sale);
+                return NoContent();
+            }
+            catch(Exception ex) 
+            { 
+                return BadRequest(ex.Message);
+            }
+            
+           
         }
 
         [HttpPost]
         public async Task<ActionResult> AddSale(AddSalesDto sale)
         {
-            await _salesService.AddAsync(sale);
-            return Ok();
+            try
+            {
+                await _salesService.AddAsync(sale);
+                return Ok();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+           
         }
 
     }
