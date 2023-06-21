@@ -26,11 +26,13 @@ public class TraderRepository : ITraderRepository
 
     public async Task<IEnumerable<Trader>> GetAllTradersAsync()
     {
-        return await _context.Set<Trader>().ToListAsync();
+        return await _context.Set<Trader>().Include(trader => trader.Orders).ToListAsync();
     }
     public async Task<Trader?> GetTraderByIdAsync(long traderId)
     {
-        return await _context.Set<Trader>().Include(trader => trader.User).FirstOrDefaultAsync(trader => trader.TraderId == traderId);
+        return await _context.Set<Trader>()
+            .Include(trader => trader.Orders)
+            .Include(trader => trader.User).FirstOrDefaultAsync(trader => trader.TraderId == traderId);
     }
     
     public async Task SaveChangesAsync()

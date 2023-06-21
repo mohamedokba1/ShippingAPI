@@ -10,10 +10,10 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchController : ControllerBase
+    public class BranchesController : ControllerBase
     {
         private readonly IBranchService _branchService;
-        public BranchController(IBranchService branchService)
+        public BranchesController(IBranchService branchService)
         {
             _branchService = branchService;
         }
@@ -54,6 +54,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<ActionResult> UpdateBranch(int id, BranchUpdateDto branch)
         {
             if (id != branch.Id)
@@ -74,6 +75,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteCity(int id)
         {
             var ExistingBranch = await _branchService.GetByIdAsync(id);

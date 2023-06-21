@@ -203,15 +203,13 @@ namespace Shipping.API
                 var checkUserIfExist = await userManager.FindByEmailAsync(userEmail);
                 if (checkUserIfExist == null)
                 {
-                    var result = await userManager.CreateAsync(new ApplicationUser { Email = userEmail }, password);
+                    var result = await userManager.CreateAsync(new ApplicationUser { Email = userEmail, UserName = "admin" }, password);
                     var adminUser = await userManager.FindByEmailAsync(userEmail);
-                    if (adminUser != null) 
+                    if (adminUser != null)
                     {
                         await userManager.AddToRoleAsync(adminUser, "admin");
-                    } 
+                    }
                 }
-
-               
             }
             app.Run();
         }

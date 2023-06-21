@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shipping.Services.Services;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace Shipping.API.Controllers
 {
@@ -23,6 +23,7 @@ namespace Shipping.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
+            
             IEnumerable<TraderResponseDto>? response = await _traderService.GetAllTradersAsync();
             return Ok(response?.ToList());
         }
@@ -83,8 +84,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin", Policy = "add")]
-        [Authorize(Roles = "admin", Policy = "add")]
         public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
         {
             var errors = await _traderService.AddUserAndTrader(traderAddDto);

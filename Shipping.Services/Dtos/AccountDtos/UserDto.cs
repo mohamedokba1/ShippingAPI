@@ -1,4 +1,4 @@
-﻿
+﻿namespace Shipping.Services.Dtos;
 public class UserDto
 {
     public string UserName { get; set; } = string.Empty;

@@ -8,17 +8,15 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PrivellgeController : ControllerBase
+    public class PrivellgesController : ControllerBase
     {
         private readonly IPrivellageService privellageService;
-        public PrivellgeController(IPrivellageService _privellageService)
+        public PrivellgesController(IPrivellageService _privellageService)
         {
             privellageService = _privellageService;
         }
 
         [HttpGet]
-        [Route("Getall")]
-
         public async Task<ActionResult<IEnumerable<PrivellageDto>>> GetAll()
         {
             var privellages = await privellageService.Getall();
@@ -27,8 +25,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        [Route("GetById/{id}")]
-
+        [Route("{id}")]
         public async Task<ActionResult<PrivellageDto>> GetById(int id)
         {
             var privellage = await privellageService.GetByid(id);
@@ -38,8 +35,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        [Route("Add")]
-
         public async Task<ActionResult> Add(PrivilegeAddDto privellageaddDto)
         {
             try
@@ -54,9 +49,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        [Route("update/{id}")]
-
-
+        [Route("{id}")]
         public async Task<ActionResult> Update(int id,PrivllageUpdateDto privellagedto)
         {
             try
@@ -72,7 +65,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
-        [Route("Delete")]
+        [Route("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             try

@@ -7,17 +7,16 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
 
-        public EmployeeController(IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService)
         {
             this.employeeService = employeeService;
         }
 
         [HttpGet]
-        [Route("Getall")]
         public  async Task<ActionResult<IEnumerable<EmployeeReadDto>>> Getall()
         {
             return Ok(await employeeService.Getall());
@@ -26,8 +25,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpGet]
-        [Route("GetById/{id}")]
-
+        [Route("{id}")]
         public async Task<ActionResult<EmployeeReadDto>> GetById(long id) 
         { 
             EmployeeReadDto? employeeReadDto= await employeeService.GetByid(id);    
@@ -40,8 +38,6 @@ namespace Shipping.API.Controllers
 
 
         [HttpPost]
-        [Route("Add")]
-
         public async Task<ActionResult> Add (EmployeeAddDto employeeAddDto)
         {
             try
@@ -57,8 +53,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpDelete]
-        [Route("Delete")]
-
+        [Route("{id}")]
         public async Task<ActionResult> Delete(long id)
         {
             try
@@ -73,8 +68,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        [Route("update/{id}")]
-
+        [Route("{id}")]
         public async Task<ActionResult> Update(long id , EmployeeupdateDto employeeupdateDto)
         {
             try
@@ -88,6 +82,5 @@ namespace Shipping.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-
     }
 }

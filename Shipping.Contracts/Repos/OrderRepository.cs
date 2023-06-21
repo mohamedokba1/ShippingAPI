@@ -23,7 +23,10 @@ namespace Shipping.Repositories.Repos
         }
         public async Task<Order?> GetOrderByIdAsync(long id)
         {
-            return await _context.Set<Order>().FirstOrDefaultAsync(order => order.OrderId == id);
+            return await _context.Set<Order>()
+                .Include(order => order.Customer)
+                .Include(order => order.Products)
+                .FirstOrDefaultAsync(order => order.OrderId == id);
         }
 
         public async Task<Order?> AddOrderAsync(Order order)

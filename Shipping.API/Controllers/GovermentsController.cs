@@ -8,27 +8,25 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class GovermentController : ControllerBase
+    public class GovermentsController : ControllerBase
     {
         private readonly IGovernmentService governmentService;
 
-        public GovermentController(IGovernmentService governmentService)
+        public GovermentsController(IGovernmentService governmentService)
         {
             this.governmentService = governmentService;
         }
 
 
         [HttpGet]
-        [Route("Getall")]
         public async Task<ActionResult<IEnumerable<GovermentReadDto>>> Getall()
         {
             return  Ok(await governmentService.Getall());
                 
         }
 
-
         [HttpGet]
-        [Route("GetById/{id}")]
+        [Route("{id}")]
 
         public async Task<ActionResult<GovermentReadDto>> GetById(int id)
         {
@@ -42,8 +40,6 @@ namespace Shipping.API.Controllers
 
 
         [HttpPost]
-        [Route("Add")]
-
         public async Task<ActionResult> Add(GovermentAddDto govermentAddDto)
         {
             try
@@ -59,8 +55,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpDelete]
-        [Route("Delete")]
-
+        [Route("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
             await governmentService.Delete(id);
@@ -68,8 +63,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
-        [Route("update/{id}")]
-
+        [Route("{id}")]
         public async Task<ActionResult> Update(int id, GovermentUpdateDto govermentUpdateDto)
         {
             await governmentService.Update(id, govermentUpdateDto);

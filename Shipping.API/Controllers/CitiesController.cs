@@ -7,10 +7,10 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CityController : ControllerBase
+    public class CitiesController : ControllerBase
     {
         private readonly ICityService _cityService;
-        public CityController(ICityService cityService) 
+        public CitiesController(ICityService cityService) 
         {
             _cityService = cityService;
         }
@@ -51,6 +51,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPut]
+        [Route("{id}")]
         public async Task<ActionResult> UpdateCity(int id, CityUpdateDto city)
         {
             if (id != city.CityId)
@@ -71,6 +72,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<ActionResult> DeleteCity(int id)
         {
             var ExistingCity = await _cityService.GetByIdAsync(id);

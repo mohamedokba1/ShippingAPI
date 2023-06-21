@@ -81,6 +81,7 @@ namespace Shipping.API.Controllers
             return new TokenDto
             {
                 Token = tokenString,
+                Email = user.Email,
                 ExpiryDate = expiryDate,
             };
         }

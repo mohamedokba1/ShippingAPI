@@ -20,7 +20,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll(string userEmail)
+        public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll([FromHeader] string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
             if (orders == null)
@@ -58,7 +58,10 @@ namespace Shipping.API.Controllers
         {
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
             if (oldOrder != null)
+            {
                 await _orderService.UpdateOrderAsync(id, order);
+                return NoContent();
+            }  
             return NotFound();
         }
 
