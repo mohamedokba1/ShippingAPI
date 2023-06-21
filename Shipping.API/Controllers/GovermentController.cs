@@ -24,7 +24,7 @@ namespace Shipping.API.Controllers
         {
             return  Ok(await governmentService.Getall());
                 
-          }
+        }
 
 
         [HttpGet]

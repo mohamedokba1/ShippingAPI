@@ -19,6 +19,4 @@ public class TraderUpdateDto
     [Required]
     [StringLength(11)]
     public string PhoneNumber { get; set; } = string.Empty;
-
-    public ICollection<Privellge>? Privellges { get; set; }
 }

@@ -2,11 +2,11 @@
 namespace Shipping.Services.Dtos;
 public class CustomerAddDto
 {
-    public long CustomerId { get; set; }
 
-    [DataType(DataType.EmailAddress)]
+    [EmailAddress(ErrorMessage = "Enter a valid email address for customer email")]
     public string Email { get; set; }=string.Empty;
     [Required]
+    [StringLength(100, ErrorMessage = "Customer name must be less than 100 character")]
     public string Name { get; set; } = string.Empty;
     [Required]
     public string Goverment { get; set; } = string.Empty;

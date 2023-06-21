@@ -5,35 +5,34 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.API.Controllers
 {
-    [Route("api/orders")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
-        private readonly HttpContextAccessor _httpContextAccessor;
         private readonly ITraderService _traderService;
-        public OrderController(
+        public OrdersController(
             IOrderService orderService,
-            HttpContextAccessor httpContextAccessor,
             ITraderService traderService)
         {
             _orderService = orderService;
-            _httpContextAccessor = httpContextAccessor;
             _traderService = traderService;
         }
 
-        [HttpGet("{userId}")]
-        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetAll(string userEmail)
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll(string userEmail)
         {
-            var userId = _httpContextAccessor.HttpContext?.User?.Identity?.Name;
-
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
+            if (orders == null)
+            {
+                return BadRequest("Trader not found");
+            }
             return Ok(orders);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<OrderReadDto>> GetById(long id)
+        public async Task<ActionResult<OrderResponseDto>> GetById(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
             if (order == null)
@@ -57,14 +56,10 @@ namespace Shipping.API.Controllers
         [Route("{id}")]
         public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
-            if (oldOrder == null)
-                return NotFound();
-            return NoContent();
+            if (oldOrder != null)
+                await _orderService.UpdateOrderAsync(id, order);
+            return NotFound();
         }
 
         [HttpDelete]

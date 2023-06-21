@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Shipping.API.ErrorHandling;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories;
@@ -7,6 +8,7 @@ using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
 using Shipping.Services.IServices;
 using Shipping.Services.Services;
+using System.Security.Claims;
 using System.Text;
 
 namespace Shipping.API
@@ -16,8 +18,9 @@ namespace Shipping.API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers();
-
+            builder.Services.AddControllers(options =>
+               options.Filters.Add<GlobalErrorHandling>());
+            
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
@@ -120,7 +123,7 @@ namespace Shipping.API
 
             #endregion
 
-            builder.Services.AddHttpContextAccessor();
+            //builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
@@ -129,6 +132,7 @@ namespace Shipping.API
             }
             app.UseCors("Shipping");
             app.UseRouting();
+            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
@@ -137,16 +141,77 @@ namespace Shipping.API
             using (var scope = app.Services.CreateScope())
             {
                 var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationUserRole>>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-                List<string> roles = new List<string> { "admin", "trader", "employee", "salesrepresentative" };
-                foreach(var role in roles)
+                List<Claim> traderClaims = new List<Claim>()
                 {
-                    bool roleExist = await roleManager.RoleExistsAsync(role);
-                    if(!roleExist)
+                    new Claim("addorder", "true"),
+                    new Claim("updateorder", "true"),
+                    new Claim("deleteorder", "true"),
+                    new Claim("readorder", "true"),
+                };
+                List<Claim> salesClaims = new List<Claim>()
+                {
+                    new Claim("updateorder", "true"),
+                    new Claim("readorder", "true"),
+                };
+                List<Claim> employeeClaims = new List<Claim>()
+                {
+                    new Claim("updateorder", "true"),
+                    new Claim("readorder", "true"),
+                };
+                string userEmail = "Admin@admin.com";
+                string password = "Test@admin12345";
+
+                List<ApplicationUserRole> roles = new List<ApplicationUserRole>
+                { 
+                    new ApplicationUserRole {Name = "admin"},
+                    new ApplicationUserRole {Name = "trader"},
+                    new ApplicationUserRole {Name = "employee"},
+                    new ApplicationUserRole {Name = "salesrepresentative"}
+                };
+                foreach (ApplicationUserRole role in roles)
+                {
+                    bool roleExist = await roleManager.RoleExistsAsync(role.Name);
+                    if (!roleExist)
                     {
-                        await roleManager.CreateAsync(new ApplicationUserRole() { Name = role});
-                    }
-                } 
+                        await roleManager.CreateAsync(role);
+                        if(role.Name == "trader")
+                        {
+                            foreach(var claim in traderClaims)
+                            {
+                                await roleManager.AddClaimAsync(role, claim);
+                            }
+                        }
+                        else if(role.Name == "employee")
+                        {
+                            foreach (var claim in employeeClaims)
+                            {
+                                await roleManager.AddClaimAsync(role, claim);
+                            }
+                        }
+                        else if (role.Name == "salesrepresentative")
+                        {
+                            foreach (var claim in salesClaims)
+                            {
+                                await roleManager.AddClaimAsync(role, claim);
+                            }
+                        }
+                    } 
+                }
+
+                var checkUserIfExist = await userManager.FindByEmailAsync(userEmail);
+                if (checkUserIfExist == null)
+                {
+                    var result = await userManager.CreateAsync(new ApplicationUser { Email = userEmail }, password);
+                    var adminUser = await userManager.FindByEmailAsync(userEmail);
+                    if (adminUser != null) 
+                    {
+                        await userManager.AddToRoleAsync(adminUser, "admin");
+                    } 
+                }
+
+               
             }
             app.Run();
         }

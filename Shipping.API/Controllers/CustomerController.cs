@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.Dtos;
 
 namespace Shipping.API.Controllers
@@ -36,31 +35,16 @@ namespace Shipping.API.Controllers
         [HttpPost]
         public async Task<ActionResult> AddCustomer(CustomerAddDto customer)
         {
-            if (customer == null)
-            {
-                return BadRequest("Customer is Null.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            await _customerService.AddAsync(customer);
-
-            return CreatedAtAction(nameof(GetCustomer), new { id = customer.CustomerId }, customer);
+            int result = await _customerService.AddAsync(customer);
+            if(result > 0)
+                return Created("Customer created successfully", customer);
+            return BadRequest();
         }
 
         [HttpPut]
         public async Task<ActionResult> UpdateCustomer(long id, CustomerUpdateDto customer)
         {
-            if (id != customer.CustomerId)
-            {
-                return BadRequest("Customer is Null.");
-            }
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var ExistingCustomer = await _customerService.GetByIdAsync(id);
+            CustomerReadDto? ExistingCustomer = await _customerService.GetByIdAsync(id);
             if (ExistingCustomer == null)
             {
                 return NotFound();
@@ -74,9 +58,7 @@ namespace Shipping.API.Controllers
         {
             var ExistingCustomer = await _customerService.GetByIdAsync(id);
             if (ExistingCustomer == null)
-            {
                 return NotFound();
-            }
             await _customerService.DeleteAsync(id);
             return NoContent();
         }

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
 using Shipping.Services.Services;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
+>>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 
 namespace Shipping.API.Controllers
 {
@@ -27,34 +27,34 @@ namespace Shipping.API.Controllers
         //    return Ok(response?.ToList());
         //}
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> GetById(long id)
-        //{
-        //    TraderResponseDto? response = await _traderService.GetTraderByIdAsync(id);
-        //    if (response == null)
-        //        return NotFound();
-        //    return Ok(response);
-        //}
-        //[HttpGet]
-        //[Route("email/{email}")]
-        //public async Task<ActionResult<long>> GetTraderIdByEmail(string email)
-        //{
-        //    try
-        //    {
-        //        var traderId = await _traderService.GetTraderIdByEmail(email);
-        //        return traderId;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return NotFound(ex.Message);
-        //    }
-        //}
-        //[HttpGet("paginated")]
-        //public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
-        //{
-        //    var traders = _traderService.GetTradersPaginated();
-        //    _logger.LogError("traders", traders);
-        //    int totalRecords = await traders.CountAsync();
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            TraderResponseDto? response = await _traderService.GetTraderByIdAsync(id);
+            if (response == null)
+                return NotFound();
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("email/{email}")]
+        public async Task<ActionResult<long>> GetTraderIdByEmail(string email)
+        {
+            try
+            {
+                var traderId = await _traderService.GetTraderIdByEmail(email);
+                return traderId;
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+        }
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
+        {
+            var traders = _traderService.GetTradersPaginated();
+            _logger.LogError("traders", traders);
+            int totalRecords = await traders.CountAsync();
 
         //    List<TraderResponseDto>? listOfTrsders = await traders
         //        .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
@@ -82,27 +82,27 @@ namespace Shipping.API.Controllers
         //    return Ok(traders?.ToList());
         //}
 
-        //[HttpPost]
-        //public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
-        //{
-        //    var errors = await _traderService.AddUserAndTrader(traderAddDto);
-        //    if (errors is null)
-        //         return Ok(traderAddDto);
-        //    return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
-        //}
+        [HttpPost]
+        public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
+        {
+            var errors = await _traderService.AddUserAndTrader(traderAddDto);
+            if (errors is null)
+                 return Ok(traderAddDto);
+            return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+        }
 
-        //[HttpPut("{traderId}")]
-        //public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
-        //{
-        //    List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
-        //    if (errors is null)
-        //    {
-        //        TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
-        //        return Ok(updatedTrader);
-        //    }
-        //    else
-        //        return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
-        //}
+        [HttpPut("{traderId}")]
+        public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
+        {
+            List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
+            if (errors is null)
+            {
+                TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
+                return Ok(updatedTrader);
+            }
+            else
+                return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+        }
 
         //[HttpDelete("{traderId}")]
         //public async Task<IActionResult> DeleteTrader(long traderId)

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Services.Dtos;
@@ -11,10 +9,12 @@ namespace Shipping.Services.Services;
 public class CityService: ICityService
 {
     private readonly ICityRepository _cityRepository;
+    private readonly IMapper _mapper;
 
-    public CityService(ICityRepository cityRepository)
+    public CityService(ICityRepository cityRepository, IMapper mapper)
     {
         _cityRepository = cityRepository;
+        _mapper = mapper;
     }
     public async Task<IEnumerable<CityReadDto>> GetAllAsync()
     {
@@ -23,7 +23,9 @@ public class CityService: ICityService
         {
             CityId = city.City_Id,
             CityName = city.CityName,
-            NormalShippingCost = city.NormalShippingCost
+            NormalShippingCost = city.NormalShippingCost,
+            PickupShippingCost= city.PickupShippingCost,
+            govermentName=city.goverment.GovermentName
         });
     }
     public async Task<CityReadDto> GetByIdAsync(int id)
@@ -35,7 +37,9 @@ public class CityService: ICityService
             {
                 CityId = city.City_Id,
                 CityName = city.CityName,
-                NormalShippingCost = city.NormalShippingCost
+                NormalShippingCost = city.NormalShippingCost,
+                PickupShippingCost=city.PickupShippingCost,
+                govermentName = city.goverment!.GovermentName,
             };
         }
         return null!;
@@ -48,6 +52,7 @@ public class CityService: ICityService
             {
                 CityName = cityAddDto.CityName,
                 NormalShippingCost = cityAddDto.NormalShippingCost,
+                PickupShippingCost = cityAddDto.PickupShippingCost,
                 GovermentId = cityAddDto.GovernmentId
             };
             ValidateModel.ModelValidation(city);
@@ -67,6 +72,7 @@ public class CityService: ICityService
             {
                 city.CityName = cityUpdateDto.CityName;
                 city.NormalShippingCost = cityUpdateDto.NormalShippingCost;
+                city.PickupShippingCost = cityUpdateDto.PickupShippingCost;
                 ValidateModel.ModelValidation(city);
 
                 await _cityRepository.UpdateAsync(city);
@@ -88,6 +94,11 @@ public class CityService: ICityService
     public async Task SaveChangesAsync()
     {
         await _cityRepository.SaveChangesAsync();
+    }
+
+    public async Task<CityReadDto?> GetByNameAsync(string cityName)
+    {
+        return _mapper.Map<CityReadDto>(await _cityRepository.GetByNameAsync(cityName));
     }
 }
 

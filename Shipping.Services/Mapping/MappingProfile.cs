@@ -76,7 +76,15 @@ public class MappingProfile : Profile
 
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
 
-        CreateMap<OrderResponseDto, Order>().ReverseMap();
+
+        CreateMap<Order, OrderResponseDto>()
+            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod.ToString()))
+            .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => src.ShippingType.ToString()))
+            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
+        CreateMap<OrderResponseDto, Order>()
+            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => Enum.Parse(typeof(PaymentType), src.PaymentMethod)))
+            .ForMember(dest => dest.State, opt => opt.MapFrom(src => Enum.Parse(typeof(OrderState), src.State)))
+            .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => Enum.Parse(typeof(ShippingType), src.ShippingType)));
         CreateMap<OrderAddDto, Order>().ReverseMap();
         CreateMap<OrderUpdateDto, Order>().ReverseMap();
 

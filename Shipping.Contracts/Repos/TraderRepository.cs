@@ -30,14 +30,9 @@ public class TraderRepository : ITraderRepository
     }
     public async Task<Trader?> GetTraderByIdAsync(long traderId)
     {
-        return await _context.Set<Trader>().FirstOrDefaultAsync(trader => trader.TraderId == traderId);
+        return await _context.Set<Trader>().Include(trader => trader.User).FirstOrDefaultAsync(trader => trader.TraderId == traderId);
     }
-    public async Task<Trader?> GetByEmailAsync(string email)
-    {
-        return _context.Set<Trader>()
-            .Include(sr => sr.User)
-            .FirstOrDefault(sr => sr.User.Email == email);
-    }
+    
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();

@@ -119,16 +119,10 @@ public class SalesService : ISalesService
         }
     }
 
-    public async Task<long> GetSalesRepresentativeIdByEmail(string email)
+    public async Task<long?> GetSalesRepresentativeIdByEmail(string email)
     {
         var salesRepresentative = await _salesRepository.GetByEmailAsync(email);
-
-        if (salesRepresentative == null)
-        {
-            throw new Exception("Sales Representative not found.");
-        }
-
-        return salesRepresentative.SalesRepresentativeId;
+        return salesRepresentative?.SalesRepresentativeId;
     }
     public async Task UpdateAsync(long id,SalesUpdateDtos sale)
     {
