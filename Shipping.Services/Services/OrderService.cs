@@ -35,8 +35,8 @@ public class OrderService : IOrderService
                 Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
                 if (order != null)
                 {
-                    order.TraderId = currentTraderId;
-                    await _orderRepository.AddOrderAsync(order);
+                    order.TraderId = (long) currentTraderId;
+                    await _orderRepository.SaveChangesAsync();
                 }
             }
             return new List<ValidationResult>();
@@ -73,13 +73,19 @@ public class OrderService : IOrderService
         return null;
     }
 
-    public async Task UpdateOrderAsync(long id, OrderUpdateDto OrderUpdateDto)
+    public async Task<List<ValidationResult>?> UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto)
     {
-        if (OrderUpdateDto != null)
+        List<ValidationResult>? errors = ValidateModel.ModelValidation(orderUpdateDto);
+        if (errors?.Count == 0)
         {
-            var existingOrder = await _orderRepository.GetOrderByIdAsync(id);
-            _mapper.Map<OrderUpdateDto>(existingOrder);
-            await _orderRepository.SaveChangesAsync();
+            Order? existingOrder = await _orderRepository.GetOrderByIdAsync(id);
+            if(existingOrder != null)
+            {
+                _mapper.Map<OrderUpdateDto, Order>(orderUpdateDto, existingOrder);
+                await _orderRepository.SaveChangesAsync();
+            }
+            return new List<ValidationResult>();
         }
+        return errors;
     }
 }

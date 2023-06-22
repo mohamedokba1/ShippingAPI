@@ -59,8 +59,9 @@ namespace Shipping.API.Controllers
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
             if (oldOrder != null)
             {
-                await _orderService.UpdateOrderAsync(id, order);
-                return NoContent();
+                var errors = await _orderService.UpdateOrderAsync(id, order);
+                if (errors?.Count == 0)
+                    return NoContent();
             }
             return NotFound();
         }
