@@ -22,7 +22,12 @@ public class CityRepository : ICityRepository
     {
         return await _context.Set<City>().Include(c => c.goverment).FirstOrDefaultAsync(c=>c.City_Id==id);
     }
-
+    public async Task<IEnumerable<City>> GetCitiesByGovernmentNameAsync(string governmentName)
+    {
+        return await _context.Cities.Include(c => c.goverment)
+            .Where(c => c.goverment.GovermentName == governmentName)
+            .ToListAsync();
+    }
     public async Task AddAsync(City entity)
     {
         await _context.Set<City>().AddAsync(entity);
