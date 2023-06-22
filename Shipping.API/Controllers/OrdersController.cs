@@ -61,7 +61,7 @@ namespace Shipping.API.Controllers
             {
                 await _orderService.UpdateOrderAsync(id, order);
                 return NoContent();
-            }  
+            }
             return NotFound();
         }
 
