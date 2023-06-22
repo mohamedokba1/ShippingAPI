@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
@@ -63,7 +61,7 @@ public class OrderService : IOrderService
         IEnumerable<Order>? orders = await _orderRepository.GetAllTraderOrdersAsync((long)currentTrader);
         if(orders != null)
             return _mapper.Map<IEnumerable<OrderResponseDto>>(orders);
-        return null;  
+        return null;
     }
 
     public async Task<OrderResponseDto?> GetOrderByIdAsync(long id)
