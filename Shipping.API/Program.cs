@@ -95,7 +95,6 @@ namespace Shipping.API
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
             builder.Services.AddScoped<IPrivellageService, PrivellageService>();
-            builder.Services.AddScoped<IPrivellageRepository, PrivellgeRepository>();
 
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IGovermentRepository, GovernmentRepository>();

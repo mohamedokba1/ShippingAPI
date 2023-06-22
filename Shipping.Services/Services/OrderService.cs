@@ -13,29 +13,17 @@ namespace Shipping.Services.Services;
 public class OrderService 
 {
     private readonly IOrderRepository _orderRepository;
-    private readonly ICityService _cityService;
     private readonly ITraderService _traderService;
-    private readonly ISalesService _salesService;
-    private readonly ICustomerService _customerService;
     private readonly IMapper _mapper;
-    private readonly UserManager<ApplicationUser> _userManager;
 
     public OrderService(
         IOrderRepository orderRepository,
-        ICityService cityService,
         ITraderService traderService,
-        ISalesService salesService,
-        ICustomerService customerService,
-        IMapper mapper,
-        UserManager<ApplicationUser> userManager)
+        IMapper mapper)
     {
         _orderRepository = orderRepository;
-        _cityService = cityService;
         _traderService = traderService;
-        _salesService = salesService;
         _mapper = mapper;
-        _userManager = userManager;
-        _customerService = customerService;
     }
 
     public async Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail)
@@ -43,13 +31,13 @@ public class OrderService
         List<ValidationResult>? validationResults = ValidateModel.ModelValidation(orderAddDto);
         if (validationResults is null)
         {
-            Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderByEmailAsync(userEmail));
+            Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderIdByEmailAsync(userEmail));
             if (currentTrader != null)
             {
                 Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
                 if (order != null)
                 {
-                    order.TraderId = (long)currentTraderId;
+                    order.TraderId = currentTrader.TraderId;
                     await _orderRepository.AddOrderAsync(order);
                 }
             }
@@ -69,7 +57,7 @@ public class OrderService
         }
     }
 
-    public async Task<IEnumerable<OrderResponseDto>> GetAllOrdersAsync(string userEmail)
+    public async Task<IEnumerable<OrderResponseDto>?> GetAllOrdersAsync(string userEmail)
     {
         var currentTrader = await _traderService.GetTraderByEmailAsync(userEmail);
         var orders = await _orderRepository.GetAllTraderOrdersAsync(_mapper.Map<Trader>(currentTrader));
@@ -90,7 +78,7 @@ public class OrderService
                     CustomerId = customer.Customer_Id,
                     City = customer.City,
                     Government = customer.Goverment,
-                    Phone = customer.Phone1,
+                    Phone=customer.Phone1,
                     CustomerName = customer.Name,
                     ShippingType = order.shipping_type,
                     TraderId = order.TraderId,
@@ -121,6 +109,5 @@ public class OrderService
             await _orderRepository.SaveChangesAsync();
         }
     }
-
 }
 

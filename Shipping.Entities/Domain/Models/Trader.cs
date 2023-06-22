@@ -23,5 +23,4 @@ public class Trader
 
     public virtual ApplicationUser? User { get; set; }
     public virtual ICollection<Order> Orders { get; set; } = new HashSet<Order>();
-    public virtual ICollection<Privellge> Privellges { get; set; } = new HashSet<Privellge>();
 }

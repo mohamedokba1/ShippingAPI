@@ -1,15 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Shipping.Entities;
-using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Shipping.Repositories.Repos
@@ -34,13 +26,13 @@ namespace Shipping.Repositories.Repos
 
         public async Task<IEnumerable<Employee>> Getall()
         {
-             return await context.Employees.Include(e=>e.branch).Include(e=>e.Privillage).ToListAsync();
+             return await context.Employees.Include(e=>e.Branch).ToListAsync();
 
         }
 
         public async Task<Employee?> GetByid(long id)
         {
-            return await context.Set<Employee>().Include(e=>e.branch).Include(e=>e.Privillage).FirstOrDefaultAsync(e => e.EmployeeId == id);
+            return await context.Set<Employee>().Include(e=>e.Branch).FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
         public async Task Savechanges()

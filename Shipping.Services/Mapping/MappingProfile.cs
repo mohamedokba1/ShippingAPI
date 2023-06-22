@@ -21,22 +21,16 @@ public class MappingProfile : Profile
 
 
         CreateMap<Employee, EmployeeReadDto>()
-           .ForMember(dest => dest.Branch, src => src.MapFrom(src => src.branch))
-           .ForMember(dest => dest.Privellage, src => src.MapFrom(src => src.Privillage))
+           .ForMember(dest => dest.Branch, src => src.MapFrom(src => src.Branch))
             .ReverseMap();
 
-          
+
 
         CreateMap<EmployeeAddDto, Employee>()
-         .ForMember(dest=>dest.branchid,src=>src.MapFrom(src=>src.branchid))
-         .ForMember(dest=>dest.privillageid,src=>src.MapFrom(src=>src.Privellge_Id)).ReverseMap();
+         .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid));
 
         CreateMap<EmployeeupdateDto, Employee>()
-            .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
-         .ForMember(dest => dest.privillageid, src => src.MapFrom(src => src.Privellge_Id)).ReverseMap();
-
-
-
+            .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid)).ReverseMap();
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();

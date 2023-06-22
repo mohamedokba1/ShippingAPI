@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace Shipping.API.Controllers
 {
@@ -35,20 +33,7 @@ namespace Shipping.API.Controllers
                 return NotFound();
             return Ok(response);
         }
-        [HttpGet]
-        [Route("email/{email}")]
-        public async Task<ActionResult<long>> GetTraderIdByEmail(string email)
-        {
-            try
-            {
-                var traderId = await _traderService.GetTraderIdByEmailAsync(email);
-                return traderId;
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
-        }
+
         [HttpGet("paginated")]
         public async Task<ActionResult<PaginationResponse<TraderResponseDto>>> GetTraders([FromQuery] PaginationParameters paginationParameters)
         {

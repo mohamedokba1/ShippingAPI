@@ -31,15 +31,11 @@ public class AddSalesDto
     [Required]
     public double CompanyPercentage { get; set; }
     [Required]
-
     public bool IsActive { get; set; }
 
     public string Address { get; set; } = string.Empty;
     [Required]
     public DiscountType DiscountType { get; set; }
     public List<int>?  BranchesIds { get; set; }
-    public List<int>? GovernmentsIds { get; set; }
-  
-    
-    
+    public List<int>? GovernmentsIds { get; set; }   
 }
