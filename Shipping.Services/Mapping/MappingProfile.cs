@@ -13,7 +13,9 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TraderUpdateDto, Trader>().ReverseMap();
+        CreateMap<TraderUpdateDto, Trader>()
+            .ForPath(dest=>dest.User.PasswordHash,src=>src.MapFrom(src=>src.Password))
+            .ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
         CreateMap<TraderAddDto, Trader>().ReverseMap();
         CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();

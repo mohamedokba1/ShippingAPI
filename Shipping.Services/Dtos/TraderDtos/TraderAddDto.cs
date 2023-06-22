@@ -23,7 +23,7 @@ public class TraderAddDto
     [Required(ErrorMessage = "Cost per refused order can not be blank")]
     public double CostPerRefusedOrder { get; set; }
 
-    public int BranchId { get; set; }
+    public string? CompanyBranch { get; set; }
 
     [RegularExpression(@"^01[0125][0-9]{8}$", ErrorMessage = "Invalid phone number ")]
     [Required(ErrorMessage = "{0} can not be blank")]

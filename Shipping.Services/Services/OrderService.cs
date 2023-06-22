@@ -10,7 +10,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Services;
 
-public class OrderService 
+public class OrderService : IOrderService
 {
     private readonly IOrderRepository _orderRepository;
     private readonly ITraderService _traderService;
@@ -59,35 +59,10 @@ public class OrderService
 
     public async Task<IEnumerable<OrderResponseDto>?> GetAllOrdersAsync(string userEmail)
     {
-        var currentTrader = await _traderService.GetTraderByEmailAsync(userEmail);
-        var orders = await _orderRepository.GetAllTraderOrdersAsync(_mapper.Map<Trader>(currentTrader));
-        var ordersList = new List<OrderResponseDto>();
-        foreach (var order in orders)
-        {
-            foreach (var customer in order.Customers)
-            {
-                var orderReadDto = new OrderReadDto
-                {
-                    OrderId = order.Order_Id,
-                    State = order.State,
-                    PaymentMethod = order.PaymentMethod,
-                    OrderDate = order.OrderDate,
-                    ExtraWeightCost = order.ExtraWeightCost,
-                    CompanyBranch = order.CompanyBranch,
-                    DefaultCost = order.DefaultCost,
-                    CustomerId = customer.Customer_Id,
-                    City = customer.City,
-                    Government = customer.Goverment,
-                    Phone=customer.Phone1,
-                    CustomerName = customer.Name,
-                    ShippingType = order.shipping_type,
-                    TraderId = order.TraderId,
-                    SalesRepresentativeId = order.SalesRepresentativeId
-                };
-
-                orderReadDtos.Add(orderReadDto);
-            }
-        }
+        long? currentTrader = await _traderService.GetTraderIdByEmailAsync(userEmail);
+        IEnumerable<Order>? orders = await _orderRepository.GetAllTraderOrdersAsync((long)currentTrader);
+        if (orders != null)
+            return _mapper.Map<IEnumerable<OrderResponseDto>>(orders);
         return null;
     }
 
@@ -110,4 +85,3 @@ public class OrderService
         }
     }
 }
-

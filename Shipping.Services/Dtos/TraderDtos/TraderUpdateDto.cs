@@ -29,6 +29,5 @@ public class TraderUpdateDto
     [StringLength(11)]
     public string PhoneNumber { get; set; } = string.Empty;
 
-    public int Privellge_Id { get; set; }
 
 }

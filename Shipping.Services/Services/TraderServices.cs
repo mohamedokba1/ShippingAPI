@@ -152,7 +152,6 @@ public class TraderServices : ITraderService
 
         return trader.TraderId;
     }
-=======
+
  
->>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 }
