@@ -22,5 +22,4 @@ public class Customer
     [StringLength(11)]
     public string Phone2 { get; set; } = string.Empty;
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
-
 }

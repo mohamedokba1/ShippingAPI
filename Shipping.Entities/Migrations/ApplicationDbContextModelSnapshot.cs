@@ -37,6 +37,21 @@ namespace Shipping.Entities.Migrations
                     b.ToTable("ApplicationUserRolePrivellge");
                 });
 
+            modelBuilder.Entity("BranchSalesRepresentative", b =>
+                {
+                    b.Property<int>("BranchesId")
+                        .HasColumnType("int");
+
+                    b.Property<long>("SalesRepresentativesSalesRepresentativeId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("BranchesId", "SalesRepresentativesSalesRepresentativeId");
+
+                    b.HasIndex("SalesRepresentativesSalesRepresentativeId");
+
+                    b.ToTable("BranchSalesRepresentative");
+                });
+
             modelBuilder.Entity("GovermentSalesRepresentative", b =>
                 {
                     b.Property<int>("GovermentsGoverment_Id")
@@ -382,16 +397,11 @@ namespace Shipping.Entities.Migrations
                     b.Property<int>("branchid")
                         .HasColumnType("int");
 
-                    b.Property<int>("privillageid")
-                        .HasColumnType("int");
-
                     b.HasKey("EmployeeId");
 
                     b.HasIndex("UserId");
 
                     b.HasIndex("branchid");
-
-                    b.HasIndex("privillageid");
 
                     b.ToTable("Employees");
                 });
@@ -495,20 +505,10 @@ namespace Shipping.Entities.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("SalesRepresentativeId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("TraderId")
-                        .HasColumnType("bigint");
-
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Privellge_Id");
-
-                    b.HasIndex("SalesRepresentativeId");
-
-                    b.HasIndex("TraderId");
 
                     b.ToTable("Privellges");
                 });
@@ -669,6 +669,21 @@ namespace Shipping.Entities.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("BranchSalesRepresentative", b =>
+                {
+                    b.HasOne("Shipping.Entities.Domain.Models.Branch", null)
+                        .WithMany()
+                        .HasForeignKey("BranchesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
+                        .WithMany()
+                        .HasForeignKey("SalesRepresentativesSalesRepresentativeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("GovermentSalesRepresentative", b =>
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.Goverment", null)
@@ -735,15 +750,6 @@ namespace Shipping.Entities.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.Branch", b =>
-                {
-                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", "salesPerson")
-                        .WithMany("Branchs")
-                        .HasForeignKey("salesPersonSalesRepresentativeId");
-
-                    b.Navigation("salesPerson");
-                });
-
             modelBuilder.Entity("Shipping.Entities.Domain.Models.City", b =>
                 {
                     b.HasOne("Shipping.Entities.Domain.Models.Goverment", "goverment")
@@ -761,23 +767,15 @@ namespace Shipping.Entities.Migrations
                         .WithMany()
                         .HasForeignKey("UserId");
 
-                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "branch")
+                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "Branch")
                         .WithMany("Employees")
                         .HasForeignKey("branchid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Shipping.Entities.Domain.Models.Privellge", "Privillage")
-                        .WithMany()
-                        .HasForeignKey("privillageid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Privillage");
+                    b.Navigation("Branch");
 
                     b.Navigation("User");
-
-                    b.Navigation("branch");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
@@ -799,17 +797,6 @@ namespace Shipping.Entities.Migrations
                     b.Navigation("SalesRepresentative");
 
                     b.Navigation("Trader");
-                });
-
-            modelBuilder.Entity("Shipping.Entities.Domain.Models.Privellge", b =>
-                {
-                    b.HasOne("Shipping.Entities.Domain.Models.SalesRepresentative", null)
-                        .WithMany("Privellges")
-                        .HasForeignKey("SalesRepresentativeId");
-
-                    b.HasOne("Shipping.Entities.Domain.Models.Trader", null)
-                        .WithMany("Privellges")
-                        .HasForeignKey("TraderId");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Product", b =>
@@ -885,15 +872,11 @@ namespace Shipping.Entities.Migrations
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SalesRepresentative", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("Privellges");
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Trader", b =>
                 {
                     b.Navigation("Orders");
-
-                    b.Navigation("Privellges");
                 });
 #pragma warning restore 612, 618
         }

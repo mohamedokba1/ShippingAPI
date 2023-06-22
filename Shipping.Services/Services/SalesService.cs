@@ -17,8 +17,8 @@ public class SalesService : ISalesService
     private readonly ISalesRepresentativeRepository _salesRepository;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IBranchRepository branchRepository;
-    private readonly IGovermentRepository governmentRepository;
+    private readonly IBranchRepository _branchRepository;
+    private readonly IGovermentRepository _governmentRepository;
 
     public SalesService(ISalesRepresentativeRepository salesRepository,
         IMapper mapper, 
@@ -29,13 +29,13 @@ public class SalesService : ISalesService
         _salesRepository = salesRepository;
         _mapper = mapper;
         _userManager = userManager;
-        this.branchRepository = branchRepository;
-        this.governmentRepository = governmentRepository;
+        _branchRepository = branchRepository;
+        this._governmentRepository = governmentRepository;
     }
     public async Task AddAsync(AddSalesDto sale)
     {
-       var branches = await branchRepository.GetRange(sale.BranchesIds);
-        var governments = await governmentRepository.GetRange(sale.GovernmentsIds);
+        var branches = await _branchRepository.GetRange(sale?.BranchesIds);
+        var governments = await _governmentRepository.GetRange(sale?.GovernmentsIds);
 
         if(branches.Count()!=sale.BranchesIds.Count)
         {
@@ -64,7 +64,7 @@ public class SalesService : ISalesService
             IsActive= sale.IsActive,
             Address = sale.Address,
             User = user,
-            Branches = branches.ToList() , 
+            Branches = branches.ToList(), 
             Goverments = governments.ToList() ,
         };
         var claims = new List<Claim>

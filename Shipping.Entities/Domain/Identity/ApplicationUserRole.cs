@@ -5,5 +5,5 @@ namespace Shipping.Entities.Domain.Identity;
 
 public class ApplicationUserRole : IdentityRole
 {
-    public ICollection<Privellge> Privellges { get; set; }
+    public ICollection<RoleClaim> RoleClaims { get; set; } = new HashSet<RoleClaim>();
 }

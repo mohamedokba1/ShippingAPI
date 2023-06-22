@@ -146,16 +146,10 @@ public class TraderServices : ITraderService
 
     public async Task<long?> GetTraderIdByEmailAsync(string email)
     {
-        var trader = await _traderRepository.GetByEmailAsync(email);
-
+        Trader? trader = await _traderRepository.GetTraderByEmailAsync(email);
         if (trader == null)
-        {
-            throw new Exception("Trader not found.");
-        }
+            return null;
 
         return trader.TraderId;
     }
-=======
- 
->>>>>>> 1f66c5eb7eec6bbdef0cc2c9804c29e462f132f9
 }

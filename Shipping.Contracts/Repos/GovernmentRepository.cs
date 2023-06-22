@@ -19,7 +19,7 @@ namespace Shipping.Repositories.Repos
             this.context = context;
         }
 
-        public async Task<IEnumerable<Goverment?>>  GetRange(List<int> ids)
+        public async Task<IEnumerable<Goverment?>> GetRange(List<int> ids)
         {
             return await context.Set<Goverment>().Where(g=> ids.Contains(g.Goverment_Id)).ToListAsync();
         }

@@ -4,9 +4,6 @@ using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Repositories;
 
@@ -46,7 +43,6 @@ public class BranchRepository:IBranchRepository
     public async Task DeleteAsync(Branch entity)
     {
         entity.State = false; 
-        //_context.Set<Branch>().Remove(entity);
         await Task.CompletedTask;
     }
 

@@ -51,10 +51,25 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Branches",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    branchName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    State = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Branches", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Customers",
                 columns: table => new
                 {
-                    Customer_Id = table.Column<long>(type: "bigint", nullable: false)
+                    CustomerId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -66,7 +81,7 @@ namespace Shipping.Entities.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Customers", x => x.Customer_Id);
+                    table.PrimaryKey("PK_Customers", x => x.CustomerId);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,26 +104,12 @@ namespace Shipping.Entities.Migrations
                 {
                     Privellge_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    PrivellgeName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PrivellgeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Privellges", x => x.Privellge_Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    Product_Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Weight = table.Column<double>(type: "float", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.Product_Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -202,8 +203,12 @@ namespace Shipping.Entities.Migrations
                 {
                     SalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CompanyPercentage = table.Column<double>(type: "float", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DiscountType = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -222,20 +227,17 @@ namespace Shipping.Entities.Migrations
                 {
                     TraderId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CostPerRefusedOrder = table.Column<double>(type: "float", nullable: false),
                     CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Traders", x => x.TraderId);
-                    table.ForeignKey(
-                        name: "FK_Traders_AspNetUsers_ApplicationUserId",
-                        column: x => x.ApplicationUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Traders_AspNetUsers_UserId",
                         column: x => x.UserId,
@@ -265,6 +267,37 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Employees",
+                columns: table => new
+                {
+                    EmployeeId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    branchid = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.ForeignKey(
+                        name: "FK_Employees_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Employees_Branches_branchid",
+                        column: x => x.branchid,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Cities",
                 columns: table => new
                 {
@@ -272,6 +305,7 @@ namespace Shipping.Entities.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CityName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NormalShippingCost = table.Column<double>(type: "float", nullable: false),
+                    PickupShippingCost = table.Column<double>(type: "float", nullable: false),
                     GovermentId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -286,24 +320,51 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Branches",
+                name: "ApplicationUserRolePrivellge",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    branchName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    State = table.Column<bool>(type: "bit", nullable: false),
-                    salesPersonSalesRepresentativeId = table.Column<long>(type: "bigint", nullable: true)
+                    PrivellgesPrivellge_Id = table.Column<int>(type: "int", nullable: false),
+                    RolesId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Branches", x => x.Id);
+                    table.PrimaryKey("PK_ApplicationUserRolePrivellge", x => new { x.PrivellgesPrivellge_Id, x.RolesId });
                     table.ForeignKey(
-                        name: "FK_Branches_SalesRepresentatives_salesPersonSalesRepresentativeId",
-                        column: x => x.salesPersonSalesRepresentativeId,
+                        name: "FK_ApplicationUserRolePrivellge_AspNetRoles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ApplicationUserRolePrivellge_Privellges_PrivellgesPrivellge_Id",
+                        column: x => x.PrivellgesPrivellge_Id,
+                        principalTable: "Privellges",
+                        principalColumn: "Privellge_Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "BranchSalesRepresentative",
+                columns: table => new
+                {
+                    BranchesId = table.Column<int>(type: "int", nullable: false),
+                    SalesRepresentativesSalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BranchSalesRepresentative", x => new { x.BranchesId, x.SalesRepresentativesSalesRepresentativeId });
+                    table.ForeignKey(
+                        name: "FK_BranchSalesRepresentative_Branches_BranchesId",
+                        column: x => x.BranchesId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_BranchSalesRepresentative_SalesRepresentatives_SalesRepresentativesSalesRepresentativeId",
+                        column: x => x.SalesRepresentativesSalesRepresentativeId,
                         principalTable: "SalesRepresentatives",
-                        principalColumn: "SalesRepresentativeId");
+                        principalColumn: "SalesRepresentativeId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -331,51 +392,35 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PrivellgeSalesRepresentative",
-                columns: table => new
-                {
-                    PrivellgesPrivellge_Id = table.Column<int>(type: "int", nullable: false),
-                    SalesRepresentativesSalesRepresentativeId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PrivellgeSalesRepresentative", x => new { x.PrivellgesPrivellge_Id, x.SalesRepresentativesSalesRepresentativeId });
-                    table.ForeignKey(
-                        name: "FK_PrivellgeSalesRepresentative_Privellges_PrivellgesPrivellge_Id",
-                        column: x => x.PrivellgesPrivellge_Id,
-                        principalTable: "Privellges",
-                        principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PrivellgeSalesRepresentative_SalesRepresentatives_SalesRepresentativesSalesRepresentativeId",
-                        column: x => x.SalesRepresentativesSalesRepresentativeId,
-                        principalTable: "SalesRepresentatives",
-                        principalColumn: "SalesRepresentativeId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
                 {
-                    Order_Id = table.Column<long>(type: "bigint", nullable: false)
+                    OrderId = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     State = table.Column<int>(type: "int", nullable: false),
                     PaymentMethod = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ExtraWeightCost = table.Column<double>(type: "float", nullable: false),
                     CompanyBranch = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DefaultCost = table.Column<double>(type: "float", nullable: false),
-                    CustomerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    shipping_type = table.Column<int>(type: "int", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Government = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ShippingType = table.Column<int>(type: "int", nullable: false),
+                    TotalCost = table.Column<double>(type: "float", nullable: false),
+                    TotalWeight = table.Column<int>(type: "int", nullable: false),
+                    DeliveredToVillage = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
-                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    CustomerId = table.Column<long>(type: "bigint", nullable: true),
                     TraderId = table.Column<long>(type: "bigint", nullable: true),
                     SalesRepresentativeId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.Order_Id);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
+                    table.ForeignKey(
+                        name: "FK_Orders_Customers_CustomerId",
+                        column: x => x.CustomerId,
+                        principalTable: "Customers",
+                        principalColumn: "CustomerId");
                     table.ForeignKey(
                         name: "FK_Orders_SalesRepresentatives_SalesRepresentativeId",
                         column: x => x.SalesRepresentativeId,
@@ -386,30 +431,6 @@ namespace Shipping.Entities.Migrations
                         column: x => x.TraderId,
                         principalTable: "Traders",
                         principalColumn: "TraderId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PrivellgeTrader",
-                columns: table => new
-                {
-                    PrivellgesPrivellge_Id = table.Column<int>(type: "int", nullable: false),
-                    TradersTraderId = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PrivellgeTrader", x => new { x.PrivellgesPrivellge_Id, x.TradersTraderId });
-                    table.ForeignKey(
-                        name: "FK_PrivellgeTrader_Privellges_PrivellgesPrivellge_Id",
-                        column: x => x.PrivellgesPrivellge_Id,
-                        principalTable: "Privellges",
-                        principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_PrivellgeTrader_Traders_TradersTraderId",
-                        column: x => x.TradersTraderId,
-                        principalTable: "Traders",
-                        principalColumn: "TraderId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -444,101 +465,32 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "Products",
                 columns: table => new
                 {
-                    EmployeeId = table.Column<long>(type: "bigint", nullable: false)
+                    Product_Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    branchId = table.Column<int>(type: "int", nullable: true)
+                    ProductName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Weight = table.Column<double>(type: "float", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Employees", x => x.EmployeeId);
+                    table.PrimaryKey("PK_Products", x => x.Product_Id);
                     table.ForeignKey(
-                        name: "FK_Employees_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Employees_Branches_branchId",
-                        column: x => x.branchId,
-                        principalTable: "Branches",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CustomerOrder",
-                columns: table => new
-                {
-                    CustomersCustomer_Id = table.Column<long>(type: "bigint", nullable: false),
-                    OrdersOrder_Id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CustomerOrder", x => new { x.CustomersCustomer_Id, x.OrdersOrder_Id });
-                    table.ForeignKey(
-                        name: "FK_CustomerOrder_Customers_CustomersCustomer_Id",
-                        column: x => x.CustomersCustomer_Id,
-                        principalTable: "Customers",
-                        principalColumn: "Customer_Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CustomerOrder_Orders_OrdersOrder_Id",
-                        column: x => x.OrdersOrder_Id,
+                        name: "FK_Products_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Order_Id",
+                        principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "OrderProduct",
-                columns: table => new
-                {
-                    OrdersOrder_Id = table.Column<long>(type: "bigint", nullable: false),
-                    ProductsProduct_Id = table.Column<long>(type: "bigint", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersOrder_Id, x.ProductsProduct_Id });
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Orders_OrdersOrder_Id",
-                        column: x => x.OrdersOrder_Id,
-                        principalTable: "Orders",
-                        principalColumn: "Order_Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Products_ProductsProduct_Id",
-                        column: x => x.ProductsProduct_Id,
-                        principalTable: "Products",
-                        principalColumn: "Product_Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EmployeePrivellge",
-                columns: table => new
-                {
-                    EmployeesEmployeeId = table.Column<long>(type: "bigint", nullable: false),
-                    PrivillagesPrivellge_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EmployeePrivellge", x => new { x.EmployeesEmployeeId, x.PrivillagesPrivellge_Id });
-                    table.ForeignKey(
-                        name: "FK_EmployeePrivellge_Employees_EmployeesEmployeeId",
-                        column: x => x.EmployeesEmployeeId,
-                        principalTable: "Employees",
-                        principalColumn: "EmployeeId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_EmployeePrivellge_Privellges_PrivillagesPrivellge_Id",
-                        column: x => x.PrivillagesPrivellge_Id,
-                        principalTable: "Privellges",
-                        principalColumn: "Privellge_Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+            migrationBuilder.CreateIndex(
+                name: "IX_ApplicationUserRolePrivellge_RolesId",
+                table: "ApplicationUserRolePrivellge",
+                column: "RolesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -575,9 +527,9 @@ namespace Shipping.Entities.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Branches_salesPersonSalesRepresentativeId",
-                table: "Branches",
-                column: "salesPersonSalesRepresentativeId");
+                name: "IX_BranchSalesRepresentative_SalesRepresentativesSalesRepresentativeId",
+                table: "BranchSalesRepresentative",
+                column: "SalesRepresentativesSalesRepresentativeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_GovermentId",
@@ -585,19 +537,9 @@ namespace Shipping.Entities.Migrations
                 column: "GovermentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CustomerOrder_OrdersOrder_Id",
-                table: "CustomerOrder",
-                column: "OrdersOrder_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_EmployeePrivellge_PrivillagesPrivellge_Id",
-                table: "EmployeePrivellge",
-                column: "PrivillagesPrivellge_Id");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Employees_branchId",
+                name: "IX_Employees_branchid",
                 table: "Employees",
-                column: "branchId");
+                column: "branchid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",
@@ -610,9 +552,9 @@ namespace Shipping.Entities.Migrations
                 column: "SalesRepresentativesSalesRepresentativeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_ProductsProduct_Id",
-                table: "OrderProduct",
-                column: "ProductsProduct_Id");
+                name: "IX_Orders_CustomerId",
+                table: "Orders",
+                column: "CustomerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_SalesRepresentativeId",
@@ -625,14 +567,9 @@ namespace Shipping.Entities.Migrations
                 column: "TraderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PrivellgeSalesRepresentative_SalesRepresentativesSalesRepresentativeId",
-                table: "PrivellgeSalesRepresentative",
-                column: "SalesRepresentativesSalesRepresentativeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PrivellgeTrader_TradersTraderId",
-                table: "PrivellgeTrader",
-                column: "TradersTraderId");
+                name: "IX_Products_OrderId",
+                table: "Products",
+                column: "OrderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SalesRepresentatives_UserId",
@@ -655,11 +592,6 @@ namespace Shipping.Entities.Migrations
                 column: "TraderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Traders_ApplicationUserId",
-                table: "Traders",
-                column: "ApplicationUserId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Traders_UserId",
                 table: "Traders",
                 column: "UserId");
@@ -674,6 +606,9 @@ namespace Shipping.Entities.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "ApplicationUserRolePrivellge");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -686,22 +621,16 @@ namespace Shipping.Entities.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CustomerOrder");
+                name: "BranchSalesRepresentative");
 
             migrationBuilder.DropTable(
-                name: "EmployeePrivellge");
+                name: "Employees");
 
             migrationBuilder.DropTable(
                 name: "GovermentSalesRepresentative");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct");
-
-            migrationBuilder.DropTable(
-                name: "PrivellgeSalesRepresentative");
-
-            migrationBuilder.DropTable(
-                name: "PrivellgeTrader");
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "SpecialPackages");
@@ -710,37 +639,31 @@ namespace Shipping.Entities.Migrations
                 name: "Users");
 
             migrationBuilder.DropTable(
+                name: "Privellges");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Customers");
-
-            migrationBuilder.DropTable(
-                name: "Employees");
+                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "Privellges");
-
-            migrationBuilder.DropTable(
                 name: "Cities");
 
             migrationBuilder.DropTable(
-                name: "Branches");
+                name: "Customers");
+
+            migrationBuilder.DropTable(
+                name: "SalesRepresentatives");
 
             migrationBuilder.DropTable(
                 name: "Traders");
 
             migrationBuilder.DropTable(
                 name: "Goverments");
-
-            migrationBuilder.DropTable(
-                name: "SalesRepresentatives");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

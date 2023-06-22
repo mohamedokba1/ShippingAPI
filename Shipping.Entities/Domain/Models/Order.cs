@@ -34,10 +34,13 @@ public class Order
     public bool IsDeleted { get; set; }
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    [ForeignKey(nameof(Customer))]
     public long? CustomerId { get; set; }
-    public virtual Customer Customer { get; set; }
+    public virtual Customer? Customer { get; set; }
+    [ForeignKey(nameof(Trader))]
     public long? TraderId { get; set; }
     public virtual Trader? Trader { get; set; }
+    [ForeignKey(nameof(SalesRepresentative))]
     public long? SalesRepresentativeId { get; set; }
     public virtual SalesRepresentative? SalesRepresentative { get; set; }
 }
