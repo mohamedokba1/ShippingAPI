@@ -95,6 +95,7 @@ namespace Shipping.API
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 
+
             builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             builder.Services.AddScoped<IGovermentRepository, GovernmentRepository>();
 
@@ -121,7 +122,6 @@ namespace Shipping.API
 
             #endregion
 
-            //builder.Services.AddHttpContextAccessor();
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {

@@ -1,5 +1,4 @@
-﻿using AutoMapper.Configuration.Annotations;
-using Shipping.Entities.Domain.Models;
+﻿using Shipping.Entities.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -25,4 +24,4 @@ public class OrderAddDto
     public ICollection<ProductAddDto> Products { get; set; } = new HashSet<ProductAddDto>();
 }
 
-public record WeightOptions(int allowedWeight, double costPerKG);
+public record WeightOptions(int allowedWeight = 1, double costPerKG = 1);

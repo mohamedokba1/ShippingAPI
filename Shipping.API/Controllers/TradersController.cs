@@ -68,26 +68,26 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-            public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
-            {
-                var errors = await _traderService.AddUserAndTrader(traderAddDto);
-                if (errors is null)
-                    return Ok(traderAddDto);
-                return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
-            }
+        public async Task<ActionResult> AddTrader(TraderAddDto traderAddDto)
+        {
+            var errors = await _traderService.AddUserAndTrader(traderAddDto);
+            if (errors?.Count == 0)
+                 return Ok(traderAddDto);
+            return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+        }
 
-            [HttpPut("{traderId}")]
-            public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
+        [HttpPut("{traderId}")]
+        public async Task<IActionResult> UpdateTrader(long traderId, TraderUpdateDto traderUpdateDto)
+        {
+            List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
+            if (errors?.Count == 0)
             {
-                List<ValidationResult>? errors = await _traderService.UpdateTraderAsync(traderId, traderUpdateDto);
-                if (errors is null)
-                {
-                    TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
-                    return Ok(updatedTrader);
-                }
-                else
-                    return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+                TraderResponseDto? updatedTrader = await _traderService.GetTraderByIdAsync(traderId);
+                return Ok(updatedTrader);
             }
+            else
+                return BadRequest(string.Join(", ", errors.Select(err => err.ErrorMessage)));
+        }
 
         [HttpDelete("{traderId}")]
         public async Task<IActionResult> DeleteTrader(long traderId)

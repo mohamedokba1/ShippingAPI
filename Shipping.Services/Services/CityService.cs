@@ -44,6 +44,18 @@ public class CityService: ICityService
         }
         return null!;
     }
+    public async Task<IEnumerable<CityReadDto>> GetCitiesByGovernmentNameAsync(string governmentName)
+    {
+        var cities = await _cityRepository.GetCitiesByGovernmentNameAsync(governmentName);
+        return cities.Select(city => new CityReadDto
+        {
+            CityId = city.City_Id,
+            CityName = city.CityName,
+            NormalShippingCost = city.NormalShippingCost,
+            PickupShippingCost = city.PickupShippingCost,
+            govermentName = city.goverment.GovermentName
+        });
+    }
     public async Task AddAsync(CityAddDto cityAddDto)
     {
         if (cityAddDto != null)

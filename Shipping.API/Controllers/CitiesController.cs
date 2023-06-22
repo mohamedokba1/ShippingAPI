@@ -33,7 +33,12 @@ namespace Shipping.API.Controllers
             }
             return Ok(city);
         }
-
+        [HttpGet("government/{governmentName}")]
+        public async Task<ActionResult<IEnumerable<CityReadDto>>> GetCitiesByGovernmentName(string governmentName)
+        {
+            var cities = await _cityService.GetCitiesByGovernmentNameAsync(governmentName);
+            return Ok(cities);
+        }
         [HttpPost]
         public async Task<ActionResult> AddCity(CityAddDto city)
         {

@@ -6,6 +6,9 @@ namespace Shipping.Services.Dtos;
 public class OrderUpdateDto
 {
     public OrderState State { get; set; } = OrderState.New;
+    public DateTime OrderDate { get; set; }
+    public double TotalCost { get; set; }
+    public int TotalWeight { get; set; }
     public PaymentType PaymentMethod { get; set; }
     [DataType(DataType.DateTime)]
     public double ExtraWeightCost { get; set; }
@@ -14,5 +17,5 @@ public class OrderUpdateDto
     public CustomerUpdateDto Customer { get; set; }
     public ShippingType ShippingType { get; set; }
     public bool IsDeleted { get; set; }
-    public ICollection<ProductResponseDto>? Products { get; set; }
+    public ICollection<ProductUpdateDto>? Products { get; set; }
 }

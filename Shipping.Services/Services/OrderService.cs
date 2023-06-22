@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Identity;
-using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
@@ -29,15 +27,15 @@ public class OrderService : IOrderService
     public async Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail)
     {
         List<ValidationResult>? validationResults = ValidateModel.ModelValidation(orderAddDto);
-        if (validationResults is null)
+        if (validationResults?.Count ==0)
         {
-            Trader? currentTrader = _mapper.Map<Trader>(await _traderService.GetTraderIdByEmailAsync(userEmail));
-            if (currentTrader != null)
+            long? currentTraderId = await _traderService.GetTraderIdByEmailAsync(userEmail);
+            if (currentTraderId != null)
             {
                 Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
                 if (order != null)
                 {
-                    order.TraderId = currentTrader.TraderId;
+                    order.TraderId = currentTraderId;
                     await _orderRepository.AddOrderAsync(order);
                 }
             }
