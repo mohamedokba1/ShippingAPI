@@ -59,7 +59,7 @@ public class OrderService : IOrderService
     {
         long? currentTrader = await _traderService.GetTraderIdByEmailAsync(userEmail);
         IEnumerable<Order>? orders = await _orderRepository.GetAllTraderOrdersAsync((long)currentTrader);
-        if(orders != null)
+        if (orders != null)
             return _mapper.Map<IEnumerable<OrderResponseDto>>(orders);
         return null;
     }
