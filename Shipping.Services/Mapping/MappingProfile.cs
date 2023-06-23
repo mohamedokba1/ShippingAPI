@@ -13,9 +13,7 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<TraderUpdateDto, Trader>()
-            .ForPath(dest=>dest.User.PasswordHash,src=>src.MapFrom(src=>src.Password))
-            .ReverseMap();
+        CreateMap<TraderUpdateDto, Trader>().ReverseMap();
         CreateMap<TraderResponseDto, Trader>().ReverseMap();
         CreateMap<TraderAddDto, Trader>().ReverseMap();
         CreateMap<ApplicationUser, TraderAddDto>().ReverseMap();
@@ -82,13 +80,17 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.State, opt => opt.MapFrom(src => Enum.Parse(typeof(OrderState), src.State)))
             .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => Enum.Parse(typeof(ShippingType), src.ShippingType)));
         CreateMap<OrderAddDto, Order>().ReverseMap();
-        CreateMap<OrderUpdateDto, Order>().ReverseMap();
+        CreateMap<OrderUpdateDto, Order>()
+            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => Enum.Parse(typeof(PaymentType), src.PaymentMethod)))
+            .ForMember(dest => dest.State, opt => opt.MapFrom(src => Enum.Parse(typeof(OrderState), src.State)))
+            .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => Enum.Parse(typeof(ShippingType), src.ShippingType)));
+
 
         CreateMap<BranchReadDto , Branch>().ReverseMap();
 
-        CreateMap<Privellge , PrivellageDto>().ReverseMap();
-        CreateMap<PrivilegeAddDto,Privellge>().ReverseMap();
-        CreateMap<PrivllageUpdateDto, Privellge>().ReverseMap();
+        CreateMap<Permission , PermissionDto>().ReverseMap();
+        CreateMap<PermissionAddDto,Permission>().ReverseMap();
+        CreateMap<PermissionUpdateDto, Permission>().ReverseMap();
 
 
        

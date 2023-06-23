@@ -8,53 +8,44 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PrivellgesController : ControllerBase
+    public class PermissionsController : ControllerBase
     {
-        private readonly IPrivellageService privellageService;
-        public PrivellgesController(IPrivellageService _privellageService)
+        private readonly IPermissionService _permissionService;
+        public PermissionsController(IPermissionService permissionService)
         {
-            privellageService = _privellageService;
+            _permissionService = permissionService;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PrivellageDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PermissionDto>>> GetAll()
         {
-            var privellages = await privellageService.Getall();
+            var privellages = await _permissionService.Getall();
             return Ok(privellages);
-
         }
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<PrivellageDto>> GetById(int id)
+        public async Task<ActionResult<PermissionDto>> GetById(int id)
         {
-            var privellage = await privellageService.GetByid(id);
+            var privellage = await _permissionService.GetByid(id);
             if (privellage == null)
                 return NotFound();
             return Ok(privellage);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(PrivilegeAddDto privellageaddDto)
+        public async Task<IActionResult> Add(PermissionAddDto privellageaddDto)
         {
-            try
-            {
-                await privellageService.Add(privellageaddDto);
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+           return BadRequest();
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id,PrivllageUpdateDto privellagedto)
+        public async Task<ActionResult> Update(int id,PermissionUpdateDto privellagedto)
         {
             try
             {
-                await privellageService.Update(id, privellagedto);
+                await _permissionService.Update(id, privellagedto);
                 return Ok("update privilege is sucees");
             }
             catch (Exception ex)
@@ -70,7 +61,7 @@ namespace Shipping.API.Controllers
         {
             try
             {
-                await privellageService.Delete(id);
+                await _permissionService.Delete(id);
                 return Ok("Seleted successfully");
             }
             catch(Exception ex)

@@ -8,7 +8,7 @@ namespace Shipping.Services.Dtos;
 public class TraderAddDto
 {
     [Required(ErrorMessage = "{0} can not be blank")]
-    [StringLength(50 , MinimumLength =5)]
+    [StringLength(50)]
     public string UserName { get; set; } = string.Empty;
     [Required(ErrorMessage = "{0} can not be blank")]
     [EmailAddress(ErrorMessage = "The Entered email is not valid")]
@@ -22,15 +22,13 @@ public class TraderAddDto
     public string Password { get; set; } = string.Empty;
     [Required(ErrorMessage = "Cost per refused order can not be blank")]
     public double CostPerRefusedOrder { get; set; }
-
     public string? CompanyBranch { get; set; }
-
-    [RegularExpression(@"^01[0125][0-9]{8}$", ErrorMessage = "Invalid phone number ")]
+    [Phone(ErrorMessage = "Invalid phone number")]
     [Required(ErrorMessage = "{0} can not be blank")]
     [StringLength(11)]
     public string PhoneNumber { get; set; } = string.Empty;
-
-
+    [JsonIgnore]
+    public ICollection<Permission>? Privellges { get; set; }
     [JsonIgnore]
     public ApplicationUser? User { get; set; }
 }

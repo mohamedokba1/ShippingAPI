@@ -18,7 +18,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<City> Cities { get; set; }
     public DbSet<Goverment> Goverments { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Privellge> Privellges { get; set; }
+    public DbSet<Permission> Privellges { get; set; }
     public DbSet<SpecialPackage> SpecialPackages { get; set; }
     public DbSet<Branch> Branches { get; set; }
 
