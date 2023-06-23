@@ -6,20 +6,20 @@ using AutoMapper;
 
 namespace Shipping.Services.Services;
 
-public class PrivellageService : IPrivellageService
+public class PermissionService : IPermissionService
 {
-    private readonly IPrivellageRepository privellageRepository;
+    private readonly IPermissionRepository privellageRepository;
     private readonly IMapper mapper;
 
-    public PrivellageService(IPrivellageRepository _privellageRepository,IMapper mapper)
+    public PermissionService(IPermissionRepository _privellageRepository,IMapper mapper)
     {
         privellageRepository = _privellageRepository;
         this.mapper = mapper;
     }
 
-    public async Task Add(PrivilegeAddDto privilegedto)
+    public async Task Add(PermissionAddDto privilegedto)
     {
-        Privellge p = mapper.Map<Privellge>(privilegedto);
+        Permission p = mapper.Map<Permission>(privilegedto);
         await privellageRepository.Add(p);
         await privellageRepository.Savechanges();
 
@@ -27,7 +27,7 @@ public class PrivellageService : IPrivellageService
 
     public async Task Delete(int id)
     {
-        Privellge privFromDb = await privellageRepository.GetByid(id);
+        Permission privFromDb = await privellageRepository.GetByid(id);
         if(privFromDb != null)
         {
             await privellageRepository.Delete(id);
@@ -40,20 +40,20 @@ public class PrivellageService : IPrivellageService
         }
     }
 
-    public async Task<IEnumerable<PrivellageDto>> Getall()
+    public async Task<IEnumerable<PermissionDto>> Getall()
     {
         var privilegesFromDb = await privellageRepository.Getall();
-        return mapper.Map<IEnumerable<PrivellageDto>>(privilegesFromDb);
+        return mapper.Map<IEnumerable<PermissionDto>>(privilegesFromDb);
     }
 
-    public async Task<PrivellageDto> GetByid(int id)
+    public async Task<PermissionDto> GetByid(int id)
     {
         var privFromDb = await privellageRepository.GetByid(id);
         if(privFromDb == null)
         {
             return null;
         }
-        return mapper.Map<PrivellageDto>(privFromDb);
+        return mapper.Map<PermissionDto>(privFromDb);
     }
 
     public async Task Savechanges()
@@ -62,9 +62,9 @@ public class PrivellageService : IPrivellageService
 
     }
 
-    public async Task Update(int id, PrivllageUpdateDto privilegedto)
+    public async Task Update(int id, PermissionUpdateDto privilegedto)
     {
-        Privellge privfromdb = await privellageRepository.GetByid(id);
+        Permission privfromdb = await privellageRepository.GetByid(id);
         if(privfromdb != null)
         {
             mapper.Map(privilegedto, privfromdb);
