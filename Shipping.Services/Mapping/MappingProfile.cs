@@ -81,9 +81,7 @@ public class MappingProfile : Profile
             .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => Enum.Parse(typeof(ShippingType), src.ShippingType)));
         CreateMap<OrderAddDto, Order>().ReverseMap();
         CreateMap<OrderUpdateDto, Order>()
-            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => Enum.Parse(typeof(PaymentType), src.PaymentMethod)))
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => Enum.Parse(typeof(OrderState), src.State)))
-            .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => Enum.Parse(typeof(ShippingType), src.ShippingType)));
+            .ForMember(dest => dest.State, opt => opt.MapFrom(src => Enum.Parse(typeof(OrderState), src.State)));
 
 
         CreateMap<BranchReadDto , Branch>().ReverseMap();
