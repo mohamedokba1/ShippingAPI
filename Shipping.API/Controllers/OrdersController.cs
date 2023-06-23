@@ -41,7 +41,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(OrderAddDto order, string userEmail)
+        public async Task<ActionResult> Add(OrderAddDto order, [FromHeader] string userEmail)
         {
             List<ValidationResult>? errors =  await _orderService.AddOrderAsync(order, userEmail);
             if(errors?.Count ==0)
