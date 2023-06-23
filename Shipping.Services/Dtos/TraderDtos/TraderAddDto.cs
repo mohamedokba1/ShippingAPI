@@ -1,5 +1,4 @@
 ﻿using Shipping.Entities.Domain.Identity;
-using Shipping.Entities.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
@@ -27,8 +26,6 @@ public class TraderAddDto
     [Required(ErrorMessage = "{0} can not be blank")]
     [StringLength(11)]
     public string PhoneNumber { get; set; } = string.Empty;
-    [JsonIgnore]
-    public ICollection<Permission>? Privellges { get; set; }
     [JsonIgnore]
     public ApplicationUser? User { get; set; }
 }

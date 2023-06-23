@@ -4,10 +4,9 @@ namespace Shipping.Services.IServices;
 
 public interface IPermissionService
 {
-    Task<IEnumerable<PermissionDto>> Getall();
-    Task<PermissionDto> GetByid(int id);
+    Task<IEnumerable<PermissionResponseDto>> Getall();
+    Task<PermissionResponseDto?> GetByid(string id);
     Task Add(PermissionAddDto privilege);
-    Task Update(int id, PermissionUpdateDto privilege);
-    Task Delete(int id);
-    Task Savechanges();
+    Task<bool> Update(string id, PermissionUpdateDto permissionUpdateDto);
+    Task<bool> Delete(string id);
 }

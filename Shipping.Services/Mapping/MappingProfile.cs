@@ -85,12 +85,6 @@ public class MappingProfile : Profile
 
 
         CreateMap<BranchReadDto , Branch>().ReverseMap();
-
-        CreateMap<Permission , PermissionDto>().ReverseMap();
-        CreateMap<PermissionAddDto,Permission>().ReverseMap();
-        CreateMap<PermissionUpdateDto, Permission>().ReverseMap();
-
-
-       
+        CreateMap<PermissionResponseDto, ApplicationUserRole>().ReverseMap();
     }
 }

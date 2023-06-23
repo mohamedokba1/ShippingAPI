@@ -19,9 +19,6 @@ namespace Shipping.Services.Dtos
         [Phone]
         public string? PhoneNumber { get; init; } 
 
-        public BranchReadDto? Branch { get; init ; }
-        public PermissionDto? Privellage { get; init;}
-
-       
+        public BranchReadDto? Branch { get; init ; }  
     }
 }

@@ -2,7 +2,6 @@
 
 public  class PermissionUpdateDto
 {
-    public int Privellge_Id { get; set; }
-    public string PrivellgeName { get; set; } = string.Empty;
-    public DateTime date { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public ICollection<string> Claims { get; set; } = new HashSet<string>();
 }

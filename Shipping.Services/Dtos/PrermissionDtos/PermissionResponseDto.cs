@@ -1,10 +1,11 @@
-﻿namespace Shipping.Services.Dtos;
+﻿using System.Security.Claims;
+
+namespace Shipping.Services.Dtos;
 
 public  class PermissionResponseDto
 {
+    public string Id { get; set; } = string.Empty;
     public string Name { get; set; } = string.Empty;
-    public bool Add { get; set; }
-    public bool Update { get; set; }
-    public bool Delete { get; set; }
-    public bool Read { get; set; }
+    public DateTime Date { get; set; }
+    public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();
 }

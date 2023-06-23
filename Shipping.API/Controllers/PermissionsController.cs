@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
-using Shipping.Services.Services;
 
 namespace Shipping.API.Controllers
 {
@@ -17,7 +15,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PermissionDto>>> GetAll()
+        public async Task<ActionResult<IEnumerable<PermissionResponseDto>>> GetAll()
         {
             var privellages = await _permissionService.Getall();
             return Ok(privellages);
@@ -25,49 +23,39 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public async Task<ActionResult<PermissionDto>> GetById(int id)
+        public async Task<ActionResult<PermissionResponseDto>> GetById(string id)
         {
-            var privellage = await _permissionService.GetByid(id);
-            if (privellage == null)
+            var permission = await _permissionService.GetByid(id);
+            if (permission == null)
                 return NotFound();
-            return Ok(privellage);
+            return Ok(permission);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add(PermissionAddDto privellageaddDto)
+        public async Task<IActionResult> Add(PermissionAddDto permissionAddDto)
         {
-           return BadRequest();
+            await _permissionService.Add(permissionAddDto);
+            return Created("new permission added successfully", permissionAddDto);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public async Task<ActionResult> Update(int id,PermissionUpdateDto privellagedto)
+        public async Task<ActionResult> Update(string id,PermissionUpdateDto permissionUpdateDto)
         {
-            try
-            {
-                await _permissionService.Update(id, privellagedto);
-                return Ok("update privilege is sucees");
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-            
+            bool result = await _permissionService.Update(id, permissionUpdateDto);
+            if (result)
+                return NoContent();
+            return BadRequest();
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public async Task<ActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(string id)
         {
-            try
-            {
-                await _permissionService.Delete(id);
-                return Ok("Seleted successfully");
-            }
-            catch(Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+           bool result =  await _permissionService.Delete(id);
+            if(result)
+                return NoContent();
+            return BadRequest();
         }
     }
 }

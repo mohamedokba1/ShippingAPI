@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Shipping.API.ErrorHandling;
+using Shipping.API.PoliciesProvider;
 using Shipping.Entities;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Repositories;
@@ -18,8 +20,7 @@ namespace Shipping.API
         public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-            builder.Services.AddControllers(options =>
-               options.Filters.Add<GlobalErrorHandling>());
+            builder.Services.AddControllers();
             
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
@@ -91,7 +92,7 @@ namespace Shipping.API
             builder.Services.AddScoped<ICustomerService, CustomerService>();
             builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
-          builder.Services.AddScoped<IOrderService, OrderService>();
+            builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 
@@ -113,6 +114,8 @@ namespace Shipping.API
 
             builder.Services.AddScoped<IBranchRepository, BranchRepository>();
             builder.Services.AddScoped<IBranchService, BranchService>();
+
+            builder.Services.AddScoped<IPermissionService, PermissionService>();
             
             #endregion 
 
@@ -122,15 +125,22 @@ namespace Shipping.API
 
             #endregion
 
+            #region Policy Provider
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
+
+            #endregion
+
+            
+
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<GlobalErrorHandling>();
             app.UseCors("Shipping");
             app.UseRouting();
-            app.UseExceptionHandler("/error");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();

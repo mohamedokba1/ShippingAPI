@@ -1,79 +1,92 @@
-﻿using Shipping.Repositories.Contracts;
-using Shipping.Services.IServices;
+﻿using Shipping.Services.IServices;
 using Shipping.Services.Dtos;
-using Shipping.Entities.Domain.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
+using Shipping.Entities.Domain.Identity;
+using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace Shipping.Services.Services;
 
 public class PermissionService : IPermissionService
 {
-    private readonly IPermissionRepository privellageRepository;
-    private readonly IMapper mapper;
+    private readonly RoleManager<ApplicationUserRole> _roleManager;
+    private readonly IMapper _mapper;
 
-    public PermissionService(IPermissionRepository _privellageRepository,IMapper mapper)
+    public PermissionService(
+        RoleManager<ApplicationUserRole> roleManager
+        ,IMapper mapper)
     {
-        privellageRepository = _privellageRepository;
-        this.mapper = mapper;
+        _roleManager = roleManager;
+        _mapper = mapper;
     }
-
-    public async Task Add(PermissionAddDto privilegedto)
+    public async Task<IEnumerable<PermissionResponseDto>> Getall()
     {
-        Permission p = mapper.Map<Permission>(privilegedto);
-        await privellageRepository.Add(p);
-        await privellageRepository.Savechanges();
-
+        return _mapper.Map<IEnumerable<PermissionResponseDto>>
+            (await _roleManager.Roles.ToListAsync());
     }
-
-    public async Task Delete(int id)
+    public async Task<PermissionResponseDto?> GetByid(string roleId)
     {
-        Permission privFromDb = await privellageRepository.GetByid(id);
-        if(privFromDb != null)
+        ApplicationUserRole? role = await _roleManager.FindByIdAsync(roleId);
+        if(role != null)
         {
-            await privellageRepository.Delete(id);
-            await privellageRepository.Savechanges();
-
+            return new PermissionResponseDto()
+            {
+                Id = roleId,
+                Name = role?.Name,
+                Claims = await _roleManager.GetClaimsAsync(role)
+            };
+        }
+        return null;
+    }
+    public async Task Add(PermissionAddDto permissionAddDto)
+    {
+        var newRole = new ApplicationUserRole
+        {
+            Name = permissionAddDto.Name,
+            NormalizedName = permissionAddDto.Name.ToUpper()
+        };
+        var result = await _roleManager.CreateAsync(newRole);
+            
+        if(result.Succeeded)
+        {
+            foreach (var claim in permissionAddDto.Claims)
+            {
+                await _roleManager.AddClaimAsync(newRole, new Claim(claim, "true"));
+            }
         }
         else
-        {
-            throw new Exception("this privilege not found");
-        }
+            throw new Exception("failed to add new role");
     }
 
-    public async Task<IEnumerable<PermissionDto>> Getall()
+    public async Task<bool> Delete(string roleId)
     {
-        var privilegesFromDb = await privellageRepository.Getall();
-        return mapper.Map<IEnumerable<PermissionDto>>(privilegesFromDb);
+        ApplicationUserRole? role = await _roleManager.FindByIdAsync(roleId);
+        if(role != null)
+        {
+            await _roleManager.DeleteAsync(role);
+            return true;
+        }
+        return false;
     }
 
-    public async Task<PermissionDto> GetByid(int id)
+    public async Task<bool> Update(string id, PermissionUpdateDto permissionUpdateDto)
     {
-        var privFromDb = await privellageRepository.GetByid(id);
-        if(privFromDb == null)
+        ApplicationUserRole? role = await _roleManager.FindByIdAsync(id);
+        if(role != null)
         {
-            return null;
+            var claims =  await _roleManager.GetClaimsAsync(role);
+            foreach(var claim in claims)
+            {
+                await _roleManager.RemoveClaimAsync(role, claim);
+            }
+            foreach(var claim in permissionUpdateDto.Claims)
+            {
+                await _roleManager.AddClaimAsync(role, new Claim(claim, "true"));
+            }
+            return true;
         }
-        return mapper.Map<PermissionDto>(privFromDb);
-    }
-
-    public async Task Savechanges()
-    {
-        await privellageRepository.Savechanges();
-
-    }
-
-    public async Task Update(int id, PermissionUpdateDto privilegedto)
-    {
-        Permission privfromdb = await privellageRepository.GetByid(id);
-        if(privfromdb != null)
-        {
-            mapper.Map(privilegedto, privfromdb);
-            await privellageRepository.Savechanges();
-        }
-        else
-        {
-            throw new Exception("this privilege is not found");
-        }
+        return false;
     }
 }
 

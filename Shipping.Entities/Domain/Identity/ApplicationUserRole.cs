@@ -5,5 +5,5 @@ namespace Shipping.Entities.Domain.Identity;
 
 public class ApplicationUserRole : IdentityRole
 {
-    public virtual ICollection<Permission> Permissions { get; set; } = new HashSet<Permission>();
+    public DateTime Date { get; set; } = DateTime.Now;
 }
