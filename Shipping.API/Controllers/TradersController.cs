@@ -21,7 +21,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<TraderResponseDto>? response = await _traderService.GetAllTradersAsync();
