@@ -23,16 +23,33 @@ public class MappingProfile : Profile
 
 
         CreateMap<Employee, EmployeeReadDto>()
-           .ForMember(dest => dest.Branch, src => src.MapFrom(src => src.Branch))
-            .ReverseMap();
+            .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User.UserName))
+             .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
+             .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
+             .ReverseMap();
 
 
 
-        CreateMap<EmployeeAddDto, Employee>()
-         .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid));
 
-        CreateMap<EmployeeupdateDto, Employee>()
-            .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid)).ReverseMap();
+
+
+
+
+
+        CreateMap<Employee , EmployeeAddDto>()
+         .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
+         .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User.UserName))
+             .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
+             .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
+             .ReverseMap();
+
+        CreateMap<Employee, EmployeeupdateDto>()
+            .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
+            .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User.UserName))
+             .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
+             .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
+             .ReverseMap();
+
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();

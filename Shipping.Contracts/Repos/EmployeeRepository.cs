@@ -26,13 +26,13 @@ namespace Shipping.Repositories.Repos
 
         public async Task<IEnumerable<Employee>> Getall()
         {
-             return await context.Employees.Include(e=>e.Branch).ToListAsync();
+             return await context.Employees.Include(e=>e.Branch).Include(e=>e.User).ToListAsync();
 
         }
 
         public async Task<Employee?> GetByid(long id)
         {
-            return await context.Set<Employee>().Include(e=>e.Branch).FirstOrDefaultAsync(e => e.EmployeeId == id);
+            return await context.Set<Employee>().Include(e=>e.Branch).Include(e=>e.User).FirstOrDefaultAsync(e => e.EmployeeId == id);
         }
 
         public async Task Savechanges()

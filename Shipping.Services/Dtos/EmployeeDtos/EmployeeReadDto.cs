@@ -20,7 +20,9 @@ namespace Shipping.Services.Dtos
         public string? PhoneNumber { get; init; } 
 
         public BranchReadDto? Branch { get; init ; }
-        public PrivellageDto? Privellage { get; init;}
+
+
+       // public PrivellageDto? Privellage { get; init;}
 
        
     }

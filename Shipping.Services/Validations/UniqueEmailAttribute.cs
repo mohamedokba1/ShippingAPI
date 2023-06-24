@@ -1,5 +1,6 @@
 ﻿using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
+using Shipping.Services.Dtos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -13,6 +14,8 @@ public class UniqueEmailAttribute : ValidationAttribute
 {
     private readonly ApplicationDbContext context;
 
+   
+
     public UniqueEmailAttribute(ApplicationDbContext context)
     {
         this.context = context;
@@ -24,7 +27,7 @@ public class UniqueEmailAttribute : ValidationAttribute
 
         string email = value.ToString();
 
-        Employee empFromDb= context.Employees.FirstOrDefault(e => e.Email == email);    
+        Employee empFromDb= context.Employees.FirstOrDefault(e => e.User.Email == email);    
         if (empFromDb == null)
         {
             return ValidationResult.Success;
