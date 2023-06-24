@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using Shipping.Services.Dtos.PrermissionDtos;
 
 namespace Shipping.Services.Services;
 
@@ -22,8 +23,20 @@ public class PermissionService : IPermissionService
     }
     public async Task<IEnumerable<PermissionResponseDto>> Getall()
     {
-        return _mapper.Map<IEnumerable<PermissionResponseDto>>
-            (await _roleManager.Roles.ToListAsync());
+        List<PermissionResponseDto> result = new List<PermissionResponseDto>();
+        var roles =  await _roleManager.Roles.ToListAsync();
+        foreach (var role in roles)
+        {
+            var claims = await _roleManager.GetClaimsAsync(role);
+            result.Add(new PermissionResponseDto
+            {
+                Id = role.Id,
+                Name = role.Name,
+                Date = role.Date,
+                Claims = _mapper.Map<IList<ClaimDto>>(claims)
+            });
+        }
+        return result;
     }
     public async Task<PermissionResponseDto?> GetByid(string roleId)
     {
@@ -34,7 +47,7 @@ public class PermissionService : IPermissionService
             {
                 Id = roleId,
                 Name = role?.Name,
-                Claims = await _roleManager.GetClaimsAsync(role)
+                Claims = _mapper.Map<IList<ClaimDto>>(await _roleManager.GetClaimsAsync(role))
             };
         }
         return null;

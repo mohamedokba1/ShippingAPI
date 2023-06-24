@@ -3,6 +3,7 @@ using Shipping.Entities;
 using Shipping.Entities.Domain;
 using Shipping.Entities.Domain.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Shipping.Services.Dtos
 {
@@ -33,7 +34,7 @@ namespace Shipping.Services.Dtos
         [Required]
         public int branchid { get; set; }
 
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public  ApplicationUser? User { get; set; }
 
 

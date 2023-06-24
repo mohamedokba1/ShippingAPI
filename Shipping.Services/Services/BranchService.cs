@@ -24,7 +24,7 @@ public class BranchService: IBranchService
         return branches.Select(branch => new BranchReadDto
         {
             Id = branch.Id, 
-            branchName = branch.branchName,
+            branchName = branch.BranchName,
             State = branch.State,
             CreatedAt = branch.CreatedAt
         });
@@ -37,7 +37,7 @@ public class BranchService: IBranchService
             return new BranchReadDto
             {
                 Id=branch.Id,
-                branchName = branch.branchName,
+                branchName = branch.BranchName,
                 State = branch.State,
                 CreatedAt = branch.CreatedAt
             };
@@ -50,7 +50,7 @@ public class BranchService: IBranchService
         {
             var branch = new Branch
             {
-                branchName = branchAddDto.branchName,
+                BranchName = branchAddDto.branchName,
                 State = branchAddDto.State,
                 CreatedAt = branchAddDto.CreatedAt
             };
@@ -70,7 +70,7 @@ public class BranchService: IBranchService
             var branch = await _branchRepository.GetByIdAsync(id);
             if (branch != null)
             {
-                branch.branchName = branchUpdateDto.branchName;
+                branch.BranchName = branchUpdateDto.branchName;
                 branch.CreatedAt= branchUpdateDto.CreatedAt;
 
                 ValidateModel.ModelValidation(branch);

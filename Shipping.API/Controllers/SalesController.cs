@@ -80,7 +80,7 @@ namespace Shipping.API.Controllers
         {
             try
             {
-                await _salesService.AddAsync(sale);
+                await _salesService.AddUserAndSales(sale);
                 return Ok();
             }
             catch(Exception ex)

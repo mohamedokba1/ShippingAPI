@@ -20,7 +20,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpGet]
-        [RequireClaim("permission.goverment.read")]
+        //[RequireClaim("permission.goverment.read")]
         public async Task<ActionResult<IEnumerable<GovermentReadDto>>> Getall()
         {
             return  Ok(await governmentService.Getall());
@@ -42,7 +42,8 @@ namespace Shipping.API.Controllers
 
 
         [HttpPost]
-        [RequireClaim("permission.goverment.add")]
+        
+        //[RequireClaim("permission.goverment.add")]
         public async Task<ActionResult> Add(GovermentAddDto govermentAddDto)
         {
             try

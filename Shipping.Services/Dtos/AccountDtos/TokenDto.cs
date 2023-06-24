@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using Shipping.Services.Dtos.PrermissionDtos;
+using System.Security.Claims;
 
 namespace Shipping.Services.Dtos;
 public class TokenDto
@@ -6,5 +7,5 @@ public class TokenDto
     public string Token { get; set; } = string.Empty;
     public DateTime ExpiryDate { get; set; }
     public string? Role { get; set; }
-    public ICollection<Claim> Claims { get; set; } = new HashSet<Claim>();
+    public ICollection<ClaimDto> Claims { get; set; } = new HashSet<ClaimDto>();
 }

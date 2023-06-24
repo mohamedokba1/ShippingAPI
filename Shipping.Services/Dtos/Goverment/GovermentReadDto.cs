@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos
 {
@@ -10,6 +8,6 @@ namespace Shipping.Services.Dtos
         [Required]
         public string GovermentName { get; set; } = string.Empty;
         public bool State { get; set; }
-        //public ICollection<City> Cities { get; set; } = new HashSet<City>();
+        public ICollection<CityReadDto> Cities { get; set; } = new HashSet<CityReadDto>();
     }
 }

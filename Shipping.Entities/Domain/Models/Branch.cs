@@ -7,7 +7,7 @@ public class Branch
 {
     [Key]
     public int Id { get; set; }
-    public string branchName { get; set; } = string.Empty;
+    public string BranchName { get; set; } = string.Empty;
     public DateTime CreatedAt { get; set; }
     public bool State { get; set; }
     public virtual ICollection<Employee> Employees { get; set; } = new HashSet<Employee>();
