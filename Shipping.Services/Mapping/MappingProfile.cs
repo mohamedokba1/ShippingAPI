@@ -33,6 +33,8 @@ public class MappingProfile : Profile
 
 
 
+        CreateMap<ApplicationUser, EmployeeupdateDto>().ReverseMap();
+        CreateMap<ApplicationUser, EmployeeAddDto>().ReverseMap();
 
         CreateMap<Employee , EmployeeAddDto>()
          .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
@@ -47,7 +49,6 @@ public class MappingProfile : Profile
              .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
              .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
              .ReverseMap();
-
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
@@ -70,6 +71,9 @@ public class MappingProfile : Profile
         CreateMap<ProductAddDto,Product>().ReverseMap();
 
         CreateMap<SalesDeletDtos, SalesRepresentative>().ReverseMap();
+
+        CreateMap<ApplicationUser, SalesUpdateDtos>().ReverseMap();
+        CreateMap<ApplicationUser, AddSalesDto>().ReverseMap();
 
         CreateMap<SalesReadDtos, SalesRepresentative>().
             ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))

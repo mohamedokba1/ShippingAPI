@@ -24,7 +24,7 @@ namespace Shipping.Services.Services
         public readonly Employee emp;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public EmployeeService(IEmployeeRepository employeeRepository , IMapper mapper, UserManager<ApplicationUser> userManager)
+        public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
         {
             this.employeeRepository = employeeRepository;
             this.mapper = mapper;
@@ -75,9 +75,7 @@ namespace Shipping.Services.Services
             else
                 return validationResult;
         }
-            else { return validationResult; }
 
-       }
 
 
 

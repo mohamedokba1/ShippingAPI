@@ -34,7 +34,7 @@ namespace Shipping.Services.Dtos
         [Required]
         public int branchid { get; set; }
 
-        [JsonIgnore]
+        [System.Text.Json.Serialization.JsonIgnore]
         public  ApplicationUser? User { get; set; }
 
 
