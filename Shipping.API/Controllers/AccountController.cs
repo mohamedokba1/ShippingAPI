@@ -33,13 +33,6 @@ namespace Shipping.API.Controllers
             _roleManager = roleManager;
             _mapper = mapper;
         }
-        [HttpPost]
-        [Route("registerSales")]
-        public async Task<ActionResult> RegisterSalesRepresentative(AddSalesDto salesRepresentative)
-        {
-            await _salesService.AddAsync(salesRepresentative);
-            return Ok("SalesRepresentative Registered Successfully");
-        }
 
         [HttpPost]
         [Route("login")]
