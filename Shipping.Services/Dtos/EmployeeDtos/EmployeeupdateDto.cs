@@ -12,11 +12,12 @@ namespace Shipping.Services.Dtos
         [Required]
         public string Email { get; set; } = string.Empty;
         [Required]
-        [StringLength(15, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3)]
         public string UserName { get; set; } = string.Empty;
         [Required]
         [DataType(DataType.Password)]
-        [StringLength(15, MinimumLength = 6)]
+        [RegularExpression("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$", ErrorMessage = "Invalid password")]
+
         public string Password { get; set; } = string.Empty;
         [Required]
 
@@ -26,8 +27,8 @@ namespace Shipping.Services.Dtos
         [Required]
         public int branchid { get; set; }
 
-        [Required]
-        public int Privellge_Id { get; init; }
+       // [Required]
+      //  public int Privellge_Id { get; init; }
 
         //public BranchReadDto? Branch { get; init; }
         //public PrivellageDto? Privellage { get; init; }

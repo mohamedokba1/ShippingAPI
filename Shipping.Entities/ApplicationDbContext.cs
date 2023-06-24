@@ -7,6 +7,10 @@ using Shipping.Entities.Domain.Identity;
 namespace Shipping.Entities;
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, string>
 {
+    public ApplicationDbContext()
+    {
+
+    }
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options):base(options)
     {}
 

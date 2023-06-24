@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -74,6 +75,47 @@ namespace Shipping.Services.Services
             else
                 return validationResult;
         }
+            else { return validationResult; }
+
+       }
+
+
+
+
+        //    var user = new ApplicationUser
+        //    {
+        //        UserName = employeeDto.UserName,
+        //        Email = employeeDto.Email,
+        //        PhoneNumber = employeeDto.PhoneNumber,
+        //        PasswordHash = employeeDto.Password
+        //    };
+
+        //    var employee = new Employee
+        //    {
+        //        Name = employeeDto.Name,
+        //        Password = employeeDto.Password,
+        //        IsActive = employeeDto.IsActive,
+        //        branchid = employeeDto.branchid,
+        //        User = user
+        //    };
+
+        //    var claims = new List<Claim>
+        //    {
+        //        new Claim(ClaimTypes.NameIdentifier,user.Id) ,
+        //        new Claim(ClaimTypes.Name ,user.UserName) ,
+        //        new Claim(ClaimTypes.Role , "employee")
+        //    };
+
+        //    await userManager.AddClaimsAsync(user, claims);
+
+        //    await userManager.CreateAsync(user, employeeDto.Password);
+
+        //    await employeeRepository.Add(employee);
+        //    await employeeRepository.Savechanges();
+
+
+
+        //}
 
         public async Task Delete(long id)
         {

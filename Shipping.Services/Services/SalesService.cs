@@ -115,10 +115,10 @@ public class SalesService : ISalesService
         var salesRepresentative = await _salesRepository.GetByEmailAsync(email);
         return salesRepresentative?.SalesRepresentativeId;
     }
-    public async Task UpdateAsync(long id,SalesUpdateDtos sale)
+    public async Task UpdateAsync(long id, SalesUpdateDtos sale)
     {
-        var salToUpdate=await _salesRepository.GetByIdAsync(id);
-        if(salToUpdate != null)
+        var salToUpdate = await _salesRepository.GetByIdAsync(id);
+        if (salToUpdate != null)
         {
 
             _mapper.Map(sale, salToUpdate);
@@ -128,10 +128,9 @@ public class SalesService : ISalesService
         }
         else
         {
-            throw new Exception("this employee is not found");
+            throw new Exception("this sales Representator is not found");
         }
-        await _salesRepository.saveChanges();
-        }
+    }
 
 }
 
