@@ -21,9 +21,6 @@ namespace Shipping.Services.Dtos
 
         public BranchReadDto? Branch { get; init ; }
 
-
-       // public PrivellageDto? Privellage { get; init;}
-
        
     }
 }

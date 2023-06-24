@@ -7,7 +7,7 @@ namespace Shipping.Services.IServices
     {
         Task<IEnumerable<EmployeeReadDto>> Getall();
         Task<EmployeeReadDto> GetByid(long id);
-        Task<List<ValidationResult>> Add(EmployeeAddDto employee);
+        Task  Add(EmployeeAddDto employee);
         Task Update(long id, EmployeeupdateDto employee);
         Task Delete(long id);
         Task Savechanges();

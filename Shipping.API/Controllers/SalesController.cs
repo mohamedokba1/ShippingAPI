@@ -15,11 +15,13 @@ namespace Shipping.API.Controllers
             _salesService = salesService;
 
         }
+
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SalesReadDtos>>> GetAllSales()
         {
             return Ok(await _salesService.GetAllSalesAsync());
         }
+
         [HttpGet]
         [Route("id")]
         public async Task<ActionResult<SalesReadDtos>> GetSaleById(long id)
@@ -27,6 +29,7 @@ namespace Shipping.API.Controllers
             return Ok(await _salesService.GetSaleByIdAsync(id));
 
         }
+
         [HttpGet]
         [Route("{email}")]
         public async Task<ActionResult<long>> GetSalesRepresentativeIdByEmail(string email)
