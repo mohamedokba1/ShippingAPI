@@ -13,7 +13,7 @@ public class PolicyProvider : IAuthorizationPolicyProvider
     }
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        if (policyName.StartsWith("permission.", StringComparison.OrdinalIgnoreCase))
+        if (policyName.StartsWith("Permission.", StringComparison.OrdinalIgnoreCase))
         {
             var policy = new AuthorizationPolicyBuilder()
             .RequireClaim(policyName, "true")

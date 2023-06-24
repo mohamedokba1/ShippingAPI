@@ -10,7 +10,6 @@ using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
 using Shipping.Services.IServices;
 using Shipping.Services.Services;
-using System.Security.Claims;
 using System.Text;
 
 namespace Shipping.API
@@ -74,10 +73,10 @@ namespace Shipping.API
             #region Authorization
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("AdminOnly", policy => policy.RequireRole("admin"));
-                options.AddPolicy("TradersOnly", policy => policy.RequireRole("trader"));
-                options.AddPolicy("EmployeesOnly", policy => policy.RequireRole("employee"));
-                options.AddPolicy("salesrepresentativesOnly", policy => policy.RequireRole("salesrepresentative"));
+                options.AddPolicy("Admin", policy =>
+                 policy.RequireRole("admin")
+                .RequireClaim("permission.orders.read", "true"));
+                
             });
             #endregion
 
@@ -138,87 +137,14 @@ namespace Shipping.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-            app.UseMiddleware<GlobalErrorHandling>();
             app.UseCors("Shipping");
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
+            app.UseMiddleware<GlobalErrorHandling>();
             app.MapControllers();
 
-            using (var scope = app.Services.CreateScope())
-            {
-                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationUserRole>>();
-                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-
-                List<Claim> traderClaims = new List<Claim>()
-                {
-                    new Claim("addorder", "true"),
-                    new Claim("updateorder", "true"),
-                    new Claim("deleteorder", "true"),
-                    new Claim("readorder", "true"),
-                };
-                List<Claim> salesClaims = new List<Claim>()
-                {
-                    new Claim("updateorder", "true"),
-                    new Claim("readorder", "true"),
-                };
-                List<Claim> employeeClaims = new List<Claim>()
-                {
-                    new Claim("updateorder", "true"),
-                    new Claim("readorder", "true"),
-                };
-                string userEmail = "Admin@admin.com";
-                string password = "Test@admin12345";
-
-                List<ApplicationUserRole> roles = new List<ApplicationUserRole>
-                { 
-                    new ApplicationUserRole {Name = "admin"},
-                    new ApplicationUserRole {Name = "trader"},
-                    new ApplicationUserRole {Name = "employee"},
-                    new ApplicationUserRole {Name = "salesrepresentative"}
-                };
-                foreach (ApplicationUserRole role in roles)
-                {
-                    bool roleExist = await roleManager.RoleExistsAsync(role.Name);
-                    if (!roleExist)
-                    {
-                        await roleManager.CreateAsync(role);
-                        if(role.Name == "trader")
-                        {
-                            foreach(var claim in traderClaims)
-                            {
-                                await roleManager.AddClaimAsync(role, claim);
-                            }
-                        }
-                        else if(role.Name == "employee")
-                        {
-                            foreach (var claim in employeeClaims)
-                            {
-                                await roleManager.AddClaimAsync(role, claim);
-                            }
-                        }
-                        else if (role.Name == "salesrepresentative")
-                        {
-                            foreach (var claim in salesClaims)
-                            {
-                                await roleManager.AddClaimAsync(role, claim);
-                            }
-                        }
-                    } 
-                }
-
-                var checkUserIfExist = await userManager.FindByEmailAsync(userEmail);
-                if (checkUserIfExist == null)
-                {
-                    var result = await userManager.CreateAsync(new ApplicationUser { Email = userEmail, UserName = "admin" }, password);
-                    var adminUser = await userManager.FindByEmailAsync(userEmail);
-                    if (adminUser != null)
-                    {
-                        await userManager.AddToRoleAsync(adminUser, "admin");
-                    }
-                }
-            }
             app.Run();
         }
     }

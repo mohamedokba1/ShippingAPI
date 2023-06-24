@@ -7,6 +7,5 @@ namespace Shipping.Services.Dtos
         [Required]
         public string GovermentName { get; set; } = string.Empty;
         public bool State { get; set; }
-       // public ICollection<City> Cities { get; set; } = new HashSet<City>();
     }
 }

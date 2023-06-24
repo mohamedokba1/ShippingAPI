@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shipping.API.PoliciesProvider;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 
@@ -15,6 +16,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
+        //[RequireClaim("permission.permissions.read")]
         public async Task<ActionResult<IEnumerable<PermissionResponseDto>>> GetAll()
         {
             var privellages = await _permissionService.Getall();
@@ -23,6 +25,7 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        //[RequireClaim("permission.permissions.read")]
         public async Task<ActionResult<PermissionResponseDto>> GetById(string id)
         {
             var permission = await _permissionService.GetByid(id);
@@ -32,6 +35,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
+        //[RequireClaim("permission.permissions.add")]
         public async Task<IActionResult> Add(PermissionAddDto permissionAddDto)
         {
             await _permissionService.Add(permissionAddDto);
@@ -40,6 +44,7 @@ namespace Shipping.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        //[RequireClaim("permission.permissions.update")]
         public async Task<ActionResult> Update(string id,PermissionUpdateDto permissionUpdateDto)
         {
             bool result = await _permissionService.Update(id, permissionUpdateDto);
@@ -50,6 +55,7 @@ namespace Shipping.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        //[RequireClaim("permission.permissions.delete")]
         public async Task<ActionResult> Delete(string id)
         {
            bool result =  await _permissionService.Delete(id);

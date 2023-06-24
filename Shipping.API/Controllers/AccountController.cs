@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Services.Dtos;
+using Shipping.Services.Dtos.PrermissionDtos;
 using Shipping.Services.IServices;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -18,15 +20,18 @@ namespace Shipping.API.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationUserRole> _roleManager;
         private readonly ISalesService _salesService;
+        private readonly IMapper _mapper;
         public AccountController(IConfiguration configuration,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationUserRole> roleManager,
-            ISalesService salesService)
+            ISalesService salesService,
+            IMapper mapper)
         {
             _configuration = configuration;
             _userManager = userManager;
             _salesService = salesService;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
         [HttpPost]
         [Route("registerSales")]
@@ -43,21 +48,19 @@ namespace Shipping.API.Controllers
             IList<Claim> claims = new List<Claim>();
             var user = await _userManager.FindByEmailAsync(credentials.Email);
             if (user == null)
-            {
                 return Unauthorized();
-            }
 
             var isAuthenticated = await _userManager.CheckPasswordAsync(user, credentials.Password);
             if (!isAuthenticated)
-            {
                 return Unauthorized();
-            }
 
             var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
-            var roleName = await _roleManager.FindByNameAsync(role);
-            if(roleName != null)
-                claims = await _roleManager.GetClaimsAsync(roleName);
-
+            if (role != null)
+            {
+                var roleName = await _roleManager.FindByNameAsync(role);
+                if (roleName != null)
+                    claims = await _roleManager.GetClaimsAsync(roleName);
+            }
             var secretKeyString = _configuration.GetValue<string>("SecretKey");
             var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
             var secretKey = new SymmetricSecurityKey(secretyKeyInBytes);
@@ -81,7 +84,7 @@ namespace Shipping.API.Controllers
                 Token = tokenString,
                 ExpiryDate = expiryDate,
                 Role = role,
-                Claims = claims
+                Claims = _mapper.Map<List<ClaimDto>>(claims)
             };
         }
 

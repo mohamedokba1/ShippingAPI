@@ -7,6 +7,9 @@ using Shipping.Services.Dtos.SalesDtos;
 using System.Diagnostics;
 
 using Shipping.Entities.Domain.Identity;
+using Shipping.Services.Dtos.PrermissionDtos;
+using System.Security.Claims;
+
 namespace Shipping.Services.Mapping;
 
 public class MappingProfile : Profile
@@ -86,5 +89,7 @@ public class MappingProfile : Profile
 
         CreateMap<BranchReadDto , Branch>().ReverseMap();
         CreateMap<PermissionResponseDto, ApplicationUserRole>().ReverseMap();
+
+        CreateMap<Claim, ClaimDto>().ReverseMap();
     }
 }
