@@ -14,12 +14,11 @@ public class Employee
 
     public string Name { get; set; } = string.Empty;
 
-    //public string Email { get; set; } = string.Empty;
-    //[StringLength(15, MinimumLength = 3)]
-    //public string UserName { get; set; } = string.Empty;
-
+    public string Email { get; set; } = string.Empty;
+    [StringLength(15, MinimumLength = 3)]
+    public string UserName { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
-   // public string? PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
     public bool IsActive { get; set; }
 
     [ForeignKey(nameof(Branch))]

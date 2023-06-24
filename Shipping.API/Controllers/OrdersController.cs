@@ -18,7 +18,8 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        [RequireClaim("permission.orders.read")]
+        [Authorize(Policy = "Admin")]
+        //[RequireClaim("permission.orders.read")]
         public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll([FromHeader] string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);

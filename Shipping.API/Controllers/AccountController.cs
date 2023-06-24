@@ -40,13 +40,11 @@ namespace Shipping.API.Controllers
         {
             IList<Claim> claims = new List<Claim>();
             var user = await _userManager.FindByEmailAsync(credentials.Email);
-            if (user == null)
+            if (user != null)
+                 await _userManager.CheckPasswordAsync(user, credentials.Password);
+            else
                 return Unauthorized();
-
-            var isAuthenticated = await _userManager.CheckPasswordAsync(user, credentials.Password);
-            if (!isAuthenticated)
-                return Unauthorized();
-
+               
             var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
             if (role != null)
             {
@@ -57,7 +55,6 @@ namespace Shipping.API.Controllers
             var secretKeyString = _configuration.GetValue<string>("SecretKey");
             var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
             var secretKey = new SymmetricSecurityKey(secretyKeyInBytes);
-
 
             var signingCredentials = new SigningCredentials(secretKey,
                 SecurityAlgorithms.HmacSha256Signature);

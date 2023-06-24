@@ -74,9 +74,9 @@ namespace Shipping.API
             builder.Services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admin", policy =>
-                 policy.RequireRole("admin")
-                .RequireClaim("permission.orders.read", "true"));
-                
+                {
+                    policy.RequireClaim("permission.orders.add", "true");
+                });
             });
             #endregion
 
@@ -128,8 +128,6 @@ namespace Shipping.API
             builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
 
             #endregion
-
-            
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
