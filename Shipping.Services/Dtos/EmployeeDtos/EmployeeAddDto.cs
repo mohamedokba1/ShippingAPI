@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Shipping.Entities.Domain.Identity;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Shipping.Services.Dtos
 {
@@ -29,7 +31,9 @@ namespace Shipping.Services.Dtos
         public int branchid { get; set; }
 
         [Required]
-        public int Privellge_Id { get; init; } 
+        public int Privellge_Id { get; init; }
+        [JsonIgnore]
+        public ApplicationUser? User { get; set; }
 
     }
 }

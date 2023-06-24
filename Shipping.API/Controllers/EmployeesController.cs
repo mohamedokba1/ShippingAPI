@@ -42,7 +42,7 @@ namespace Shipping.API.Controllers
         {
             try
             {
-               await employeeService.Add(employeeAddDto);
+               await employeeService.AddUserAndEmployee(employeeAddDto);
                 return NoContent();
             }
             catch (Exception ex)

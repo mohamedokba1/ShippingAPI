@@ -1,5 +1,7 @@
-﻿using Shipping.Entities.Domain.Models;
+﻿using Shipping.Entities.Domain.Identity;
+using Shipping.Entities.Domain.Models;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Shipping.Services.Dtos;
 public class AddSalesDto
@@ -37,5 +39,7 @@ public class AddSalesDto
     [Required]
     public DiscountType DiscountType { get; set; }
     public List<int>?  BranchesIds { get; set; }
-    public List<int>? GovernmentsIds { get; set; }   
+    public List<int>? GovernmentsIds { get; set; }
+    [JsonIgnore]
+    public ApplicationUser? User { get; set; }
 }

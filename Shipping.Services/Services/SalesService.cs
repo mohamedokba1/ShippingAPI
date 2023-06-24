@@ -8,6 +8,8 @@ using Shipping.Repositories.Repos;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.SalesDtos;
 using Shipping.Services.IServices;
+using Shipping.Services.Validations;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace Shipping.Services.Services;
@@ -17,71 +19,60 @@ public class SalesService : ISalesService
     private readonly ISalesRepresentativeRepository _salesRepository;
     private readonly IMapper _mapper;
     private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IBranchRepository _branchRepository;
-    private readonly IGovermentRepository _governmentRepository;
 
     public SalesService(ISalesRepresentativeRepository salesRepository,
         IMapper mapper, 
-        UserManager<ApplicationUser> userManager ,
-        IBranchRepository branchRepository,
-        IGovermentRepository governmentRepository)
+        UserManager<ApplicationUser> userManager )
     {
         _salesRepository = salesRepository;
         _mapper = mapper;
         _userManager = userManager;
-        _branchRepository = branchRepository;
-        this._governmentRepository = governmentRepository;
     }
-    public async Task AddAsync(AddSalesDto sale)
+    public async Task<List<ValidationResult>?> AddUserAndSales(AddSalesDto sales)
     {
-        var branches = await _branchRepository.GetRange(sale?.BranchesIds);
-        var governments = await _governmentRepository.GetRange(sale?.GovernmentsIds);
-
-        if(branches.Count()!=sale.BranchesIds.Count)
+        List<ValidationResult>? validationResult = ValidateModel.ModelValidation(sales);
+        if (validationResult?.Count == 0)
         {
-            throw new Exception("these branches dont found ");
+            ApplicationUser? checkuserEmail = await _userManager.FindByEmailAsync(sales.Email);
+            if (checkuserEmail is null)
+            {
+                ApplicationUser? checkUserName = await _userManager.FindByNameAsync(sales.UserName);
+                if (checkUserName is null)
+                {
+                    ApplicationUser user = _mapper.Map<ApplicationUser>(sales);
+                    IdentityResult result = await _userManager.CreateAsync(user, sales.Password);
+                    if (!result.Succeeded)
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ValidationResult err = new ValidationResult(error.Description);
+                            validationResult.Add(err);
+                        }
+                        return validationResult;
+                    }
+                    await _userManager.AddToRoleAsync(user, "salesrepresentative");
+                    await _userManager.UpdateAsync(user);
+                    ApplicationUser? addedUser = await _userManager.FindByEmailAsync(sales.Email);
+                    sales.User = addedUser;
+                }
+                else
+                {
+                    validationResult.Add(new ValidationResult("usre name is already exist"));
+                    return validationResult;
+                }
+            }
+            else
+            {
+                validationResult.Add(new ValidationResult("Email is already exist"));
+                return validationResult;
+            }
+
+            await _salesRepository.AddAsync(_mapper.Map<AddSalesDto, SalesRepresentative>(sales));
+            return validationResult;
         }
-
-        if (governments.Count()!=sale.GovernmentsIds.Count)
-        {
-            throw new Exception("these governments dont found ");
-
-        }
-        var user = new ApplicationUser
-        {
-            UserName = sale.UserName,
-            Email = sale.Email,
-            PhoneNumber = sale.PhoneNumber,
-            PasswordHash=sale.Password
-        };
-
-        var salesRep = new SalesRepresentative
-        {
-            Name = sale.Name,
-            Password=sale.Password,
-            CompanyPercentage = sale.CompanyPercentage,
-            DiscountType = sale.DiscountType,
-            IsActive= sale.IsActive,
-            Address = sale.Address,
-            User = user,
-            Branches = branches.ToList(), 
-            Goverments = governments.ToList() ,
-        };
-        var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.NameIdentifier, user.Id),
-        new Claim(ClaimTypes.Name, user.UserName),
-        new Claim(ClaimTypes.Role, "SalesRepresentative")
-    };
-
-        var claimResult = await _userManager.AddClaimsAsync(user, claims);
-       
-        await _userManager.CreateAsync(user, sale.Password);
-        await _salesRepository.AddAsync(salesRep);
-        await _salesRepository.saveChanges();
+        else
+            return validationResult;
     }
-
-
     public async Task DeleteAsync(long id)
     {
         
