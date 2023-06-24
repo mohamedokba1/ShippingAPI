@@ -22,7 +22,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<City> Cities { get; set; }
     public DbSet<Goverment> Goverments { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Privellge> Privellges { get; set; }
     public DbSet<SpecialPackage> SpecialPackages { get; set; }
     public DbSet<Branch> Branches { get; set; }
 
@@ -30,5 +29,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     {
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<IdentityUserClaim<string>>().ToTable("Users");
+
+       
     }
 }

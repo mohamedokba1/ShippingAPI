@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -12,6 +13,7 @@ namespace Shipping.API.Controllers
     {
         private readonly ITraderService _traderService;
         private readonly ILogger<TradersController> _logger;
+       
         public TradersController(ITraderService traderService, ILogger<TradersController> logger)
         {
             _traderService = traderService;
@@ -19,6 +21,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
+        
         public async Task<IActionResult> GetAll()
         {
             IEnumerable<TraderResponseDto>? response = await _traderService.GetAllTradersAsync();

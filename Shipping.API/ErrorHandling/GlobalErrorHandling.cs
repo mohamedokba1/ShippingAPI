@@ -1,19 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
-
+﻿
 namespace Shipping.API.ErrorHandling;
 
-public class GlobalErrorHandling : ExceptionFilterAttribute
+public class GlobalErrorHandling
 {
-    private readonly ILogger<GlobalErrorHandling> _logger;
-
-    public GlobalErrorHandling(ILogger<GlobalErrorHandling> logger)
+    private readonly RequestDelegate _next;
+    public GlobalErrorHandling(RequestDelegate next)
     {
-        _logger = logger;
+        _next = next;
     }
-
-    public override void OnException(ExceptionContext context)
+    public async Task InvokeAsync(HttpContext context)
     {
-        _logger.LogError(context.Exception, "Unhandled exception occured.");
-        context.ExceptionHandled = true;
+        try
+        {
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            context.Response.StatusCode = 500;
+            await context.Response.WriteAsync(ex.Message);
+        }
     }
 }

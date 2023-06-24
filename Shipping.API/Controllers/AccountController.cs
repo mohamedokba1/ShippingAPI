@@ -16,12 +16,17 @@ namespace Shipping.API.Controllers
     {
         private readonly IConfiguration _configuration;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<ApplicationUserRole> _roleManager;
         private readonly ISalesService _salesService;
-        public AccountController(IConfiguration configuration, UserManager<ApplicationUser> userManager, ISalesService salesService)
+        public AccountController(IConfiguration configuration,
+            UserManager<ApplicationUser> userManager,
+            RoleManager<ApplicationUserRole> roleManager,
+            ISalesService salesService)
         {
             _configuration = configuration;
             _userManager = userManager;
             _salesService = salesService;
+            _roleManager = roleManager;
         }
         [HttpPost]
         [Route("registerSales")]
@@ -35,6 +40,7 @@ namespace Shipping.API.Controllers
         [Route("login")]
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
         {
+            IList<Claim> claims = new List<Claim>();
             var user = await _userManager.FindByEmailAsync(credentials.Email);
             if (user == null)
             {
@@ -47,18 +53,10 @@ namespace Shipping.API.Controllers
                 return Unauthorized();
             }
 
-            var claimsList = new List<Claim>
-            {
-                new Claim(ClaimTypes.NameIdentifier, user.Id),
-                new Claim(ClaimTypes.Name, user?.Email)
-            };
-
-            var userRoles = await _userManager.GetRolesAsync(user);
-            if (userRoles.Contains("Trader") || userRoles.Contains("SalesRepresentative") || userRoles.Contains("Employee"))
-            {
-                claimsList.AddRange(userRoles.Select(role => new Claim(ClaimTypes.Role, role)));
-            }
-
+            var role = (await _userManager.GetRolesAsync(user)).FirstOrDefault();
+            var roleName = await _roleManager.FindByNameAsync(role);
+            if(roleName != null)
+                claims = await _roleManager.GetClaimsAsync(roleName);
 
             var secretKeyString = _configuration.GetValue<string>("SecretKey");
             var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
@@ -70,7 +68,7 @@ namespace Shipping.API.Controllers
 
             var expiryDate = DateTime.Now.AddDays(2);
             var token = new JwtSecurityToken(
-                claims: claimsList,
+                claims: claims,
                 expires: expiryDate,
                 signingCredentials: signingCredentials);
 
@@ -81,8 +79,9 @@ namespace Shipping.API.Controllers
             return new TokenDto
             {
                 Token = tokenString,
-                Email = user.Email,
                 ExpiryDate = expiryDate,
+                Role = role,
+                Claims = claims
             };
         }
 

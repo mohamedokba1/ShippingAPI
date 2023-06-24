@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Shipping.API.PoliciesProvider;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using Shipping.Services.Services;
@@ -19,6 +20,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpGet]
+        [RequireClaim("permission.goverment.read")]
         public async Task<ActionResult<IEnumerable<GovermentReadDto>>> Getall()
         {
             return  Ok(await governmentService.Getall());
@@ -40,6 +42,7 @@ namespace Shipping.API.Controllers
 
 
         [HttpPost]
+        [RequireClaim("permission.goverment.add")]
         public async Task<ActionResult> Add(GovermentAddDto govermentAddDto)
         {
             try

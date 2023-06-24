@@ -41,7 +41,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(OrderAddDto order, string userEmail)
+        public async Task<ActionResult> Add(OrderAddDto order, [FromHeader] string userEmail)
         {
             List<ValidationResult>? errors =  await _orderService.AddOrderAsync(order, userEmail);
             if(errors?.Count ==0)
@@ -59,8 +59,9 @@ namespace Shipping.API.Controllers
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
             if (oldOrder != null)
             {
-                await _orderService.UpdateOrderAsync(id, order);
-                return NoContent();
+                var errors = await _orderService.UpdateOrderAsync(id, order);
+                if (errors?.Count == 0)
+                    return NoContent();
             }
             return NotFound();
         }

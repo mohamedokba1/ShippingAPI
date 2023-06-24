@@ -8,6 +8,6 @@ public interface IOrderService
     Task<IEnumerable<OrderResponseDto>?> GetAllOrdersAsync(string email);
     Task<OrderResponseDto?> GetOrderByIdAsync(long id);
     Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail);
-    Task UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto);
+    Task<List<ValidationResult>?> UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto);
     Task DeleteOrderAsync(long id);
 }
