@@ -37,10 +37,6 @@ namespace Shipping.API
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(builder.Configuration.GetConnectionString("ShippingDB")));
 
-
-
-            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
             #endregion
 
             #region Identity
@@ -60,10 +56,10 @@ namespace Shipping.API
 
             builder.Services.AddAuthentication(options =>
             {
-                options.DefaultAuthenticateScheme = "Dev";
-                options.DefaultChallengeScheme = "Dev";
+                options.DefaultAuthenticateScheme = "Bearer";
+                options.DefaultChallengeScheme = "Bearer";
             })
-            .AddJwtBearer("Dev", _ =>
+            .AddJwtBearer("Bearer", _ =>
             {
                 var secretKeyString = builder.Configuration.GetValue<string>("SecretKey");
                 var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
@@ -73,9 +69,9 @@ namespace Shipping.API
             #region Authorization
             builder.Services.AddAuthorization(options =>
             {
-                options.AddPolicy("Admin", policy =>
+                options.AddPolicy("permission.orders.read", policy =>
                 {
-                    policy.RequireClaim("permission.orders.add", "true");
+                    policy.RequireClaim("permission.orders.read");
                 });
             });
             #endregion
@@ -121,13 +117,15 @@ namespace Shipping.API
             #region Auto Mapper
 
             builder.Services.AddAutoMapper(typeof(Program));
-
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             #endregion
 
             #region Policy Provider
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
+            //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
 
             #endregion
+
+            builder.Services.AddHttpContextAccessor();
 
             var app = builder.Build();
             if (app.Environment.IsDevelopment())
