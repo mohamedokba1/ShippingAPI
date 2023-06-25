@@ -53,44 +53,38 @@ namespace Shipping.API.Controllers
             {
                 var roleName = await _roleManager.FindByNameAsync(role);
                 if (roleName != null)
-                {
-                    var userClaims = await _userManager.GetClaimsAsync(user);
                     claims = await _roleManager.GetClaimsAsync(roleName);
-                    identity = new ClaimsIdentity(userClaims, "Bearer");
-                    await HttpContext.SignInAsync(new ClaimsPrincipal(identity));
-                }
                     
             }
             var secretKeyString = _configuration.GetValue<string>("SecretKey");
             var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
             var secretKey = new SymmetricSecurityKey(secretyKeyInBytes);
 
-            //var signingCredentials = new SigningCredentials(secretKey,
-            //    SecurityAlgorithms.HmacSha256Signature);
+            var signingCredentials = new SigningCredentials(secretKey,
+                SecurityAlgorithms.HmacSha256Signature);
 
-            //var expiryDate = DateTime.Now.AddDays(2);
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(claims),
-                Expires = DateTime.UtcNow.AddDays(2),
-                SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
-            };
-            //var token = new JwtSecurityToken(
-            //    claims: claims,
-            //    expires: expiryDate,
-            //    signingCredentials: signingCredentials);
+            var expiryDate = DateTime.Now.AddDays(2);
+            //var tokenDescriptor = new SecurityTokenDescriptor
+            //{
+            //    Subject = new ClaimsIdentity(claims),
+            //    Expires = DateTime.UtcNow.AddDays(2),
+            //    SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
+            //};
+            var token = new JwtSecurityToken(
+                claims: claims,
+                expires: expiryDate,
+                signingCredentials: signingCredentials);
 
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString =  tokenHandler.WriteToken(token);
 
             return new TokenDto
             {
                 Token = tokenString,
-                ExpiryDate = tokenDescriptor.Expires,
+                ExpiryDate = expiryDate,
                 Role = role,
-                Claims = _mapper.Map<List<ClaimDto>>(claims)
+                Claims = _mapper.Map<List<string>>(claims.Select(c => c.Type))
             };
         }
     }

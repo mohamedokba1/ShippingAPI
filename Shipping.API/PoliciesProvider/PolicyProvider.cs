@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
+using System.Security.Claims;
 
 namespace Shipping.API.PoliciesProvider;
 
@@ -15,7 +16,7 @@ public class PolicyProvider : IAuthorizationPolicyProvider
     }
     public Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
     {
-        var userCalims = _context?.HttpContext?.User.Claims.ToList();
+        var userCalims = _context?.HttpContext?.User.FindFirstValue(ClaimTypes.Role);
         //.FirstOrDefault(u => string.Equals(u.Type,"permission.orders.read", StringComparison.OrdinalIgnoreCase));
         var token = _context?.HttpContext?.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
         if (policyName.StartsWith("Permission.", StringComparison.OrdinalIgnoreCase))

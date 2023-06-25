@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Shipping.API.ErrorHandling;
 using Shipping.API.PoliciesProvider;
 using Shipping.Entities;
@@ -53,6 +54,11 @@ namespace Shipping.API
             .AddDefaultTokenProviders();
             #endregion
 
+            #region Policy Provider
+            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
+
+            #endregion
+
             #region Authentication Scheme
 
             builder.Services.AddAuthentication(options =>
@@ -60,19 +66,27 @@ namespace Shipping.API
                 options.DefaultAuthenticateScheme = "Bearer";
                 options.DefaultChallengeScheme = "Bearer";
             })
-            .AddJwtBearer("Bearer", _ =>
+            .AddJwtBearer("Bearer", options =>
             {
-                var secretKeyString = builder.Configuration.GetValue<string>("SecretKey");
-                var secretyKeyInBytes = Encoding.ASCII.GetBytes(secretKeyString ?? string.Empty);
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.
+                        ASCII.GetBytes(builder.Configuration["SecretKey"]!)),
+                    ClockSkew = TimeSpan.Zero
+                };
             });
             #endregion
 
             #region Authorization
-            builder.Services.AddAuthorization(options =>
+            builder.Services.AddAuthorization(
+            options =>
             {
-                options.AddPolicy("permission.orders.read", policy =>
+                options.AddPolicy("admin", policy =>
                 {
-                    policy.RequireClaim("permission.orders.read");
+                    policy.RequireClaim("permission.orders.read", "true")
+                    .RequireRole("admin");
                 });
             });
             #endregion
@@ -121,10 +135,7 @@ namespace Shipping.API
             builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             #endregion
 
-            #region Policy Provider
-            //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
-
-            #endregion
+            
 
             builder.Services.AddHttpContextAccessor();
 
