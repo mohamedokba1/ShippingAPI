@@ -1,5 +1,4 @@
-﻿
-namespace Shipping.API.ErrorHandling;
+﻿namespace Shipping.API.ErrorHandling;
 
 public class GlobalErrorHandling
 {

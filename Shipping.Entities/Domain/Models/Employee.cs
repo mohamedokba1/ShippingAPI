@@ -23,6 +23,8 @@ public class Employee
 
     [ForeignKey(nameof(Branch))]
     public int branchid { get; set; }
+    [ForeignKey(nameof(User))]
+    public string? UserId { get; set; }
 
     public virtual ApplicationUser? User { get; set; }
     public virtual Branch? Branch { get; set; }

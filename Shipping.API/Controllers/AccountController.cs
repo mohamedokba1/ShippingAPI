@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.IdentityModel.Tokens;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Services.Dtos;
@@ -44,7 +42,10 @@ namespace Shipping.API.Controllers
             var identity = new ClaimsIdentity();
             var user = await _userManager.FindByEmailAsync(credentials.Email);
             if (user != null)
-                 await _userManager.CheckPasswordAsync(user, credentials.Password);
+            {
+                if (!await _userManager.CheckPasswordAsync(user, credentials.Password))
+                    return Unauthorized();
+            }
             else
                 return Unauthorized();
                
@@ -64,12 +65,6 @@ namespace Shipping.API.Controllers
                 SecurityAlgorithms.HmacSha256Signature);
 
             var expiryDate = DateTime.Now.AddDays(2);
-            //var tokenDescriptor = new SecurityTokenDescriptor
-            //{
-            //    Subject = new ClaimsIdentity(claims),
-            //    Expires = DateTime.UtcNow.AddDays(2),
-            //    SigningCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256Signature)
-            //};
             var token = new JwtSecurityToken(
                 claims: claims,
                 expires: expiryDate,
@@ -84,7 +79,8 @@ namespace Shipping.API.Controllers
                 Token = tokenString,
                 ExpiryDate = expiryDate,
                 Role = role,
-                Claims = _mapper.Map<List<string>>(claims.Select(c => c.Type))
+                //Claims = _mapper.Map<List<string>>(claims.Select(c => c.Type))
+                Claims = _mapper.Map<List<ClaimDto>>(claims)
             };
         }
     }

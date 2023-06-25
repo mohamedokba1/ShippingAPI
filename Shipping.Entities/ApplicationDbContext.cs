@@ -406,6 +406,36 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 NormalizedEmail = "ADMIN@ADMIN.COM",
                 PhoneNumber = "01234567890",
                 PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Admin@123"),
+            },
+            new ApplicationUser
+            {
+                Id = "2",
+                UserName = "trader1",
+                NormalizedUserName = "TRADER1",
+                Email = "trader1@example.com",
+                NormalizedEmail = "TRADER1@EXAMPLE.COM",
+                PhoneNumber = "01278555861",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Trader@123"),
+            },
+            new ApplicationUser
+            {
+                Id = "3",
+                UserName = "employee1",
+                NormalizedUserName = "EMPLOYEE1",
+                Email = "employee1@example.com",
+                NormalizedEmail = "EMPLOYEE1@EXAMPLE.COM",
+                PhoneNumber = "01033325256",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Employee@123")
+            },
+            new ApplicationUser
+            {
+                Id = "4",
+                UserName = "sales1",
+                NormalizedUserName = "SALES1",
+                Email = "sales1@example.com",
+                NormalizedEmail = "SALES1@EXAMPLE.COM",
+                PhoneNumber = "01033325256",
+                PasswordHash = new PasswordHasher<ApplicationUser>().HashPassword(null, "Sales@123")
             }
             );
         modelBuilder.Entity<IdentityUserRole<string>>().HasData(
@@ -413,6 +443,59 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             {
                 RoleId = "1",
                 UserId = "1",
+            }
+            );
+
+        modelBuilder.Entity<Branch>().HasData(
+                new Branch
+                {
+                    Id = 1,
+                    CreatedAt = DateTime.Now,
+                    BranchName = "Cairo",
+                    State = true,
+                }
+            );
+        modelBuilder.Entity<Trader>().HasData(
+            new Trader
+            {
+                TraderId = 1,
+                Email = "trader1@example.com",
+                UserName = "trader1",
+                Address = "Cairo",
+                CostPerRefusedOrder = 1,
+                PhoneNumber = "01278555861",
+                UserId = "2",
+                CompanyBranch = "Cairo"
+            }
+            );
+        modelBuilder.Entity<Employee>().HasData(
+            new Employee
+            {
+                EmployeeId = 1,
+                Email = "employee1@example.com",
+                IsActive = true,
+                PhoneNumber = "01033325256",
+                UserName = "employee1",
+                Name = "Ahmed Mohamed",
+                Password = "Employee@123",
+                branchid = 1,
+                UserId = "3"
+            }
+            );
+
+        modelBuilder.Entity<SalesRepresentative>().HasData(
+            new SalesRepresentative
+            {
+                SalesRepresentativeId = 1,
+                Email = "sales1@example.com",
+                Address = "Cairo",
+                DiscountType = DiscountType.FixedValue,
+                IsActive = true,
+                Name = "Mohamed Khaled",
+                Password = "Sales@123",
+                CompanyPercentage = 60,
+                UserName = "sales1",
+                UserId = "4"
             }
             );
         #endregion

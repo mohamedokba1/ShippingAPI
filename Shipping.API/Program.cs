@@ -29,6 +29,7 @@ namespace Shipping.API
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("Shipping", p => p.AllowAnyHeader()
+                .AllowAnyOrigin()
                 .WithOrigins("http://localhost:4200")
                 .WithMethods("PUT", "POST", "DELETE", "GET"));
             });
@@ -54,7 +55,7 @@ namespace Shipping.API
             #endregion
 
             #region Policy Provider
-            builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
+            //builder.Services.AddSingleton<IAuthorizationPolicyProvider, PolicyProvider>();
 
             #endregion
 
@@ -69,8 +70,8 @@ namespace Shipping.API
             {
                 options.TokenValidationParameters = new TokenValidationParameters()
                 {
-                    ValidateAudience = false,
-                    ValidateIssuer = false,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.
                         ASCII.GetBytes(builder.Configuration["SecretKey"]!)),
                     ClockSkew = TimeSpan.Zero
@@ -82,10 +83,9 @@ namespace Shipping.API
             builder.Services.AddAuthorization(
             options =>
             {
-                options.AddPolicy("admin", policy =>
+                options.AddPolicy("permission.orders.read", policy =>
                 {
-                    policy.RequireClaim("permission.orders.read", "true")
-                    .RequireRole("admin");
+                    policy.RequireClaim("permission.orders.read", "true");
                 });
             });
             #endregion
@@ -144,12 +144,12 @@ namespace Shipping.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<GlobalErrorHandling>();
             app.UseCors("Shipping");
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<GlobalErrorHandling>();
             app.MapControllers();
 
             app.Run();

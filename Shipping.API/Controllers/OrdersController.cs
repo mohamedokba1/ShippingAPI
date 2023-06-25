@@ -9,6 +9,7 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -18,8 +19,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "admin")]
-        //[RequireClaim("permission.orders.read")]
+        [RequireClaim("permission.orders.read")]
         public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll([FromHeader] string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
@@ -42,6 +42,7 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Policy = "admin")]
         [RequireClaim("permission.orders.add")]
         public async Task<ActionResult> Add(OrderAddDto order, [FromHeader] string userEmail)
         {
