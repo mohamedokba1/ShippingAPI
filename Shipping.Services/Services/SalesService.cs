@@ -21,7 +21,7 @@ public class SalesService : ISalesService
     private readonly UserManager<ApplicationUser> _userManager;
 
     public SalesService(ISalesRepresentativeRepository salesRepository,
-        IMapper mapper, 
+        IMapper mapper,
         UserManager<ApplicationUser> userManager )
     {
         _salesRepository = salesRepository;

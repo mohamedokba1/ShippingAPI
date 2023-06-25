@@ -3,73 +3,60 @@ using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shipping.Services.Services
 {
     public class GovernmentService : IGovernmentService
     
     {
-        private readonly IGovermentRepository govermentRepository;
-        private readonly IMapper mapper;
+        private readonly IGovermentRepository _govermentRepository;
+        private readonly IMapper _mapper;
 
         public GovernmentService(IGovermentRepository govermentRepository , IMapper mapper)
         {
-            this.govermentRepository = govermentRepository;
-            this.mapper = mapper;
+            _govermentRepository = govermentRepository;
+            _mapper = mapper;
         }
         public async Task Add(GovermentAddDto govermentDto)
         {
-           Goverment g = mapper.Map<Goverment>(govermentDto);
-
-            await govermentRepository.Add(g);
+            await _govermentRepository.Add(_mapper.Map<Goverment>(govermentDto));
+            await SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            await govermentRepository.Delete(id);
+            await _govermentRepository.Delete(id);
+            await SaveChangesAsync();
         }
 
         public async Task<IEnumerable<GovermentReadDto>> Getall()
         {
-            var govermentsfromDB = await govermentRepository.Getall();
-            return mapper.Map<IEnumerable<GovermentReadDto>>(govermentsfromDB);
-            
+            var govermentsfromDB = await _govermentRepository.Getall();
+            return _mapper.Map<IEnumerable<GovermentReadDto>>(govermentsfromDB);     
         }
-
-        public async Task<GovermentReadDto> GetByid(int id)
+        public async Task<GovermentReadDto?> GetByid(int id)
         {
-            Goverment? govermentfromDB = await govermentRepository.GetByid(id);
-
+            Goverment? govermentfromDB = await _govermentRepository.GetByid(id);
             if(govermentfromDB == null)
             {
                 return null;
             }
-            return mapper.Map<GovermentReadDto>(govermentfromDB);
+            return _mapper.Map<GovermentReadDto>(govermentfromDB);
         }
 
-        public async Task Savechanges()
+        public async Task SaveChangesAsync()
         {
-            await govermentRepository.Savechanges();
+            await _govermentRepository.Savechanges();
         }
 
         public  async Task Update(int id, GovermentUpdateDto govermentdto)
         {
-            Goverment governmentToUpdate = await govermentRepository.GetByid(id);
+            Goverment governmentToUpdate = await _govermentRepository.GetByid(id);
             if (governmentToUpdate != null)
             {
-                mapper.Map(govermentdto, governmentToUpdate);
-                await govermentRepository.Savechanges();
-
-                
-
-
+                _mapper.Map(govermentdto, governmentToUpdate);
+                await _govermentRepository.Savechanges();
             }
-
         }
     }
 }

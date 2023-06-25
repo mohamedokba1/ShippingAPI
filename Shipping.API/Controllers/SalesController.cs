@@ -67,12 +67,10 @@ namespace Shipping.API.Controllers
                 await _salesService.UpdateAsync(id, sale);
                 return NoContent();
             }
-            catch(Exception ex) 
+            catch(Exception ex)
             { 
                 return BadRequest(ex.Message);
             }
-            
-           
         }
 
         [HttpPost]
@@ -87,7 +85,6 @@ namespace Shipping.API.Controllers
             {
                 return BadRequest(ex.Message);
             }
-           
         }
 
     }

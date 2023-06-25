@@ -23,13 +23,11 @@ namespace Shipping.API.Controllers
         //[RequireClaim("permission.goverment.read")]
         public async Task<ActionResult<IEnumerable<GovermentReadDto>>> Getall()
         {
-            return  Ok(await governmentService.Getall());
-                
+            return  Ok(await governmentService.Getall());   
         }
 
         [HttpGet]
         [Route("{id}")]
-
         public async Task<ActionResult<GovermentReadDto>> GetById(int id)
         {
             GovermentReadDto? govermentReadDto = await governmentService.GetByid(id);
@@ -76,4 +74,3 @@ namespace Shipping.API.Controllers
 
     }
 }
-

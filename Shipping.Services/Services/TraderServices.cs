@@ -54,7 +54,7 @@ public class TraderServices : ITraderService
                 }
                 else
                 {
-                    validationResult.Add(new ValidationResult("usre name is already exist"));
+                    validationResult.Add(new ValidationResult("Username is already exist"));
                     return validationResult;
                 }
             }

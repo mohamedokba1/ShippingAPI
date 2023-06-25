@@ -75,6 +75,330 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ClaimType = "permission.goverments.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ClaimType = "permission.goverments.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ClaimType = "permission.goverments.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ClaimType = "permission.goverments.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ClaimType = "permission.cities.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ClaimType = "permission.cities.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ClaimType = "permission.cities.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ClaimType = "permission.cities.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ClaimType = "permission.traders.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ClaimType = "permission.traders.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ClaimType = "permission.traders.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ClaimType = "permission.traders.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ClaimType = "permission.employees.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ClaimType = "permission.employees.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ClaimType = "permission.employees.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ClaimType = "permission.employees.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ClaimType = "permission.branches.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ClaimType = "permission.branches.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            ClaimType = "permission.branches.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            ClaimType = "permission.branches.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            ClaimType = "permission.sales.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            ClaimType = "permission.sales.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            ClaimType = "permission.sales.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            ClaimType = "permission.sales.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            ClaimType = "permission.orders.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            ClaimType = "permission.orders.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            ClaimType = "permission.orders.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            ClaimType = "permission.orders.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            ClaimType = "permission.orders.add",
+                            ClaimValue = "true",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            ClaimType = "permission.orders.update",
+                            ClaimValue = "true",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            ClaimType = "permission.orders.delete",
+                            ClaimValue = "true",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            ClaimType = "permission.orders.read",
+                            ClaimValue = "true",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            ClaimType = "permission.orders.update",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            ClaimType = "permission.orders.read",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            ClaimType = "permission.branches.read",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            ClaimType = "permission.cities.read",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            ClaimType = "permission.cities.update",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            ClaimType = "permission.cities.add",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            ClaimType = "permission.goverments.read",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            ClaimType = "permission.goverments.update",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            ClaimType = "permission.goverments.add",
+                            ClaimValue = "true",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            ClaimType = "permission.orders.update",
+                            ClaimValue = "true",
+                            RoleId = "4"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            ClaimType = "permission.orders.read",
+                            ClaimValue = "true",
+                            RoleId = "4"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            ClaimType = "permission.branches.read",
+                            ClaimValue = "true",
+                            RoleId = "4"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            ClaimType = "permission.cities.read",
+                            ClaimValue = "true",
+                            RoleId = "4"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            ClaimType = "permission.goverments.read",
+                            ClaimValue = "true",
+                            RoleId = "4"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -137,6 +461,13 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "1",
+                            RoleId = "1"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -221,6 +552,25 @@ namespace Shipping.Entities.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "1cc2525f-ebea-431c-87ef-a0db23a1502c",
+                            Email = "Admin@admin.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@ADMIN.COM",
+                            NormalizedUserName = "ADMIN",
+                            PasswordHash = "AQAAAAIAAYagAAAAEDOFk1KDrcI67B/n01RrBkGPlMaEbmjVSxeRRc25h3amNOoDSS3Cxy0PCRWKSGgZnA==",
+                            PhoneNumber = "01234567890",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "e0741776-6dcb-4ced-9ae1-51f89e3a40fb",
+                            TwoFactorEnabled = false,
+                            UserName = "Admin"
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Identity.ApplicationUserRole", b =>
@@ -251,6 +601,36 @@ namespace Shipping.Entities.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "1",
+                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7107),
+                            Name = "admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7113),
+                            Name = "trader",
+                            NormalizedName = "TRADER"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7118),
+                            Name = "employee",
+                            NormalizedName = "EMPLOYEE"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7123),
+                            Name = "salesrepresentative",
+                            NormalizedName = "SALESREPRESENTATIVE"
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Branch", b =>
@@ -354,6 +734,10 @@ namespace Shipping.Entities.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EmployeeId"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -362,20 +746,19 @@ namespace Shipping.Entities.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired();
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(15)
-                        .HasColumnType("nvarchar(15)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
 
                     b.Property<int>("branchid")
                         .HasColumnType("int");
