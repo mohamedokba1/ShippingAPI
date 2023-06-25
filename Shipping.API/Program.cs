@@ -24,6 +24,7 @@ namespace Shipping.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+
             #region CORS
             builder.Services.AddCors(options =>
             {

@@ -23,7 +23,6 @@ namespace Shipping.Services.Dtos
 
         [RegularExpression(@"^01[0125][0-9]{8}$", ErrorMessage = "Invalid phone number format")]
         public string? PhoneNumber { get; set; }
-        public bool IsActive { get; set; }
         [Required]
         public int branchid { get; set; }
 

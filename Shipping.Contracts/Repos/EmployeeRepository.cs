@@ -17,6 +17,7 @@ namespace Shipping.Repositories.Repos
         public async  Task Add(Employee employee)
         {
            await  context.Employees.AddAsync(employee);
+            await context.SaveChangesAsync();
         }         
 
         public async Task Delete(long id)

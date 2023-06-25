@@ -14,8 +14,8 @@ namespace Shipping.Services.Dtos
         [Required]
         [StringLength(50, MinimumLength = 3)]
         public string Name { get; set; } = string.Empty;
-        [EmailAddress]
 
+        [EmailAddress]
         [Required]
         public string Email { get; set; } = string.Empty;
         [Required]
