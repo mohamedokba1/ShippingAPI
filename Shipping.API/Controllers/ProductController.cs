@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Shipping.Services.Dtos;
-using Shipping.Services.IServices;
 
 namespace Shipping.API.Controllers
 {
