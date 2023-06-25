@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Shipping.Entities.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class first : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,6 @@ namespace Shipping.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -456,19 +455,19 @@ namespace Shipping.Entities.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
-                columns: new[] { "Id", "ConcurrencyStamp", "Date", "Name", "NormalizedName" },
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", null, new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7107), "admin", "ADMIN" },
-                    { "2", null, new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7113), "trader", "TRADER" },
-                    { "3", null, new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7118), "employee", "EMPLOYEE" },
-                    { "4", null, new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7123), "salesrepresentative", "SALESREPRESENTATIVE" }
+                    { "1", null, "admin", "ADMIN" },
+                    { "2", null, "trader", "TRADER" },
+                    { "3", null, "employee", "EMPLOYEE" },
+                    { "4", null, "salesrepresentative", "SALESREPRESENTATIVE" }
                 });
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
-                values: new object[] { "1", 0, "1cc2525f-ebea-431c-87ef-a0db23a1502c", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEDOFk1KDrcI67B/n01RrBkGPlMaEbmjVSxeRRc25h3amNOoDSS3Cxy0PCRWKSGgZnA==", "01234567890", false, "e0741776-6dcb-4ced-9ae1-51f89e3a40fb", false, "Admin" });
+                values: new object[] { "1", 0, "54773c11-9a1d-4a9f-a705-aa659f460519", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEJ8DhtJzu8G3CqQnBVT5eBbIWiFAL4D0hCBSEchUo19byt4nNqLi1ajvwWz67Efv7g==", "01234567890", false, "df011e50-1512-4b76-b563-81263fede5ee", false, "Admin" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoleClaims",

@@ -35,28 +35,28 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 Id = "1",
                 Name = "admin",
                 NormalizedName = "ADMIN",
-                Date = DateTime.Now,
+               // Date = DateTime.Now,
             },
             new ApplicationUserRole
             {
                 Id = "2",
                 Name = "trader",
                 NormalizedName = "TRADER",
-                Date = DateTime.Now,
+                //Date = DateTime.Now,
             },
             new ApplicationUserRole
             {
                  Id = "3",
                  Name = "employee",
                  NormalizedName = "EMPLOYEE",
-                 Date = DateTime.Now,
+                // Date = DateTime.Now,
             },
             new ApplicationUserRole
             {
                 Id = "4",
                 Name = "salesrepresentative",
                 NormalizedName = "SALESREPRESENTATIVE",
-                Date = DateTime.Now,
+               // Date = DateTime.Now,
             }
           );
         modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(

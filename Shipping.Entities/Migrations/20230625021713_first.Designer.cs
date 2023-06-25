@@ -12,8 +12,8 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230624204233_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230625021713_first")]
+    partial class first
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -561,16 +561,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1cc2525f-ebea-431c-87ef-a0db23a1502c",
+                            ConcurrencyStamp = "54773c11-9a1d-4a9f-a705-aa659f460519",
                             Email = "Admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDOFk1KDrcI67B/n01RrBkGPlMaEbmjVSxeRRc25h3amNOoDSS3Cxy0PCRWKSGgZnA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ8DhtJzu8G3CqQnBVT5eBbIWiFAL4D0hCBSEchUo19byt4nNqLi1ajvwWz67Efv7g==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "e0741776-6dcb-4ced-9ae1-51f89e3a40fb",
+                            SecurityStamp = "df011e50-1512-4b76-b563-81263fede5ee",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -584,9 +584,6 @@ namespace Shipping.Entities.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -609,28 +606,24 @@ namespace Shipping.Entities.Migrations
                         new
                         {
                             Id = "1",
-                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7107),
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7113),
                             Name = "trader",
                             NormalizedName = "TRADER"
                         },
                         new
                         {
                             Id = "3",
-                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7118),
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "4",
-                            Date = new DateTime(2023, 6, 24, 23, 42, 33, 422, DateTimeKind.Local).AddTicks(7123),
                             Name = "salesrepresentative",
                             NormalizedName = "SALESREPRESENTATIVE"
                         });
