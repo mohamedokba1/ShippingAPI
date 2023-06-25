@@ -39,7 +39,6 @@ namespace Shipping.API.Controllers
         public async Task<ActionResult<TokenDto>> Login(LoginDto credentials)
         {
             IList<Claim> claims = new List<Claim>();
-            var identity = new ClaimsIdentity();
             var user = await _userManager.FindByEmailAsync(credentials.Email);
             if (user != null)
             {

@@ -443,6 +443,21 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             {
                 RoleId = "1",
                 UserId = "1",
+            },
+            new IdentityUserRole<string>()
+            {
+                RoleId = "2",
+                UserId = "2",
+            },
+            new IdentityUserRole<string>()
+            {
+                RoleId = "3",
+                UserId = "3",
+            },
+            new IdentityUserRole<string>()
+            {
+                RoleId = "4",
+                UserId = "4",
             }
             );
 
