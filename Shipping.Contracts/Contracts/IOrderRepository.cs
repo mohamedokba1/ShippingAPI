@@ -11,8 +11,6 @@ public interface IOrderRepository
     Task<Order?> AddOrderAsync(Order order);
     Task UpdateOrderAsync(Order order);
     Task<bool> DeleteOrderAsync(Order order);
-    
-
     Task SaveChangesAsync();
     IQueryable<Order> GetOrderPaginated();
 }
