@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
+using Shipping.Repositories.Repos;
 using Shipping.Services.Dtos;
 
 namespace Shipping.Services.Services;
@@ -46,6 +48,12 @@ public class CustomerService : ICustomerService
             await _customerRepository.DeleteAsync(customer);
             await _customerRepository.SaveChangesAsync();
         }
+    }
+
+    public IQueryable<CustomerReadDto> GetCustomersPaginated()
+    {
+        IQueryable customers = _customerRepository.GetCustomersPaginated();
+        return customers.ProjectTo<CustomerReadDto>(_mapper.ConfigurationProvider);
     }
 }
 
