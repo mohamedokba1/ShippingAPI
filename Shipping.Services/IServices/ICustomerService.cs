@@ -8,4 +8,6 @@ public interface ICustomerService
     Task<int> AddAsync(CustomerAddDto customerAddDto);
     Task UpdateAsync(CustomerUpdateDto customerUpdateDto, long id);
     Task DeleteAsync(long id);
+    IQueryable<CustomerReadDto> GetCustomersPaginated();
+
 }

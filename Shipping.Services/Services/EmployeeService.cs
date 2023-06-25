@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Repositories.Repos;
 using Shipping.Services.Dtos;
@@ -166,6 +168,12 @@ namespace Shipping.Services.Services
             {
                 throw new Exception("this employee is not found");
             }
+        }
+
+        public IQueryable<EmployeeReadDto> GetEmployeesPaginated()
+        {
+            IQueryable employees = employeeRepository.GetEmployeePaginated();
+            return employees.ProjectTo<EmployeeReadDto>(mapper.ConfigurationProvider);
         }
     }
 }

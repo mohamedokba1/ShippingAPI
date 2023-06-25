@@ -11,5 +11,6 @@ public interface ICustomerRepository
     Task UpdateAsync(Customer entity);
     Task DeleteAsync(Customer entity);
     Task<int> SaveChangesAsync();
+    IQueryable<Customer> GetCustomersPaginated();
     Task<List<Customer>> GetCustomersByIds(List<long> customerIds);
 }

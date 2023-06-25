@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shipping.API.PoliciesProvider;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -81,6 +82,28 @@ namespace Shipping.API.Controllers
             
             await _orderService.DeleteOrderAsync(id);
             return NoContent();
+        }
+
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<OrderResponseDto>>> GetOrder([FromQuery] PaginationParameters paginationParameters)
+        {
+            var orderes = _orderService.GetOrderesPaginated();
+
+            int totalRecords = await orderes.CountAsync();
+
+            List<OrderResponseDto>? listOfOrderes = await orderes
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+            PaginationResponse<OrderResponseDto> result =
+                new PaginationResponse<OrderResponseDto>()
+                {
+                    Data = listOfOrderes,
+                    PageNo = paginationParameters.PageNumber,
+                    PageSize = paginationParameters.PageSize,
+                    TotalRecords = totalRecords
+                };
+            return Ok(result);
         }
     }
 }

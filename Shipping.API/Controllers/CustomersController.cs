@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
 
 namespace Shipping.API.Controllers
@@ -19,6 +20,33 @@ namespace Shipping.API.Controllers
             var customers = await _customerService.GetAllAsync();
             return Ok(customers);
         }
+        //pagination
+
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<CustomerReadDto>>> GetCustomers([FromQuery] PaginationParameters paginationParameters)
+        {
+            var customers = _customerService.GetCustomersPaginated();
+            //_logger.LogError("customers", customers);
+            int totalRecords = await customers.CountAsync();
+
+            List<CustomerReadDto>? listOfCustomers = await customers
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+            PaginationResponse<CustomerReadDto> result =
+                new PaginationResponse<CustomerReadDto>()
+                {
+                    Data = listOfCustomers,
+                    PageNo = paginationParameters.PageNumber,
+                    PageSize = paginationParameters.PageSize,
+                    TotalRecords = totalRecords
+                };
+            return Ok(result);
+        }
+
+
+
+        //
 
         [HttpGet]
         [Route("{id}")]

@@ -10,4 +10,6 @@ public interface ICityService
     public Task UpdateAsync(CityUpdateDto cityUpdateDto, int id);
     public Task DeleteAsync(int id);
     public Task SaveChangesAsync();
+    IQueryable<CityReadDto> GetCitiesPaginated();
+
 }

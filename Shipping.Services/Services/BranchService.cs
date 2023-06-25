@@ -1,4 +1,6 @@
-﻿using Shipping.Entities.Domain.Models;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -13,10 +15,12 @@ using System.Threading.Tasks;
 public class BranchService: IBranchService
 {
     private readonly IBranchRepository _branchRepository;
+    private readonly IMapper _mapper;
 
-    public BranchService(IBranchRepository branchRepository)
+    public BranchService(IBranchRepository branchRepository, IMapper mapper)
     {
         _branchRepository = branchRepository;
+        _mapper = mapper;
     }
     public async Task<IEnumerable<BranchReadDto>> GetAllAsync()
     {
@@ -94,5 +98,11 @@ public class BranchService: IBranchService
     public async Task SaveChangesAsync()
     {
         await _branchRepository.SaveChangesAsync();
+    }
+
+    public IQueryable<BranchReadDto> GetBranchesPaginated()
+    {
+        IQueryable branches = _branchRepository.GetBranchPaginated();
+        return branches.ProjectTo<BranchReadDto>(_mapper.ConfigurationProvider);
     }
 }

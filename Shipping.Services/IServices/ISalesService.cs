@@ -13,4 +13,6 @@ public interface ISalesService
     public Task<List<ValidationResult>?> AddUserAndSales(AddSalesDto sales);
     public Task UpdateAsync(long id ,SalesUpdateDtos sale);
     public Task DeleteAsync(long id);
+    IQueryable<SalesReadDtos> GetSalesPaginated();
+
 }

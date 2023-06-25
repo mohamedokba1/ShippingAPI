@@ -10,5 +10,7 @@ namespace Shipping.Services.IServices
         Task Update(int id,GovermentUpdateDto goverment);
         Task Delete(int id);
         Task SaveChangesAsync();
+        IQueryable<GovermentReadDto> GetGovernmentsPaginated();
+
     }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -287,6 +289,12 @@ public class OrderService : IOrderService
             return _mapper.Map<OrderResponseDto>(order);
 
         return null;
+    }
+
+    public IQueryable<OrderResponseDto> GetOrderesPaginated()
+    {
+        IQueryable orderes = _orderRepository.GetOrderPaginated();
+        return orderes.ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider);
     }
 
     public async Task<List<ValidationResult>?> UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto)

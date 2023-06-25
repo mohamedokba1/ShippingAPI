@@ -66,5 +66,10 @@ namespace Shipping.Repositories.Repos
 
         }
 
+        public IQueryable<SalesRepresentative> GetSalesRepresentativePaginated()
+        {
+            return context.Set<SalesRepresentative>().AsQueryable();
+
+        }
     }
 }
