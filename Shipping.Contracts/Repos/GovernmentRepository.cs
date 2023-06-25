@@ -58,6 +58,10 @@ namespace Shipping.Repositories.Repos
             
         }
 
+        public IQueryable<Goverment> GetGovernmentPaginated()
+        {
+            return context.Set<Goverment>().AsQueryable();
 
+        }
     }
 }

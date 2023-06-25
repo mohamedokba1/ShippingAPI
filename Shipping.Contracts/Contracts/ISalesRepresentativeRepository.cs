@@ -11,4 +11,5 @@ public interface ISalesRepresentativeRepository
     Task<SalesRepresentative?> GetByIdAsync(long id);
     Task<SalesRepresentative?> GetByEmailAsync(string email);
     Task saveChanges();
+    IQueryable<SalesRepresentative> GetSalesRepresentativePaginated();
 }

@@ -10,4 +10,6 @@ public interface IOrderService
     Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail);
     Task<List<ValidationResult>?> UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto);
     Task DeleteOrderAsync(long id);
+    IQueryable<OrderResponseDto> GetOrderesPaginated();
+
 }

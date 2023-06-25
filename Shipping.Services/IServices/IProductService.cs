@@ -10,4 +10,6 @@ public interface IProductService
     public Task AddProductAsync(ProductAddDto product);
     public Task UpdateProductAsync(long id, ProductUpdateDto product);
     public Task DeleteProductAsync(long id);
+    IQueryable<ProductResponseDto> GetProductsPaginated();
+
 }

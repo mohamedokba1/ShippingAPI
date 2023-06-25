@@ -3,7 +3,6 @@ using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 
-
 public class CityRepository : ICityRepository
 {
     private readonly ApplicationDbContext _context;
@@ -53,5 +52,11 @@ public class CityRepository : ICityRepository
     public async Task<City?> GetByNameAsync(string cityName)
     {
         return await _context.Set<City>().FirstOrDefaultAsync(city => city.CityName == cityName);
+    }
+
+    public IQueryable<City> GetCityPaginated()
+    {
+        return _context.Set<City>().AsQueryable();
+
     }
 }

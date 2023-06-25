@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.Branch;
@@ -23,6 +24,28 @@ namespace Shipping.API.Controllers
         {
             var branches = await _branchService.GetAllAsync();
             return Ok(branches);
+        }
+
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<BranchReadDto>>> GetBranch([FromQuery] PaginationParameters paginationParameters)
+        {
+            var branches = _branchService.GetBranchesPaginated();
+            
+            int totalRecords = await branches.CountAsync();
+
+            List<BranchReadDto>? listOfBranches = await branches
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+            PaginationResponse<BranchReadDto> result =
+                new PaginationResponse<BranchReadDto>()
+                {
+                    Data = listOfBranches,
+                    PageNo = paginationParameters.PageNumber,
+                    PageSize = paginationParameters.PageSize,
+                    TotalRecords = totalRecords
+                };
+            return Ok(result);
         }
 
         [HttpGet]

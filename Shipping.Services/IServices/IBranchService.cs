@@ -17,6 +17,8 @@ using System.Threading.Tasks;
     public Task UpdateAsync(BranchUpdateDto branchUpdateDto, int id);
     public Task DeleteAsync(int id);
     public Task SaveChangesAsync();
+    IQueryable<BranchReadDto> GetBranchesPaginated();
+
 
 }
 

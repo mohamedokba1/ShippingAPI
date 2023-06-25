@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -42,6 +44,12 @@ namespace Shipping.Services.Services
                 return null;
             }
             return _mapper.Map<GovermentReadDto>(govermentfromDB);
+        }
+
+        public IQueryable<GovermentReadDto> GetGovernmentsPaginated()
+        {
+            IQueryable governments = _govermentRepository.GetGovernmentPaginated();
+            return governments.ProjectTo<GovermentReadDto>(_mapper.ConfigurationProvider);
         }
 
         public async Task SaveChangesAsync()

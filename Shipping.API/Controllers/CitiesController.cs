@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
+using Shipping.Services.IServices;
 
 
 namespace Shipping.API.Controllers
@@ -20,6 +22,27 @@ namespace Shipping.API.Controllers
         {
             var cities=await _cityService.GetAllAsync();
             return Ok(cities);
+        }
+        [HttpGet("paginated")]
+        public async Task<ActionResult<PaginationResponse<CityReadDto>>> GetCities([FromQuery] PaginationParameters paginationParameters)
+        {
+            var cities = _cityService.GetCitiesPaginated();
+
+            int totalRecords = await cities.CountAsync();
+
+            List<CityReadDto>? listOfCities = await cities
+                .Skip((paginationParameters.PageNumber - 1) * paginationParameters.PageSize)
+                .Take(paginationParameters.PageSize)
+                .ToListAsync();
+            PaginationResponse<CityReadDto> result =
+                new PaginationResponse<CityReadDto>()
+                {
+                    Data = listOfCities,
+                    PageNo = paginationParameters.PageNumber,
+                    PageSize = paginationParameters.PageSize,
+                    TotalRecords = totalRecords
+                };
+            return Ok(result);
         }
 
         [HttpGet]
