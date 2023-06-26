@@ -12,6 +12,7 @@ namespace Shipping.Services.IServices
         Task Delete(long id);
         Task Savechanges();
         IQueryable<EmployeeReadDto> GetEmployeesPaginated();
+        Task AssignOrderToSales(long salesId, long orderId);
 
     }
 }
