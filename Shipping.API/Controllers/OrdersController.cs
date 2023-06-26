@@ -46,7 +46,7 @@ namespace Shipping.API.Controllers
                 return Ok(order);
             }
             else
-                return BadRequest();
+                return BadRequest(errors);
         }
 
         [HttpPut]

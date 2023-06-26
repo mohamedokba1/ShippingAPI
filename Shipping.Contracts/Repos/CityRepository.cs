@@ -13,7 +13,6 @@ public class CityRepository : ICityRepository
 
     public async Task<IEnumerable<City>> GetAllAsync()
     {
-
         return await _context.Set<City>().Include(c=>c.goverment).ToListAsync();
     }
 

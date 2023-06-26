@@ -601,16 +601,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "3befd5c7-8e19-47ce-957a-dae8c1d18bee",
+                            ConcurrencyStamp = "7a960744-0651-4924-b58b-d6a33cc0aa20",
                             Email = "Admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAmlUv4kTN7XO+ogvN4wpOM8qcrUl07+sNIMkpxSktFodVJzCNGoSytLnxF94TSnrA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELMrJ9t9b7BMRSi2KfJFCVypcfXQCPQvrWztw7SUUZUbOzXYEckRYCibyEmkbCVnrw==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a76db55e-9797-4059-b606-5f3565ad9d99",
+                            SecurityStamp = "59d9cf4b-92f1-4e98-8253-7616d7e3f373",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
@@ -618,16 +618,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "2",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "52dd26ab-395e-48bb-bd28-3212afdcd0c0",
+                            ConcurrencyStamp = "aa9eeeee-2c69-4306-83e8-7321cf7c4909",
                             Email = "trader1@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "TRADER1@EXAMPLE.COM",
                             NormalizedUserName = "TRADER1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEF+x2RAX0hrF4L9e2qiBNTZN4NgSlJKHwPBk9QMy37OBGIPQgqxtz+tdaIF7SMpNMA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAECynPu4AYDfqqKpII+TOTtDEvOXT1WB/Y61KuoKhHWnnMwFP4Nkzv1DiMmC0FJpvDw==",
                             PhoneNumber = "01278555861",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "a06dadae-6215-4545-b521-95ccc570573b",
+                            SecurityStamp = "de5c744a-fe04-4fb0-aeb0-9f0dda980826",
                             TwoFactorEnabled = false,
                             UserName = "trader1"
                         },
@@ -635,16 +635,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "3",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "2dda741e-443f-48b2-a1f0-9f99f9f12fca",
+                            ConcurrencyStamp = "5114b571-1bd5-4123-833b-b568e63cc174",
                             Email = "employee1@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYEE1@EXAMPLE.COM",
                             NormalizedUserName = "EMPLOYEE1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEPBDgW2Q+fYmkBFqPtPl7xFK+xzY3IuAcJhTmmjd2XskxQH4sOFIxUOOFnIlDv0bRQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ9kLC0fvj96H3u0m+Fan08eOaf/75pwAqzvRPcf3UmowvFaAvBiGi3joT64PRvvTg==",
                             PhoneNumber = "01033325256",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "523b9c2a-93b7-4d86-b21b-466ca782b5a5",
+                            SecurityStamp = "098d0030-444b-41d1-b1b9-c778843ef156",
                             TwoFactorEnabled = false,
                             UserName = "employee1"
                         },
@@ -652,16 +652,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "4",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "003b2cf0-a4e8-4585-a4ad-909e06c15b97",
+                            ConcurrencyStamp = "744be13a-a217-4bf7-82a0-f226659e7598",
                             Email = "sales1@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "SALES1@EXAMPLE.COM",
                             NormalizedUserName = "SALES1",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ2ofZ1rZzdFAUiPOHZ1Dl1oDTOLi5xkw/yU1l6lUlwG/ushIjuF+mVWAQ6qxGlSMg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE3tV+5iRw52c4hGWylH8CK5HrVnGRMcFF8pT7E19EgVTuENsWSyEBo8/OZ/mKwyKw==",
                             PhoneNumber = "01033325256",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9e9a3ff7-757c-4d02-ad69-e547e33d562a",
+                            SecurityStamp = "d35390e4-38a6-4eb6-b9da-74ad691578ce",
                             TwoFactorEnabled = false,
                             UserName = "sales1"
                         },
@@ -669,16 +669,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "5",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "39f6c50d-ee04-45f4-a974-14d08eb28381",
+                            ConcurrencyStamp = "735752d6-168f-4fa7-a08b-928ced38e683",
                             Email = "employee2@example.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "EMPLOYEE2@EXAMPLE.COM",
                             NormalizedUserName = "EMPLOYEE2",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFgtu3wXd+NwbxLqDVXlTbR9NunYlmL/ayCSc91kvX3IxOPbUAyvciqMoshrWq4LAw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELWzIbuHHT+InMsvxxkwmGmuRuzSRlZ9Ge/WL6cw1eMlQ2L9sFgA+CRyuHvJS4+JZw==",
                             PhoneNumber = "01033325256",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5d3b76d7-bfd7-458a-a6bc-80c661099d8d",
+                            SecurityStamp = "9b0daaed-f93e-439d-8ddf-fe4bacb368ed",
                             TwoFactorEnabled = false,
                             UserName = "employee2"
                         });
@@ -717,28 +717,28 @@ namespace Shipping.Entities.Migrations
                         new
                         {
                             Id = "1",
-                            Date = "6/26/2023 5:09:51 AM",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Date = "6/26/2023 5:09:51 AM",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "trader",
                             NormalizedName = "TRADER"
                         },
                         new
                         {
                             Id = "3",
-                            Date = "6/26/2023 5:09:51 AM",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "4",
-                            Date = "6/26/2023 5:09:51 AM",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "salesrepresentative",
                             NormalizedName = "SALESREPRESENTATIVE"
                         });
@@ -771,28 +771,28 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = 1,
                             BranchName = "Cairo",
-                            CreatedAt = new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(518),
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8055),
                             State = true
                         },
                         new
                         {
                             Id = 2,
                             BranchName = "Giza",
-                            CreatedAt = new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(610),
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8124),
                             State = true
                         },
                         new
                         {
                             Id = 3,
                             BranchName = "Alexandria",
-                            CreatedAt = new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(636),
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8144),
                             State = true
                         },
                         new
                         {
                             Id = 4,
                             BranchName = "Sharqia",
-                            CreatedAt = new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(640),
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8146),
                             State = false
                         });
                 });

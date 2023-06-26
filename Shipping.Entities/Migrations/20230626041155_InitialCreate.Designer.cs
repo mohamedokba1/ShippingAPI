@@ -12,8 +12,8 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230625021713_first")]
-    partial class first
+    [Migration("20230626041155_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -278,6 +278,34 @@ namespace Shipping.Entities.Migrations
                         },
                         new
                         {
+                            Id = 47,
+                            ClaimType = "permission.permissions.read",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            ClaimType = "permission.permissions.update",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            ClaimType = "permission.permissions.add",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            ClaimType = "permission.permissions.delete",
+                            ClaimValue = "true",
+                            RoleId = "1"
+                        },
+                        new
+                        {
                             Id = 29,
                             ClaimType = "permission.orders.add",
                             ClaimValue = "true",
@@ -470,6 +498,21 @@ namespace Shipping.Entities.Migrations
                         {
                             UserId = "1",
                             RoleId = "1"
+                        },
+                        new
+                        {
+                            UserId = "2",
+                            RoleId = "2"
+                        },
+                        new
+                        {
+                            UserId = "3",
+                            RoleId = "3"
+                        },
+                        new
+                        {
+                            UserId = "4",
+                            RoleId = "4"
                         });
                 });
 
@@ -561,18 +604,86 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "54773c11-9a1d-4a9f-a705-aa659f460519",
+                            ConcurrencyStamp = "7a960744-0651-4924-b58b-d6a33cc0aa20",
                             Email = "Admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEJ8DhtJzu8G3CqQnBVT5eBbIWiFAL4D0hCBSEchUo19byt4nNqLi1ajvwWz67Efv7g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELMrJ9t9b7BMRSi2KfJFCVypcfXQCPQvrWztw7SUUZUbOzXYEckRYCibyEmkbCVnrw==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "df011e50-1512-4b76-b563-81263fede5ee",
+                            SecurityStamp = "59d9cf4b-92f1-4e98-8253-7616d7e3f373",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
+                        },
+                        new
+                        {
+                            Id = "2",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "aa9eeeee-2c69-4306-83e8-7321cf7c4909",
+                            Email = "trader1@example.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "TRADER1@EXAMPLE.COM",
+                            NormalizedUserName = "TRADER1",
+                            PasswordHash = "AQAAAAIAAYagAAAAECynPu4AYDfqqKpII+TOTtDEvOXT1WB/Y61KuoKhHWnnMwFP4Nkzv1DiMmC0FJpvDw==",
+                            PhoneNumber = "01278555861",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "de5c744a-fe04-4fb0-aeb0-9f0dda980826",
+                            TwoFactorEnabled = false,
+                            UserName = "trader1"
+                        },
+                        new
+                        {
+                            Id = "3",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "5114b571-1bd5-4123-833b-b568e63cc174",
+                            Email = "employee1@example.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEE1@EXAMPLE.COM",
+                            NormalizedUserName = "EMPLOYEE1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ9kLC0fvj96H3u0m+Fan08eOaf/75pwAqzvRPcf3UmowvFaAvBiGi3joT64PRvvTg==",
+                            PhoneNumber = "01033325256",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "098d0030-444b-41d1-b1b9-c778843ef156",
+                            TwoFactorEnabled = false,
+                            UserName = "employee1"
+                        },
+                        new
+                        {
+                            Id = "4",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "744be13a-a217-4bf7-82a0-f226659e7598",
+                            Email = "sales1@example.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SALES1@EXAMPLE.COM",
+                            NormalizedUserName = "SALES1",
+                            PasswordHash = "AQAAAAIAAYagAAAAEE3tV+5iRw52c4hGWylH8CK5HrVnGRMcFF8pT7E19EgVTuENsWSyEBo8/OZ/mKwyKw==",
+                            PhoneNumber = "01033325256",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "d35390e4-38a6-4eb6-b9da-74ad691578ce",
+                            TwoFactorEnabled = false,
+                            UserName = "sales1"
+                        },
+                        new
+                        {
+                            Id = "5",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "735752d6-168f-4fa7-a08b-928ced38e683",
+                            Email = "employee2@example.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "EMPLOYEE2@EXAMPLE.COM",
+                            NormalizedUserName = "EMPLOYEE2",
+                            PasswordHash = "AQAAAAIAAYagAAAAELWzIbuHHT+InMsvxxkwmGmuRuzSRlZ9Ge/WL6cw1eMlQ2L9sFgA+CRyuHvJS4+JZw==",
+                            PhoneNumber = "01033325256",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "9b0daaed-f93e-439d-8ddf-fe4bacb368ed",
+                            TwoFactorEnabled = false,
+                            UserName = "employee2"
                         });
                 });
 
@@ -583,6 +694,9 @@ namespace Shipping.Entities.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Date")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -606,24 +720,28 @@ namespace Shipping.Entities.Migrations
                         new
                         {
                             Id = "1",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "trader",
                             NormalizedName = "TRADER"
                         },
                         new
                         {
                             Id = "3",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "4",
+                            Date = "6/26/2023 7:11:55 AM",
                             Name = "salesrepresentative",
                             NormalizedName = "SALESREPRESENTATIVE"
                         });
@@ -650,6 +768,36 @@ namespace Shipping.Entities.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Branches");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BranchName = "Cairo",
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8055),
+                            State = true
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BranchName = "Giza",
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8124),
+                            State = true
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BranchName = "Alexandria",
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8144),
+                            State = true
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BranchName = "Sharqia",
+                            CreatedAt = new DateTime(2023, 6, 26, 7, 11, 55, 368, DateTimeKind.Local).AddTicks(8146),
+                            State = false
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.City", b =>
@@ -678,6 +826,208 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("GovermentId");
 
                     b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            City_Id = 1,
+                            CityName = "Cairo",
+                            GovermentId = 1,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 2,
+                            CityName = "Giza",
+                            GovermentId = 1,
+                            NormalShippingCost = 15.0,
+                            PickupShippingCost = 5.0
+                        },
+                        new
+                        {
+                            City_Id = 3,
+                            CityName = "Shubra El-Kheima",
+                            GovermentId = 1,
+                            NormalShippingCost = 20.0,
+                            PickupShippingCost = 15.0
+                        },
+                        new
+                        {
+                            City_Id = 4,
+                            CityName = "Cairo",
+                            GovermentId = 1,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 5,
+                            CityName = "Helwan",
+                            GovermentId = 1,
+                            NormalShippingCost = 35.0,
+                            PickupShippingCost = 20.0
+                        },
+                        new
+                        {
+                            City_Id = 6,
+                            CityName = "Alexandria",
+                            GovermentId = 2,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 7,
+                            CityName = "Borg El Arab",
+                            GovermentId = 2,
+                            NormalShippingCost = 15.0,
+                            PickupShippingCost = 5.0
+                        },
+                        new
+                        {
+                            City_Id = 8,
+                            CityName = "Abu Qir",
+                            GovermentId = 2,
+                            NormalShippingCost = 20.0,
+                            PickupShippingCost = 15.0
+                        },
+                        new
+                        {
+                            City_Id = 9,
+                            CityName = "Montaza",
+                            GovermentId = 2,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 10,
+                            CityName = "Miami",
+                            GovermentId = 2,
+                            NormalShippingCost = 35.0,
+                            PickupShippingCost = 20.0
+                        },
+                        new
+                        {
+                            City_Id = 11,
+                            CityName = "Giza",
+                            GovermentId = 3,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 12,
+                            CityName = "Al Haram",
+                            GovermentId = 3,
+                            NormalShippingCost = 15.0,
+                            PickupShippingCost = 5.0
+                        },
+                        new
+                        {
+                            City_Id = 13,
+                            CityName = "Sheikh Zayed City",
+                            GovermentId = 3,
+                            NormalShippingCost = 20.0,
+                            PickupShippingCost = 15.0
+                        },
+                        new
+                        {
+                            City_Id = 14,
+                            CityName = "6th of October City",
+                            GovermentId = 3,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 15,
+                            CityName = "Bulaq ad Dakrur",
+                            GovermentId = 3,
+                            NormalShippingCost = 35.0,
+                            PickupShippingCost = 20.0
+                        },
+                        new
+                        {
+                            City_Id = 16,
+                            CityName = "Mansoura",
+                            GovermentId = 4,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 17,
+                            CityName = "Talkha",
+                            GovermentId = 4,
+                            NormalShippingCost = 15.0,
+                            PickupShippingCost = 5.0
+                        },
+                        new
+                        {
+                            City_Id = 18,
+                            CityName = "Mit Ghamr",
+                            GovermentId = 4,
+                            NormalShippingCost = 20.0,
+                            PickupShippingCost = 15.0
+                        },
+                        new
+                        {
+                            City_Id = 19,
+                            CityName = "Aga",
+                            GovermentId = 4,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 20,
+                            CityName = "Sherbin",
+                            GovermentId = 4,
+                            NormalShippingCost = 35.0,
+                            PickupShippingCost = 20.0
+                        },
+                        new
+                        {
+                            City_Id = 21,
+                            CityName = "Zagazig",
+                            GovermentId = 5,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 22,
+                            CityName = "Belbeis",
+                            GovermentId = 5,
+                            NormalShippingCost = 15.0,
+                            PickupShippingCost = 5.0
+                        },
+                        new
+                        {
+                            City_Id = 23,
+                            CityName = "Abu Hammad",
+                            GovermentId = 5,
+                            NormalShippingCost = 20.0,
+                            PickupShippingCost = 15.0
+                        },
+                        new
+                        {
+                            City_Id = 24,
+                            CityName = "Abu Kebir",
+                            GovermentId = 5,
+                            NormalShippingCost = 30.0,
+                            PickupShippingCost = 10.0
+                        },
+                        new
+                        {
+                            City_Id = 25,
+                            CityName = "Kafr Saqr",
+                            GovermentId = 5,
+                            NormalShippingCost = 35.0,
+                            PickupShippingCost = 20.0
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Customer", b =>
@@ -730,6 +1080,9 @@ namespace Shipping.Entities.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("EmployeeId"));
 
+                    b.Property<int>("BranchId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -756,16 +1109,39 @@ namespace Shipping.Entities.Migrations
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.Property<int>("branchid")
-                        .HasColumnType("int");
-
                     b.HasKey("EmployeeId");
+
+                    b.HasIndex("BranchId");
 
                     b.HasIndex("UserId");
 
-                    b.HasIndex("branchid");
-
                     b.ToTable("Employees");
+
+                    b.HasData(
+                        new
+                        {
+                            EmployeeId = 1L,
+                            BranchId = 1,
+                            Email = "employee1@example.com",
+                            IsActive = true,
+                            Name = "Ahmed Mohamed",
+                            Password = "Employee@123",
+                            PhoneNumber = "01033325256",
+                            UserId = "3",
+                            UserName = "employee1"
+                        },
+                        new
+                        {
+                            EmployeeId = 2L,
+                            BranchId = 2,
+                            Email = "employee2@example.com",
+                            IsActive = false,
+                            Name = "Sayed Sameh",
+                            Password = "Employee@123",
+                            PhoneNumber = "01033325256",
+                            UserId = "5",
+                            UserName = "employee2"
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Goverment", b =>
@@ -786,6 +1162,38 @@ namespace Shipping.Entities.Migrations
                     b.HasKey("Goverment_Id");
 
                     b.ToTable("Goverments");
+
+                    b.HasData(
+                        new
+                        {
+                            Goverment_Id = 1,
+                            GovermentName = "Cairo",
+                            State = true
+                        },
+                        new
+                        {
+                            Goverment_Id = 2,
+                            GovermentName = "Alexandria",
+                            State = true
+                        },
+                        new
+                        {
+                            Goverment_Id = 3,
+                            GovermentName = "Giza",
+                            State = true
+                        },
+                        new
+                        {
+                            Goverment_Id = 4,
+                            GovermentName = "Dakahlia",
+                            State = false
+                        },
+                        new
+                        {
+                            Goverment_Id = 5,
+                            GovermentName = "Sharqia",
+                            State = false
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Order", b =>
@@ -931,6 +1339,21 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("SalesRepresentatives");
+
+                    b.HasData(
+                        new
+                        {
+                            SalesRepresentativeId = 1L,
+                            Address = "Cairo",
+                            CompanyPercentage = 60.0,
+                            DiscountType = 1,
+                            Email = "sales1@example.com",
+                            IsActive = true,
+                            Name = "Mohamed Khaled",
+                            Password = "Sales@123",
+                            UserId = "4",
+                            UserName = "sales1"
+                        });
                 });
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.SpecialPackage", b =>
@@ -1002,6 +1425,19 @@ namespace Shipping.Entities.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Traders");
+
+                    b.HasData(
+                        new
+                        {
+                            TraderId = 1L,
+                            Address = "Cairo",
+                            CompanyBranch = "Cairo",
+                            CostPerRefusedOrder = 1.0,
+                            Email = "trader1@example.com",
+                            PhoneNumber = "01278555861",
+                            UserId = "2",
+                            UserName = "trader1"
+                        });
                 });
 
             modelBuilder.Entity("BranchSalesRepresentative", b =>
@@ -1098,15 +1534,15 @@ namespace Shipping.Entities.Migrations
 
             modelBuilder.Entity("Shipping.Entities.Domain.Models.Employee", b =>
                 {
+                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "Branch")
+                        .WithMany("Employees")
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Shipping.Entities.Domain.Identity.ApplicationUser", "User")
                         .WithMany()
                         .HasForeignKey("UserId");
-
-                    b.HasOne("Shipping.Entities.Domain.Models.Branch", "Branch")
-                        .WithMany("Employees")
-                        .HasForeignKey("branchid")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
 
                     b.Navigation("Branch");
 

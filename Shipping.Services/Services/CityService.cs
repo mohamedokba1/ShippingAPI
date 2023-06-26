@@ -25,7 +25,7 @@ public class CityService: ICityService
             CityName = city.CityName,
             NormalShippingCost = city.NormalShippingCost,
             PickupShippingCost= city.PickupShippingCost,
-            govermentName=city.goverment.GovermentName
+            govermentName= city.goverment.GovermentName
         });
     }
     public async Task<CityReadDto> GetByIdAsync(int id)
