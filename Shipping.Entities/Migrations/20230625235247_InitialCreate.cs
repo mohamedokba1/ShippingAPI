@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Shipping.Entities.Migrations
 {
     /// <inheritdoc />
-    public partial class ModifyUsersRoles : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,7 +18,7 @@ namespace Shipping.Entities.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -459,10 +459,10 @@ namespace Shipping.Entities.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Date", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", null, new DateTime(2023, 6, 26, 0, 11, 59, 730, DateTimeKind.Local).AddTicks(4969), "admin", "ADMIN" },
-                    { "2", null, new DateTime(2023, 6, 26, 0, 11, 59, 730, DateTimeKind.Local).AddTicks(4989), "trader", "TRADER" },
-                    { "3", null, new DateTime(2023, 6, 26, 0, 11, 59, 730, DateTimeKind.Local).AddTicks(4996), "employee", "EMPLOYEE" },
-                    { "4", null, new DateTime(2023, 6, 26, 0, 11, 59, 730, DateTimeKind.Local).AddTicks(5004), "salesrepresentative", "SALESREPRESENTATIVE" }
+                    { "1", null, "6/26/2023 2:52:46 AM", "admin", "ADMIN" },
+                    { "2", null, "6/26/2023 2:52:46 AM", "trader", "TRADER" },
+                    { "3", null, "6/26/2023 2:52:46 AM", "employee", "EMPLOYEE" },
+                    { "4", null, "6/26/2023 2:52:46 AM", "salesrepresentative", "SALESREPRESENTATIVE" }
                 });
 
             migrationBuilder.InsertData(
@@ -470,16 +470,16 @@ namespace Shipping.Entities.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "98050f27-4313-4d88-81cd-1f66c601aeb3", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEImDgmUTMFHISAmoxupwbHJ5kqyb1AsaLq6xGSH+RjqrfJwdoYeb7zRQFJu/Hz8BxA==", "01234567890", false, "de6668e1-bada-445f-8ba6-9260ba1cda5e", false, "Admin" },
-                    { "2", 0, "bc2a9046-ebbf-4227-9f0c-be283d861c08", "trader1@example.com", false, false, null, "TRADER1@EXAMPLE.COM", "TRADER1", "AQAAAAIAAYagAAAAEJ7bwFoiAK4hztw3D2inP6bEJMrxdTPqMiqBfXgpzqPMZYOgNG6wwZYNWtafHjpJkw==", "01278555861", false, "a0213d3f-2252-4ae3-bec8-4c9a5135980c", false, "trader1" },
-                    { "3", 0, "fffa0bd9-e8fe-451f-b2dd-4b497cb89a7b", "employee1@example.com", false, false, null, "EMPLOYEE1@EXAMPLE.COM", "EMPLOYEE1", "AQAAAAIAAYagAAAAEOlUo/24U4hdeNeekl+NAcRMCMWeUtQTe+gIJEcA+2lOSzyuQzmU8ZEaXZDPH78CQw==", "01033325256", false, "e7694100-dd68-46d0-a0e0-071e46d3b7ff", false, "employee1" },
-                    { "4", 0, "3b1b883c-08bb-4e27-87db-d15bc7e36517", "sales1@example.com", false, false, null, "SALES1@EXAMPLE.COM", "SALES1", "AQAAAAIAAYagAAAAEKfhs1zX6Y3di2yGvQd8U5M+e+j1HgTfOynyKQ3HCpfchRLGazU0vCYOlAgQvJUznw==", "01033325256", false, "b4aa4654-a52a-405e-adf7-2b6c984290a4", false, "sales1" }
+                    { "1", 0, "f6c8acb1-7e7d-4d9a-a7a9-346b27ad0f8b", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEGafl+tGxCha7aNve8EFDHE/02oGmo6D2dZUXCcHWrX5ZY/mGJtfyFuurJ7BLu4oVg==", "01234567890", false, "569b396d-acd4-40af-b856-addf61483d1f", false, "Admin" },
+                    { "2", 0, "53bdf592-3239-4262-b407-00485609805e", "trader1@example.com", false, false, null, "TRADER1@EXAMPLE.COM", "TRADER1", "AQAAAAIAAYagAAAAEEUUkX54bBF4d9ydnd+MS5dpRBSgGbFiji8sxd7unsSS5jIa8lySQIjWmBd/gZnqiA==", "01278555861", false, "65bb88ed-27ce-455d-8f25-6ead14c3263b", false, "trader1" },
+                    { "3", 0, "09f39ff3-6a29-409c-9dc5-880adeaf58e3", "employee1@example.com", false, false, null, "EMPLOYEE1@EXAMPLE.COM", "EMPLOYEE1", "AQAAAAIAAYagAAAAENe1uCYhXXDNjW9nJV9gQB/BB0IYRbKo9G4bVAZjvLM47JB/4P3Un/hQ6yFukrhDkw==", "01033325256", false, "8fedb014-53e8-45a2-8f1c-740468e1a939", false, "employee1" },
+                    { "4", 0, "6c4c37cd-7e96-403f-b9e8-0abc0660d17c", "sales1@example.com", false, false, null, "SALES1@EXAMPLE.COM", "SALES1", "AQAAAAIAAYagAAAAEMKarBObMAdH3nA6Y0vtgA6Xj8y0T9JHaM0rAZ7BDAK5UPhNQp+XJ5B8UQAgL2E2/A==", "01033325256", false, "d5111de0-1923-4ba8-9b77-7e6dfe2dcd86", false, "sales1" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Branches",
                 columns: new[] { "Id", "BranchName", "CreatedAt", "State" },
-                values: new object[] { 1, "Cairo", new DateTime(2023, 6, 26, 0, 12, 0, 70, DateTimeKind.Local).AddTicks(9981), true });
+                values: new object[] { 1, "Cairo", new DateTime(2023, 6, 26, 2, 52, 47, 101, DateTimeKind.Local).AddTicks(3956), true });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoleClaims",

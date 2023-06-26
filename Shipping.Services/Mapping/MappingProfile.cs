@@ -1,11 +1,7 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
-using Microsoft.Data.SqlClient;
 using Shipping.Entities.Domain.Models;
 using Shipping.Services.Dtos;
 using Shipping.Services.Dtos.SalesDtos;
-using System.Diagnostics;
-
 using Shipping.Entities.Domain.Identity;
 using Shipping.Services.Dtos.PrermissionDtos;
 using System.Security.Claims;
@@ -29,13 +25,6 @@ public class MappingProfile : Profile
              .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
              .ReverseMap();
 
-
-
-
-
-
-
-
         CreateMap<ApplicationUser, EmployeeupdateDto>().ReverseMap();
         CreateMap<ApplicationUser, EmployeeAddDto>().ReverseMap();
 
@@ -49,9 +38,9 @@ public class MappingProfile : Profile
         CreateMap<Employee, EmployeeupdateDto>()
             .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
             .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User.UserName))
-             .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
-             .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
-             .ReverseMap();
+            .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
+            .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
+            .ReverseMap();
 
         CreateMap<GovermentReadDto, Goverment>().ReverseMap();
         CreateMap<GovermentAddDto, Goverment>().ReverseMap();
@@ -78,23 +67,19 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, SalesUpdateDtos>().ReverseMap();
         CreateMap<ApplicationUser, AddSalesDto>().ReverseMap();
 
-        CreateMap<SalesReadDtos, SalesRepresentative>().
-            ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
+        CreateMap<SalesReadDtos, SalesRepresentative>()
+            .ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
             .ForPath(dest => dest.User.PhoneNumber, opt => opt.MapFrom(opt => opt.PhoneNumber))
-             .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
-             .ReverseMap();
+            .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
+            .ReverseMap();
         
-        CreateMap<SalesUpdateDtos, SalesRepresentative>().
-            ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
+        CreateMap<SalesUpdateDtos, SalesRepresentative>()
+            .ForPath(dest => dest.User.UserName, opt => opt.MapFrom(opt => opt.UserName))
             .ForPath(dest => dest.User.PhoneNumber, opt => opt.MapFrom(opt => opt.PhoneNumber))
-             .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
-             .ReverseMap();
-
-
+            .ForPath(dest => dest.User.Email, opt => opt.MapFrom(opt => opt.Email))
+            .ReverseMap();
 
         CreateMap<AddSalesDto, SalesRepresentative>().ReverseMap();
-
-
         CreateMap<Order, OrderResponseDto>()
             .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => src.PaymentMethod.ToString()))
             .ForMember(dest => dest.ShippingType, opt => opt.MapFrom(src => src.ShippingType.ToString()))
@@ -110,6 +95,8 @@ public class MappingProfile : Profile
 
         CreateMap<BranchReadDto , Branch>().ReverseMap();
         CreateMap<PermissionResponseDto, ApplicationUserRole>().ReverseMap();
+        CreateMap<PermissionUpdateDto, ApplicationUserRole>().ReverseMap();
+        CreateMap<PermissionAddDto, ApplicationUserRole>().ReverseMap();
 
         CreateMap<Claim, ClaimDto>().ReverseMap();
     }

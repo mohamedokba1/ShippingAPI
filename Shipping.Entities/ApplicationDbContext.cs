@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Shipping.Entities;
 public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, string>
@@ -35,28 +36,28 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 Id = "1",
                 Name = "admin",
                 NormalizedName = "ADMIN",
-                Date = DateTime.Now,
+                Date = DateTime.Now.ToString()
             },
             new ApplicationUserRole
             {
                 Id = "2",
                 Name = "trader",
                 NormalizedName = "TRADER",
-                Date = DateTime.Now,
+                Date = DateTime.Now.ToString()
             },
             new ApplicationUserRole
             {
                  Id = "3",
                  Name = "employee",
                  NormalizedName = "EMPLOYEE",
-                 Date = DateTime.Now,
+                 Date = DateTime.Now.ToString()
             },
             new ApplicationUserRole
             {
                 Id = "4",
                 Name = "salesrepresentative",
                 NormalizedName = "SALESREPRESENTATIVE",
-                Date = DateTime.Now,
+                Date = DateTime.Now.ToString()
             }
           );
         modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(
