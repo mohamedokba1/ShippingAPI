@@ -11,5 +11,8 @@ namespace Shipping.Services.IServices
         Task Update(long id, EmployeeupdateDto employee);
         Task Delete(long id);
         Task Savechanges();
+        IQueryable<EmployeeReadDto> GetEmployeesPaginated();
+        Task AssignOrderToSales(long salesId, long orderId);
+
     }
 }

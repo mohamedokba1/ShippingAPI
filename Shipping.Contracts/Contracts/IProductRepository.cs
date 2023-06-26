@@ -10,5 +10,6 @@ public interface IProductRepository
     Task <IEnumerable<Product>> GetAllProductsAsync(Order order);
     Task <Product?> GetByIdAsync(long id);
     Task SaveChangesAsync();
-    
+    IQueryable<Product> GetProductPaginated();
+
 }

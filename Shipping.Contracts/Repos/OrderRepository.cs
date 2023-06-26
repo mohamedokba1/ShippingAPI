@@ -76,5 +76,11 @@ namespace Shipping.Repositories.Repos
                 .Where(order => order.SalesRepresentativeId == salesId)
                 .ToListAsync();
         }
+
+        public IQueryable<Order> GetOrderPaginated()
+        {
+            return _context.Set<Order>().AsQueryable();
+
+        }
     }
 }

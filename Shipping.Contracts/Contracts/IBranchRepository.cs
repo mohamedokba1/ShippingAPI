@@ -11,4 +11,5 @@ public interface IBranchRepository
     Task DeleteAsync(Branch entity);
     Task SaveChangesAsync();
     Task<IEnumerable<Branch?>> GetRange(List<int> ids);
+    IQueryable<Branch> GetBranchPaginated();
 }

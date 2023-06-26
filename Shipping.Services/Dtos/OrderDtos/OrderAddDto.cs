@@ -16,9 +16,7 @@ public class OrderAddDto
     public double? ExtraWeightCost { get; set; }
     public string CompanyBranch { get; set; } = string.Empty;
     public string City { get; set; } = string.Empty;
-    [JsonIgnore]
     public double? TotalCost { get; set; }
-    [JsonIgnore]
     public double? TotalWeight { get; set; }
     public double DeliverToVillageCost { get; set; }
     public bool DeliveredToVillage { get; set; }

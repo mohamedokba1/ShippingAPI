@@ -1,5 +1,4 @@
-﻿using Shipping.Entities.Domain.Models;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Shipping.Services.Dtos;
 
@@ -14,6 +13,8 @@ public class OrderUpdateDto
     public double ExtraWeightCost { get; set; }
     public string CompanyBranch { get; set; } = string.Empty;
     public double DefaultCost { get; set; }
+    public double DeliverToVillageCost { get; set; }
+    public bool DeliveredToVillage { get; set; }
     public CustomerUpdateDto Customer { get; set; }
     public string ShippingType { get; set; } = string.Empty;
     public bool IsDeleted { get; set; }

@@ -3,7 +3,6 @@ using Shipping.Entities;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories.Contracts;
 
-
 namespace Shipping.Repositories.Repos
 {
     public class EmployeeRepository : IEmployeeRepository
@@ -16,9 +15,22 @@ namespace Shipping.Repositories.Repos
         }
         public async  Task Add(Employee employee)
         {
-           await  context.Employees.AddAsync(employee);
-            await context.SaveChangesAsync();
-        }         
+           await context.Employees.AddAsync(employee);
+        }
+
+        public async Task AssignOrderToSales(long salesId, long orderId)
+        {
+            var sales = await context.Set<SalesRepresentative>()
+                .FirstOrDefaultAsync(sales => sales.SalesRepresentativeId == salesId);
+            if(sales != null)
+            {
+                var order = await context.Set<Order>().FirstOrDefaultAsync(order => order.OrderId == orderId);
+                if(order != null)
+                {
+                    sales.Orders.Add(order);
+                }
+            }
+        }
 
         public async Task Delete(long id)
         {
@@ -34,6 +46,12 @@ namespace Shipping.Repositories.Repos
         public async Task<Employee?> GetByid(long id)
         {
             return await context.Set<Employee>().Include(e=>e.Branch).Include(e=>e.User).FirstOrDefaultAsync(e => e.EmployeeId == id);
+        }
+
+        public IQueryable<Employee> GetEmployeePaginated()
+        {
+            return context.Set<Employee>().AsQueryable();
+
         }
 
         public async Task Savechanges()

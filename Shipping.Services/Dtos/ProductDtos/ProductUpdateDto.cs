@@ -11,4 +11,5 @@ public class ProductUpdateDto
     public double Weight { get; set; }
     [Required]
     public double Price { get; set; }
+    public double Quantity { get; set; }
 }

@@ -51,4 +51,9 @@ public class BranchRepository:IBranchRepository
         await _context.SaveChangesAsync();
     }
 
+    public IQueryable<Branch> GetBranchPaginated()
+    {
+        return _context.Set<Branch>().AsQueryable();
+
+    }
 }

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Shipping.Entities.Domain.Models;
 using Shipping.Repositories;
 using Shipping.Services.Dtos;
 using Shipping.Services.Validations;
-
 
 namespace Shipping.Services.Services;
 public class CityService: ICityService
@@ -21,7 +21,7 @@ public class CityService: ICityService
         var cities = await _cityRepository.GetAllAsync();
         return cities.Select(city => new CityReadDto
         {
-            CityId = city.City_Id,
+            City_Id = city.City_Id,
             CityName = city.CityName,
             NormalShippingCost = city.NormalShippingCost,
             PickupShippingCost= city.PickupShippingCost,
@@ -35,7 +35,7 @@ public class CityService: ICityService
         {
             return new CityReadDto
             {
-                CityId = city.City_Id,
+                City_Id = city.City_Id,
                 CityName = city.CityName,
                 NormalShippingCost = city.NormalShippingCost,
                 PickupShippingCost=city.PickupShippingCost,
@@ -49,7 +49,7 @@ public class CityService: ICityService
         var cities = await _cityRepository.GetCitiesByGovernmentNameAsync(governmentName);
         return cities.Select(city => new CityReadDto
         {
-            CityId = city.City_Id,
+            City_Id = city.City_Id,
             CityName = city.CityName,
             NormalShippingCost = city.NormalShippingCost,
             PickupShippingCost = city.PickupShippingCost,
@@ -111,6 +111,12 @@ public class CityService: ICityService
     public async Task<CityReadDto?> GetByNameAsync(string cityName)
     {
         return _mapper.Map<CityReadDto>(await _cityRepository.GetByNameAsync(cityName));
+    }
+
+    public IQueryable<CityReadDto> GetCitiesPaginated()
+    {
+        IQueryable cities = _cityRepository.GetCityPaginated();
+        return cities.ProjectTo<CityReadDto>(_mapper.ConfigurationProvider);
     }
 }
 

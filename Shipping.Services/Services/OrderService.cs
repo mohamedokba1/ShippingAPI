@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -37,16 +39,196 @@ public class OrderService : IOrderService
     public async Task<List<ValidationResult>?> AddOrderAsync(OrderAddDto orderAddDto, string userEmail)
     {
         List<ValidationResult>? validationResults = ValidateModel.ModelValidation(orderAddDto);
-        if (validationResults?.Count ==0)
+        if (validationResults?.Count == 0)
         {
             long? currentTraderId = await _traderService.GetTraderIdByEmailAsync(userEmail);
             if (currentTraderId != null)
             {
-                Order? order = await _orderRepository.AddOrderAsync(_mapper.Map<Order>(orderAddDto));
+                var city = await _cityService.GetByNameAsync(orderAddDto.City);
+                switch (orderAddDto.PaymentMethod)
+                {
+                    case PaymentType.Cash:
+                        switch (orderAddDto.ShippingType)
+                        {
+                            case ShippingType.Normal:
+                                foreach (ProductAddDto product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalCost += (product.Price * product.Quantity);
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost;
+                                break;
+
+                            case ShippingType.Express24H:
+                                foreach (ProductAddDto product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalCost += (product.Price * product.Quantity);
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost * 2;
+                                break;
+
+                            case ShippingType.Express15D:
+                                foreach (ProductAddDto product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalCost += (product.Price * product.Quantity);
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost / 2;
+                                break;
+                        }
+                        break;
+
+                    case PaymentType.Visa:
+                        switch (orderAddDto.ShippingType)
+                        {
+                            case ShippingType.Normal:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost;
+                                break;
+
+                            case ShippingType.Express24H:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost * 2;
+                                break;
+
+                            case ShippingType.Express15D:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost / 2;
+                                break;
+                        }
+                        break;
+
+                    case PaymentType.PackageForPackage:
+                        switch (orderAddDto.ShippingType)
+                        {
+                            case ShippingType.Normal:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                {
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                }
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost;
+                                break;
+
+                            case ShippingType.Express24H:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                {
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                }
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost * 2;
+                                break;
+
+                            case ShippingType.Express15D:
+                                foreach (var product in orderAddDto.Products)
+                                {
+                                    orderAddDto.TotalWeight += (product.Weight * product.Quantity);
+                                }
+                                if (orderAddDto.TotalWeight > orderAddDto.WeightOption.allowedWeight)
+                                {
+                                    double overWeight = (double)orderAddDto.TotalWeight - orderAddDto.WeightOption.allowedWeight;
+                                    orderAddDto.TotalCost += (overWeight * orderAddDto.WeightOption.costPerKG);
+                                    orderAddDto.ExtraWeightCost = overWeight * orderAddDto.WeightOption.costPerKG;
+                                }
+                                if (orderAddDto.DeliveredToVillage)
+                                    orderAddDto.TotalCost += orderAddDto.DeliverToVillageCost;
+                                if (city != null)
+                                    orderAddDto.TotalCost += city.NormalShippingCost / 2;
+                                break;
+                        }
+                        break;
+                }
+                Order? order = _mapper.Map<Order>(orderAddDto);
                 if (order != null)
                 {
-                    order.TraderId = (long) currentTraderId;
-                    await _orderRepository.SaveChangesAsync();
+                    order.TraderId = (long)currentTraderId;
+                    await _orderRepository.AddOrderAsync(order);
                 }
             }
             return new List<ValidationResult>();
@@ -54,7 +236,7 @@ public class OrderService : IOrderService
         else
             return validationResults;
     }
-
+    
     public async Task DeleteOrderAsync(long id)
     {
         Order? order = await _orderRepository.GetOrderByIdAsync(id);
@@ -100,7 +282,6 @@ public class OrderService : IOrderService
         return null;
     }
 
-
     public async Task<OrderResponseDto?> GetOrderByIdAsync(long id)
     {
         var order = await _orderRepository.GetOrderByIdAsync(id);
@@ -108,6 +289,12 @@ public class OrderService : IOrderService
             return _mapper.Map<OrderResponseDto>(order);
 
         return null;
+    }
+
+    public IQueryable<OrderResponseDto> GetOrderesPaginated()
+    {
+        IQueryable orderes = _orderRepository.GetOrderPaginated();
+        return orderes.ProjectTo<OrderResponseDto>(_mapper.ConfigurationProvider);
     }
 
     public async Task<List<ValidationResult>?> UpdateOrderAsync(long id, OrderUpdateDto orderUpdateDto)

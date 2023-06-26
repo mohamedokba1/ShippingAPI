@@ -1,6 +1,4 @@
-﻿using Shipping.Services.Dtos.PrermissionDtos;
-
-namespace Shipping.Services.Dtos;
+﻿namespace Shipping.Services.Dtos;
 public class TokenDto
 {
     public string Token { get; set; } = string.Empty;

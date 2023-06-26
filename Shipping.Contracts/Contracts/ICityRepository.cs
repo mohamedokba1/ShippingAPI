@@ -12,4 +12,6 @@ public interface ICityRepository
     Task UpdateAsync(City entity);
     Task DeleteAsync(City entity);
     Task SaveChangesAsync();
+    IQueryable<City> GetCityPaginated();
+
 }

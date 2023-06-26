@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Shipping.Entities.Domain.Models;
+using Shipping.Repositories;
 using Shipping.Repositories.Contracts;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -51,6 +53,12 @@ namespace Shipping.Services.Services
                 _mapper.Map<ProductUpdateDto, Product>(productUpdateDto, product);
                 await _productRepository.SaveChangesAsync();
             }
+        }
+
+        public IQueryable<ProductResponseDto> GetProductsPaginated()
+        {
+            IQueryable products = _productRepository.GetProductPaginated();
+            return products.ProjectTo<ProductResponseDto>(_mapper.ConfigurationProvider);
         }
     }
 }

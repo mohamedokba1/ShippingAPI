@@ -47,4 +47,9 @@ public class CustomerRepository : ICustomerRepository
             .ToListAsync();
     }
 
+    public IQueryable<Customer> GetCustomersPaginated()
+    {
+        return _context.Set<Customer>().AsQueryable();
+
+    }
 }

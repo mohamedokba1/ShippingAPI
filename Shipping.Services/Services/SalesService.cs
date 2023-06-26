@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNetCore.Identity;
 using Shipping.Entities.Domain.Identity;
 using Shipping.Entities.Domain.Models;
@@ -108,6 +109,12 @@ public class SalesService : ISalesService
         {
             return null;
         }
+    }
+
+    public IQueryable<SalesReadDtos> GetSalesPaginated()
+    {
+        IQueryable sales = _salesRepository.GetSalesRepresentativePaginated();
+        return sales.ProjectTo<SalesReadDtos>(_mapper.ConfigurationProvider);
     }
 
     public async Task<long?> GetSalesRepresentativeIdByEmail(string email)
