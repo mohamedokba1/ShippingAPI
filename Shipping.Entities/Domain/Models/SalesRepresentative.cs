@@ -26,9 +26,6 @@ public class SalesRepresentative
     public DiscountType DiscountType { get; set; }
     [ForeignKey(nameof(User))]
     public string? UserId { get; set; }
-
-    [ForeignKey(nameof(Branches))]
-    public List<int> BranchesIds{ get; set; } = new List<int>();
     public virtual ApplicationUser? User { get; set; }
     public virtual ICollection<Goverment> Goverments { get; set; } = new HashSet<Goverment>();
     public virtual ICollection<Branch> Branches { get; set; } = new HashSet<Branch>();

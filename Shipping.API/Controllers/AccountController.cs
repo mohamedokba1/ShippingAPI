@@ -78,8 +78,7 @@ namespace Shipping.API.Controllers
                 Token = tokenString,
                 ExpiryDate = expiryDate,
                 Role = role,
-                //Claims = _mapper.Map<List<string>>(claims.Select(c => c.Type))
-                Claims = _mapper.Map<List<ClaimDto>>(claims)
+                Claims = _mapper.Map<List<string>>(claims.Select(c => c.Type))
             };
         }
     }

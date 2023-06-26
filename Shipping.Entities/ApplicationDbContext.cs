@@ -557,7 +557,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
             },
             new Employee
             {
-                EmployeeId = 1,
+                EmployeeId = 2,
                 Email = "employee2@example.com",
                 IsActive = false,
                 PhoneNumber = "01033325256",
@@ -581,8 +581,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 Password = "Sales@123",
                 CompanyPercentage = 60,
                 UserName = "sales1",
-                UserId = "4",
-                BranchesIds = new List<int>(){ 1, 2}
+                UserId = "4"
             }
             );
 
@@ -660,7 +659,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 NormalShippingCost = 35,
                 PickupShippingCost = 20,
                 GovermentId = 1,
-            }
+            },
         #endregion
 
             #region Alexandria Citites

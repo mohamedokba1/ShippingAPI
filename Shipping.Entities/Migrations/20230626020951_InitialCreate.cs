@@ -269,7 +269,7 @@ namespace Shipping.Entities.Migrations
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
-                    branchid = table.Column<int>(type: "int", nullable: false),
+                    BranchId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -281,8 +281,8 @@ namespace Shipping.Entities.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Employees_Branches_branchid",
-                        column: x => x.branchid,
+                        name: "FK_Employees_Branches_BranchId",
+                        column: x => x.BranchId,
                         principalTable: "Branches",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -459,10 +459,10 @@ namespace Shipping.Entities.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Date", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "1", null, "6/26/2023 2:52:46 AM", "admin", "ADMIN" },
-                    { "2", null, "6/26/2023 2:52:46 AM", "trader", "TRADER" },
-                    { "3", null, "6/26/2023 2:52:46 AM", "employee", "EMPLOYEE" },
-                    { "4", null, "6/26/2023 2:52:46 AM", "salesrepresentative", "SALESREPRESENTATIVE" }
+                    { "1", null, "6/26/2023 5:09:51 AM", "admin", "ADMIN" },
+                    { "2", null, "6/26/2023 5:09:51 AM", "trader", "TRADER" },
+                    { "3", null, "6/26/2023 5:09:51 AM", "employee", "EMPLOYEE" },
+                    { "4", null, "6/26/2023 5:09:51 AM", "salesrepresentative", "SALESREPRESENTATIVE" }
                 });
 
             migrationBuilder.InsertData(
@@ -470,16 +470,35 @@ namespace Shipping.Entities.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "1", 0, "f6c8acb1-7e7d-4d9a-a7a9-346b27ad0f8b", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEGafl+tGxCha7aNve8EFDHE/02oGmo6D2dZUXCcHWrX5ZY/mGJtfyFuurJ7BLu4oVg==", "01234567890", false, "569b396d-acd4-40af-b856-addf61483d1f", false, "Admin" },
-                    { "2", 0, "53bdf592-3239-4262-b407-00485609805e", "trader1@example.com", false, false, null, "TRADER1@EXAMPLE.COM", "TRADER1", "AQAAAAIAAYagAAAAEEUUkX54bBF4d9ydnd+MS5dpRBSgGbFiji8sxd7unsSS5jIa8lySQIjWmBd/gZnqiA==", "01278555861", false, "65bb88ed-27ce-455d-8f25-6ead14c3263b", false, "trader1" },
-                    { "3", 0, "09f39ff3-6a29-409c-9dc5-880adeaf58e3", "employee1@example.com", false, false, null, "EMPLOYEE1@EXAMPLE.COM", "EMPLOYEE1", "AQAAAAIAAYagAAAAENe1uCYhXXDNjW9nJV9gQB/BB0IYRbKo9G4bVAZjvLM47JB/4P3Un/hQ6yFukrhDkw==", "01033325256", false, "8fedb014-53e8-45a2-8f1c-740468e1a939", false, "employee1" },
-                    { "4", 0, "6c4c37cd-7e96-403f-b9e8-0abc0660d17c", "sales1@example.com", false, false, null, "SALES1@EXAMPLE.COM", "SALES1", "AQAAAAIAAYagAAAAEMKarBObMAdH3nA6Y0vtgA6Xj8y0T9JHaM0rAZ7BDAK5UPhNQp+XJ5B8UQAgL2E2/A==", "01033325256", false, "d5111de0-1923-4ba8-9b77-7e6dfe2dcd86", false, "sales1" }
+                    { "1", 0, "3befd5c7-8e19-47ce-957a-dae8c1d18bee", "Admin@admin.com", false, false, null, "ADMIN@ADMIN.COM", "ADMIN", "AQAAAAIAAYagAAAAEAmlUv4kTN7XO+ogvN4wpOM8qcrUl07+sNIMkpxSktFodVJzCNGoSytLnxF94TSnrA==", "01234567890", false, "a76db55e-9797-4059-b606-5f3565ad9d99", false, "Admin" },
+                    { "2", 0, "52dd26ab-395e-48bb-bd28-3212afdcd0c0", "trader1@example.com", false, false, null, "TRADER1@EXAMPLE.COM", "TRADER1", "AQAAAAIAAYagAAAAEF+x2RAX0hrF4L9e2qiBNTZN4NgSlJKHwPBk9QMy37OBGIPQgqxtz+tdaIF7SMpNMA==", "01278555861", false, "a06dadae-6215-4545-b521-95ccc570573b", false, "trader1" },
+                    { "3", 0, "2dda741e-443f-48b2-a1f0-9f99f9f12fca", "employee1@example.com", false, false, null, "EMPLOYEE1@EXAMPLE.COM", "EMPLOYEE1", "AQAAAAIAAYagAAAAEPBDgW2Q+fYmkBFqPtPl7xFK+xzY3IuAcJhTmmjd2XskxQH4sOFIxUOOFnIlDv0bRQ==", "01033325256", false, "523b9c2a-93b7-4d86-b21b-466ca782b5a5", false, "employee1" },
+                    { "4", 0, "003b2cf0-a4e8-4585-a4ad-909e06c15b97", "sales1@example.com", false, false, null, "SALES1@EXAMPLE.COM", "SALES1", "AQAAAAIAAYagAAAAEJ2ofZ1rZzdFAUiPOHZ1Dl1oDTOLi5xkw/yU1l6lUlwG/ushIjuF+mVWAQ6qxGlSMg==", "01033325256", false, "9e9a3ff7-757c-4d02-ad69-e547e33d562a", false, "sales1" },
+                    { "5", 0, "39f6c50d-ee04-45f4-a974-14d08eb28381", "employee2@example.com", false, false, null, "EMPLOYEE2@EXAMPLE.COM", "EMPLOYEE2", "AQAAAAIAAYagAAAAEFgtu3wXd+NwbxLqDVXlTbR9NunYlmL/ayCSc91kvX3IxOPbUAyvciqMoshrWq4LAw==", "01033325256", false, "5d3b76d7-bfd7-458a-a6bc-80c661099d8d", false, "employee2" }
                 });
 
             migrationBuilder.InsertData(
                 table: "Branches",
                 columns: new[] { "Id", "BranchName", "CreatedAt", "State" },
-                values: new object[] { 1, "Cairo", new DateTime(2023, 6, 26, 2, 52, 47, 101, DateTimeKind.Local).AddTicks(3956), true });
+                values: new object[,]
+                {
+                    { 1, "Cairo", new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(518), true },
+                    { 2, "Giza", new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(610), true },
+                    { 3, "Alexandria", new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(636), true },
+                    { 4, "Sharqia", new DateTime(2023, 6, 26, 5, 9, 51, 701, DateTimeKind.Local).AddTicks(640), false }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Goverments",
+                columns: new[] { "Goverment_Id", "GovermentName", "State" },
+                values: new object[,]
+                {
+                    { 1, "Cairo", true },
+                    { 2, "Alexandria", true },
+                    { 3, "Giza", true },
+                    { 4, "Dakahlia", false },
+                    { 5, "Sharqia", false }
+                });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoleClaims",
@@ -531,7 +550,11 @@ namespace Shipping.Entities.Migrations
                     { 43, "permission.orders.read", "true", "4" },
                     { 44, "permission.branches.read", "true", "4" },
                     { 45, "permission.cities.read", "true", "4" },
-                    { 46, "permission.goverments.read", "true", "4" }
+                    { 46, "permission.goverments.read", "true", "4" },
+                    { 47, "permission.permissions.read", "true", "1" },
+                    { 48, "permission.permissions.update", "true", "1" },
+                    { 49, "permission.permissions.add", "true", "1" },
+                    { 50, "permission.permissions.delete", "true", "1" }
                 });
 
             migrationBuilder.InsertData(
@@ -546,9 +569,45 @@ namespace Shipping.Entities.Migrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "City_Id", "CityName", "GovermentId", "NormalShippingCost", "PickupShippingCost" },
+                values: new object[,]
+                {
+                    { 1, "Cairo", 1, 30.0, 10.0 },
+                    { 2, "Giza", 1, 15.0, 5.0 },
+                    { 3, "Shubra El-Kheima", 1, 20.0, 15.0 },
+                    { 4, "Cairo", 1, 30.0, 10.0 },
+                    { 5, "Helwan", 1, 35.0, 20.0 },
+                    { 6, "Alexandria", 2, 30.0, 10.0 },
+                    { 7, "Borg El Arab", 2, 15.0, 5.0 },
+                    { 8, "Abu Qir", 2, 20.0, 15.0 },
+                    { 9, "Montaza", 2, 30.0, 10.0 },
+                    { 10, "Miami", 2, 35.0, 20.0 },
+                    { 11, "Giza", 3, 30.0, 10.0 },
+                    { 12, "Al Haram", 3, 15.0, 5.0 },
+                    { 13, "Sheikh Zayed City", 3, 20.0, 15.0 },
+                    { 14, "6th of October City", 3, 30.0, 10.0 },
+                    { 15, "Bulaq ad Dakrur", 3, 35.0, 20.0 },
+                    { 16, "Mansoura", 4, 30.0, 10.0 },
+                    { 17, "Talkha", 4, 15.0, 5.0 },
+                    { 18, "Mit Ghamr", 4, 20.0, 15.0 },
+                    { 19, "Aga", 4, 30.0, 10.0 },
+                    { 20, "Sherbin", 4, 35.0, 20.0 },
+                    { 21, "Zagazig", 5, 30.0, 10.0 },
+                    { 22, "Belbeis", 5, 15.0, 5.0 },
+                    { 23, "Abu Hammad", 5, 20.0, 15.0 },
+                    { 24, "Abu Kebir", 5, 30.0, 10.0 },
+                    { 25, "Kafr Saqr", 5, 35.0, 20.0 }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Employees",
-                columns: new[] { "EmployeeId", "Email", "IsActive", "Name", "Password", "PhoneNumber", "UserId", "UserName", "branchid" },
-                values: new object[] { 1L, "employee1@example.com", true, "Ahmed Mohamed", "Employee@123", "01033325256", "3", "employee1", 1 });
+                columns: new[] { "EmployeeId", "BranchId", "Email", "IsActive", "Name", "Password", "PhoneNumber", "UserId", "UserName" },
+                values: new object[,]
+                {
+                    { 1L, 1, "employee1@example.com", true, "Ahmed Mohamed", "Employee@123", "01033325256", "3", "employee1" },
+                    { 2L, 2, "employee2@example.com", false, "Sayed Sameh", "Employee@123", "01033325256", "5", "employee2" }
+                });
 
             migrationBuilder.InsertData(
                 table: "SalesRepresentatives",
@@ -605,9 +664,9 @@ namespace Shipping.Entities.Migrations
                 column: "GovermentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Employees_branchid",
+                name: "IX_Employees_BranchId",
                 table: "Employees",
-                column: "branchid");
+                column: "BranchId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_UserId",

@@ -21,7 +21,7 @@ public class CityService: ICityService
         var cities = await _cityRepository.GetAllAsync();
         return cities.Select(city => new CityReadDto
         {
-            CityId = city.City_Id,
+            City_Id = city.City_Id,
             CityName = city.CityName,
             NormalShippingCost = city.NormalShippingCost,
             PickupShippingCost= city.PickupShippingCost,
@@ -35,7 +35,7 @@ public class CityService: ICityService
         {
             return new CityReadDto
             {
-                CityId = city.City_Id,
+                City_Id = city.City_Id,
                 CityName = city.CityName,
                 NormalShippingCost = city.NormalShippingCost,
                 PickupShippingCost=city.PickupShippingCost,
@@ -49,7 +49,7 @@ public class CityService: ICityService
         var cities = await _cityRepository.GetCitiesByGovernmentNameAsync(governmentName);
         return cities.Select(city => new CityReadDto
         {
-            CityId = city.City_Id,
+            City_Id = city.City_Id,
             CityName = city.CityName,
             NormalShippingCost = city.NormalShippingCost,
             PickupShippingCost = city.PickupShippingCost,

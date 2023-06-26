@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Shipping.API.PoliciesProvider;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
 using System.ComponentModel.DataAnnotations;
@@ -10,7 +8,6 @@ namespace Shipping.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
     public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
@@ -20,7 +17,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        [RequireClaim("permission.orders.read")]
         public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll([FromHeader] string userEmail)
         {
             var orders = await _orderService.GetAllOrdersAsync(userEmail);
@@ -33,7 +29,6 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize("Admin")]
         public async Task<ActionResult<OrderResponseDto>> GetById(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
@@ -43,8 +38,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Policy = "admin")]
-        [RequireClaim("permission.orders.add")]
         public async Task<ActionResult> Add(OrderAddDto order, [FromHeader] string userEmail)
         {
             List<ValidationResult>? errors =  await _orderService.AddOrderAsync(order, userEmail);
@@ -58,7 +51,6 @@ namespace Shipping.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [RequireClaim("permission.orders.update")]
         public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
@@ -73,7 +65,6 @@ namespace Shipping.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [RequireClaim("permission.orders.delete")]
         public async Task<ActionResult> Delete(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
