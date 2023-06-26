@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.EntityFrameworkCore;
 using Shipping.Services.Dtos;
 using Shipping.Services.IServices;
@@ -11,17 +12,22 @@ namespace Shipping.API.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IEmployeeService employeeService;
+        private readonly ISalesService _salesService;
+        private readonly IOrderService _orderService;
 
-        public EmployeesController(IEmployeeService employeeService)
+        public EmployeesController(IEmployeeService employeeService,
+            ISalesService salesService,
+            IOrderService orderService)
         {
             this.employeeService = employeeService;
+            _orderService = orderService;
+            _salesService = salesService;
         }
 
         [HttpGet]
         public  async Task<ActionResult<IEnumerable<EmployeeReadDto>>> Getall()
         {
             return Ok(await employeeService.Getall());
-           
         }
 
         [HttpGet("paginated")]
@@ -46,12 +52,31 @@ namespace Shipping.API.Controllers
             return Ok(result);
         }
 
-
+        [HttpPost]
+        [Route("assign")]
+        public async Task<ActionResult<EmployeeReadDto>> AssignOrderToSales(long salesId, long orderId)
+        {
+            var sales  = await _salesService.GetSaleByIdAsync(salesId);
+            if(sales != null)
+            {
+                var order = await _orderService.GetOrderByIdAsync(orderId);
+                if (order != null)
+                {
+                    await employeeService.AssignOrderToSales(sales.SalesRepresentativeId, order.OrderId);
+                    return NoContent();
+                }
+                else { return BadRequest("Order not found"); }
+            }
+            else
+            {
+                return BadRequest("Sales representative not found");
+            }
+        }
         [HttpGet]
         [Route("{id}")]
         public async Task<ActionResult<EmployeeReadDto>> GetById(long id) 
         { 
-            EmployeeReadDto? employeeReadDto= await employeeService.GetByid(id);    
+            EmployeeReadDto? employeeReadDto= await employeeService.GetByid(id);   
             if (employeeReadDto == null)
             {
                 return NotFound();

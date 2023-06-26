@@ -11,5 +11,6 @@ public interface IEmployeeRepository
     Task Delete(long id);
     Task Savechanges();
     IQueryable<Employee> GetEmployeePaginated();
+    Task AssignOrderToSales(long salesId, long orderId);
 
 }

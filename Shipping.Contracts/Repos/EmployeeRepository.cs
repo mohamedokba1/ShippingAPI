@@ -15,8 +15,22 @@ namespace Shipping.Repositories.Repos
         }
         public async  Task Add(Employee employee)
         {
-           await  context.Employees.AddAsync(employee);
-        }         
+           await context.Employees.AddAsync(employee);
+        }
+
+        public async Task AssignOrderToSales(long salesId, long orderId)
+        {
+            var sales = await context.Set<SalesRepresentative>()
+                .FirstOrDefaultAsync(sales => sales.SalesRepresentativeId == salesId);
+            if(sales != null)
+            {
+                var order = await context.Set<Order>().FirstOrDefaultAsync(order => order.OrderId == orderId);
+                if(order != null)
+                {
+                    sales.Orders.Add(order);
+                }
+            }
+        }
 
         public async Task Delete(long id)
         {

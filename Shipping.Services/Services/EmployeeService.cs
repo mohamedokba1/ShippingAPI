@@ -23,7 +23,6 @@ namespace Shipping.Services.Services
     {
         private readonly IEmployeeRepository employeeRepository;
         private readonly IMapper mapper;
-        public readonly Employee emp;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public EmployeeService(IEmployeeRepository employeeRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
@@ -78,48 +77,9 @@ namespace Shipping.Services.Services
                 return validationResult;
         }
 
-
-
-
-
-        //    var user = new ApplicationUser
-        //    {
-        //        UserName = employeeDto.UserName,
-        //        Email = employeeDto.Email,
-        //        PhoneNumber = employeeDto.PhoneNumber,
-        //        PasswordHash = employeeDto.Password
-        //    };
-
-        //    var employee = new Employee
-        //    {
-        //        Name = employeeDto.Name,
-        //        Password = employeeDto.Password,
-        //        IsActive = employeeDto.IsActive,
-        //        branchid = employeeDto.branchid,
-        //        User = user
-        //    };
-
-        //    var claims = new List<Claim>
-        //    {
-        //        new Claim(ClaimTypes.NameIdentifier,user.Id) ,
-        //        new Claim(ClaimTypes.Name ,user.UserName) ,
-        //        new Claim(ClaimTypes.Role , "employee")
-        //    };
-
-        //    await userManager.AddClaimsAsync(user, claims);
-
-        //    await userManager.CreateAsync(user, employeeDto.Password);
-
-        //    await employeeRepository.Add(employee);
-        //    await employeeRepository.Savechanges();
-
-
-
-        //}
-
         public async Task Delete(long id)
         {
-            Employee employeeFromDb = await employeeRepository.GetByid(id);
+            Employee? employeeFromDb = await employeeRepository.GetByid(id);
             if(employeeFromDb != null)
             {
                 employeeFromDb.IsActive = false;
@@ -161,7 +121,7 @@ namespace Shipping.Services.Services
             {
                 mapper.Map(employeeDto, empFromDb);
 
-                await employeeRepository.Savechanges(); 
+                await employeeRepository.Savechanges();
 
             }
             else
@@ -174,6 +134,12 @@ namespace Shipping.Services.Services
         {
             IQueryable employees = employeeRepository.GetEmployeePaginated();
             return employees.ProjectTo<EmployeeReadDto>(mapper.ConfigurationProvider);
+        }
+
+        public async Task AssignOrderToSales(long salesId, long orderId)
+        {
+            await employeeRepository.AssignOrderToSales(salesId, orderId);
+            await employeeRepository.Savechanges();
         }
     }
 }
