@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230625225427_date-privilege")]
+    partial class dateprivilege
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -398,34 +401,6 @@ namespace Shipping.Entities.Migrations
                             ClaimType = "permission.goverments.read",
                             ClaimValue = "true",
                             RoleId = "4"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            ClaimType = "permission.permissions.read",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 48,
-                            ClaimType = "permission.permissions.update",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 49,
-                            ClaimType = "permission.permissions.add",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            ClaimType = "permission.permissions.delete",
-                            ClaimValue = "true",
-                            RoleId = "1"
                         });
                 });
 
@@ -586,16 +561,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "99bcbc7a-3ea7-4335-9630-c5ac913d9e6a",
+                            ConcurrencyStamp = "4126469d-5a00-4552-99d7-80c9bb530ef9",
                             Email = "Admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL/WjhIkKkrollWf+sjRQFzy3XswFN7wEVqHPOQnEyFfutOc5oeAJ/wlGC+PR1rTbw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEI/0DkhcbZ0UBDA8W6eY7pK0eLTMLVYEVwWrXiq6byT8+Y465O9sxL/D9mtijbkKqA==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f1fa5c4c-6811-4505-a324-02f8f58f3e82",
+                            SecurityStamp = "b0df4fdd-26d3-4d95-aa4d-40d9da45004f",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -610,8 +585,8 @@ namespace Shipping.Entities.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Date")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .HasMaxLength(256)
@@ -634,28 +609,28 @@ namespace Shipping.Entities.Migrations
                         new
                         {
                             Id = "1",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = new DateTime(2023, 6, 26, 1, 54, 26, 673, DateTimeKind.Local).AddTicks(9658),
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = new DateTime(2023, 6, 26, 1, 54, 26, 673, DateTimeKind.Local).AddTicks(9673),
                             Name = "trader",
                             NormalizedName = "TRADER"
                         },
                         new
                         {
                             Id = "3",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = new DateTime(2023, 6, 26, 1, 54, 26, 673, DateTimeKind.Local).AddTicks(9683),
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "4",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = new DateTime(2023, 6, 26, 1, 54, 26, 673, DateTimeKind.Local).AddTicks(9694),
                             Name = "salesrepresentative",
                             NormalizedName = "SALESREPRESENTATIVE"
                         });

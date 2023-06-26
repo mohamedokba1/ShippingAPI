@@ -32,7 +32,7 @@ public class PermissionService : IPermissionService
             {
                 Id = role.Id,
                 Name = role.Name,
-              //  Date = role.Date,
+              Date = role.Date,
                 Claims = _mapper.Map<IList<ClaimDto>>(claims)
             });
         }
@@ -47,6 +47,7 @@ public class PermissionService : IPermissionService
             {
                 Id = roleId,
                 Name = role?.Name,
+                Date = role?.Date,
                 Claims = _mapper.Map<IList<ClaimDto>>(await _roleManager.GetClaimsAsync(role))
             };
         }
@@ -56,8 +57,10 @@ public class PermissionService : IPermissionService
     {
         var newRole = new ApplicationUserRole
         {
+            Date = permissionAddDto.Date,
             Name = permissionAddDto.Name,
-            NormalizedName = permissionAddDto.Name.ToUpper()
+            NormalizedName = permissionAddDto.Name.ToUpper(),
+            
         };
         var result = await _roleManager.CreateAsync(newRole);
             
@@ -87,7 +90,10 @@ public class PermissionService : IPermissionService
     {
         ApplicationUserRole? role = await _roleManager.FindByIdAsync(id);
         if(role != null)
-        {
+
+        { 
+            role.Name = permissionUpdateDto.Name;
+
             var claims =  await _roleManager.GetClaimsAsync(role);
             foreach(var claim in claims)
             {

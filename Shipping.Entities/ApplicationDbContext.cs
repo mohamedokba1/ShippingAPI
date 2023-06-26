@@ -35,28 +35,28 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 Id = "1",
                 Name = "admin",
                 NormalizedName = "ADMIN",
-               // Date = DateTime.Now,
+                Date = DateTime.Now.ToString("G"),
             },
             new ApplicationUserRole
             {
                 Id = "2",
                 Name = "trader",
                 NormalizedName = "TRADER",
-                //Date = DateTime.Now,
+                Date = DateTime.Now.ToString("G"),
             },
             new ApplicationUserRole
             {
                  Id = "3",
                  Name = "employee",
                  NormalizedName = "EMPLOYEE",
-                // Date = DateTime.Now,
+                 Date = DateTime.Now.ToString("G")
             },
             new ApplicationUserRole
             {
                 Id = "4",
                 Name = "salesrepresentative",
                 NormalizedName = "SALESREPRESENTATIVE",
-               // Date = DateTime.Now,
+                Date = DateTime.Now.ToString("G")
             }
           );
         modelBuilder.Entity<IdentityRoleClaim<string>>().HasData(
@@ -391,8 +391,36 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                  ClaimType = "permission.goverments.read",
                  ClaimValue = "true",
                  RoleId = "4",
-             }
-             #endregion
+             } ,
+             new IdentityRoleClaim<string>()
+             {
+                 Id = 47,
+                 ClaimType = "permission.permissions.read",
+                 ClaimValue = "true",
+                 RoleId = "1",
+             } ,
+              new IdentityRoleClaim<string>()
+              {
+                  Id = 48,
+                  ClaimType = "permission.permissions.update",
+                  ClaimValue = "true",
+                  RoleId = "1",
+              } ,
+               new IdentityRoleClaim<string>()
+               {
+                   Id = 49,
+                   ClaimType = "permission.permissions.add",
+                   ClaimValue = "true",
+                   RoleId = "1",
+               } , 
+                new IdentityRoleClaim<string>()
+                {
+                    Id = 50,
+                    ClaimType = "permission.permissions.delete",
+                    ClaimValue = "true",
+                    RoleId = "1",
+                }
+                #endregion
 
           );
 

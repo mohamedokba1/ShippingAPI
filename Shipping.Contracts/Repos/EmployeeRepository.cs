@@ -22,7 +22,7 @@ namespace Shipping.Repositories.Repos
 
         public async Task Delete(long id)
         {
-            var employee = await GetByid(id);
+             await GetByid(id);
         }
 
         public async Task<IEnumerable<Employee>> Getall()

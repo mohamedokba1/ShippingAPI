@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Shipping.Entities;
 
@@ -11,9 +12,11 @@ using Shipping.Entities;
 namespace Shipping.Entities.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230625231654_date-privilege-string")]
+    partial class dateprivilegestring
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -398,34 +401,6 @@ namespace Shipping.Entities.Migrations
                             ClaimType = "permission.goverments.read",
                             ClaimValue = "true",
                             RoleId = "4"
-                        },
-                        new
-                        {
-                            Id = 47,
-                            ClaimType = "permission.permissions.read",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 48,
-                            ClaimType = "permission.permissions.update",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 49,
-                            ClaimType = "permission.permissions.add",
-                            ClaimValue = "true",
-                            RoleId = "1"
-                        },
-                        new
-                        {
-                            Id = 50,
-                            ClaimType = "permission.permissions.delete",
-                            ClaimValue = "true",
-                            RoleId = "1"
                         });
                 });
 
@@ -586,16 +561,16 @@ namespace Shipping.Entities.Migrations
                         {
                             Id = "1",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "99bcbc7a-3ea7-4335-9630-c5ac913d9e6a",
+                            ConcurrencyStamp = "50537c0a-97c4-4b57-890c-aafb8142cf14",
                             Email = "Admin@admin.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@ADMIN.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEL/WjhIkKkrollWf+sjRQFzy3XswFN7wEVqHPOQnEyFfutOc5oeAJ/wlGC+PR1rTbw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEO3OgP8/bvG9jPHQnmAy64tTjkzNoeYGZ7ddjmDxuvEPphlqEtM5/TXCee1D4rzIKg==",
                             PhoneNumber = "01234567890",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "f1fa5c4c-6811-4505-a324-02f8f58f3e82",
+                            SecurityStamp = "a849bff8-8561-4fcc-8cd9-8ed08956521f",
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         });
@@ -634,28 +609,28 @@ namespace Shipping.Entities.Migrations
                         new
                         {
                             Id = "1",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = "6/26/2023 2:16:54 AM",
                             Name = "admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
                             Id = "2",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = "6/26/2023 2:16:54 AM",
                             Name = "trader",
                             NormalizedName = "TRADER"
                         },
                         new
                         {
                             Id = "3",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = "6/26/2023 2:16:54 AM",
                             Name = "employee",
                             NormalizedName = "EMPLOYEE"
                         },
                         new
                         {
                             Id = "4",
-                            Date = "6/26/2023 3:49:11 AM",
+                            Date = "6/26/2023 2:16:54 AM",
                             Name = "salesrepresentative",
                             NormalizedName = "SALESREPRESENTATIVE"
                         });

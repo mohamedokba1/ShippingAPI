@@ -18,7 +18,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpGet]
-        [Authorize(Policy = "admin")]
         //[RequireClaim("permission.orders.read")]
         public async Task<ActionResult<IEnumerable<OrderResponseDto>>> GetAll([FromHeader] string userEmail)
         {
@@ -32,7 +31,6 @@ namespace Shipping.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize("Admin")]
         public async Task<ActionResult<OrderResponseDto>> GetById(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);
@@ -42,7 +40,6 @@ namespace Shipping.API.Controllers
         }
 
         [HttpPost]
-        [RequireClaim("permission.orders.add")]
         public async Task<ActionResult> Add(OrderAddDto order, [FromHeader] string userEmail)
         {
             List<ValidationResult>? errors =  await _orderService.AddOrderAsync(order, userEmail);
@@ -56,7 +53,6 @@ namespace Shipping.API.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [RequireClaim("permission.orders.update")]
         public async Task<ActionResult> Update(long id, OrderUpdateDto order)
         {
             var oldOrder = await _orderService.GetOrderByIdAsync(id);
@@ -71,7 +67,6 @@ namespace Shipping.API.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [RequireClaim("permission.orders.delete")]
         public async Task<ActionResult> Delete(long id)
         {
             var order = await _orderService.GetOrderByIdAsync(id);

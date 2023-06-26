@@ -41,10 +41,7 @@ public class MappingProfile : Profile
         CreateMap<ApplicationUser, EmployeeAddDto>().ReverseMap();
 
         CreateMap<Employee , EmployeeAddDto>()
-         .ForMember(dest => dest.branchid, src => src.MapFrom(src => src.branchid))
-         .ForPath(dest => dest.UserName, src => src.MapFrom(src => src.User.UserName))
-             .ForPath(dest => dest.Email, src => src.MapFrom(src => src.User.Email))
-             .ForPath(dest => dest.PhoneNumber, src => src.MapFrom(src => src.User.PhoneNumber))
+             
              .ReverseMap();
 
         CreateMap<Employee, EmployeeupdateDto>()
