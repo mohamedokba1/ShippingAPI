@@ -35,7 +35,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                 Id = "1",
                 Name = "admin",
                 NormalizedName = "ADMIN",
-                Date = DateTime.Now,
+                Date = DateTime.Now.ToString(),
             },
             new ApplicationUserRole
             {
@@ -419,36 +419,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
                  ClaimType = "permission.goverments.read",
                  ClaimValue = "true",
                  RoleId = "4",
-             } ,
-             new IdentityRoleClaim<string>()
-             {
-                 Id = 47,
-                 ClaimType = "permission.permissions.read",
-                 ClaimValue = "true",
-                 RoleId = "1",
-             } ,
-              new IdentityRoleClaim<string>()
-              {
-                  Id = 48,
-                  ClaimType = "permission.permissions.update",
-                  ClaimValue = "true",
-                  RoleId = "1",
-              } ,
-               new IdentityRoleClaim<string>()
-               {
-                   Id = 49,
-                   ClaimType = "permission.permissions.add",
-                   ClaimValue = "true",
-                   RoleId = "1",
-               } , 
-                new IdentityRoleClaim<string>()
-                {
-                    Id = 50,
-                    ClaimType = "permission.permissions.delete",
-                    ClaimValue = "true",
-                    RoleId = "1",
-                }
-                #endregion
+             }
+             #endregion
 
           );
 
